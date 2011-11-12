@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+%html{html_attrs}
+
+  %head
+    %meta{"http-equiv"=>"Content-type", :content=>"text/html;charset=utf-8"}
+    %title 4am
+
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "application"
+
+    %link{ rel: "shortcut icon", href: image_path("favicon.png"), type: "image/x-icon" }
+
+    //= csrf_meta_tags 
+
+  %body
+
+
+
+
+
+
+    #main
+
+      .topbar{"data-scrollspy" => "scrollspy"}
+        .topbar-inner
+          .container
+            %a.brand
+            %ul.nav
+              %li
+                %a{:href => "#overview"} Login
+              %li
+                %a{:href => "#about"} About
+      
+
+      .container{style: 'padding-top:60px;'}
+
+        - if flash[:notice]
+          .alert-message.warning
+            %a.close{href: "#"} ×
+            %p
+              %strong= flash[:notice]
+  
+        - if flash[:error]
+          .alert-message.error
+            %a.close{href: "#"} ×
+            %p
+              %strong= flash[:error]
+
+        = yield
+
