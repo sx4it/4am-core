@@ -7,12 +7,13 @@
 
 // = require_self
 
+$color-topbar: #222
 
 body
-  background-color: #F5F6F6
+  //background-color: #F5F6F6
 
 #main
-  background-color: #F5F6F6
+  //background-color: #F5F6F6
 
 .topbar
   box-shadow: 0 0 15px rgba(0,0,0,0.15)
@@ -22,6 +23,7 @@ body
 
   .topbar-inner
     height: 100%
+    background-color: $color-topbar
 
     .container
       height: 100%
@@ -38,3 +40,53 @@ body
 
         li a
           padding: 12px 12px 10px
+
+
+.breadcrumb
+  padding: 4px 8px
+
+a, a:hover
+  text-decoration: none
+
+
+
+ul.menu
+  position: relative
+  top: -20px
+  padding: 16px 6px 6px 6px
+  height: 100%
+  background: whiteSmoke
+  list-style: none
+  margin: 0
+
+  li
+    width: inherit
+    line-height: 24px
+    padding: 6px
+   
+    &:hover
+      background-color: #ddd
+
+    a
+      background: transparent no-repeat 0px 1px
+      padding-left: 24px
+      color: #404040
+      font:
+        size: 16px
+
+      @each $icon in user, documents-stack, traffic-light-single, sticky-notes-stack, server-medium
+        &.icon_#{$icon}
+          background-image: url(image_path('icons/fugue/#{$icon}.png'))
+
+      .count
+        right: 16px
+        position: absolute
+        height: 16px
+        vertical-align: middle
+        line-height: 12px
+        height: 12px
+        width: 12px
+        border-radius: 8px
+        -webkit-box-shadow: inset 0 0 5px#DDD
+        text-align: center
+        margin-top: 6px

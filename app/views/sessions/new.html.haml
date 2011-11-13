@@ -1,12 +1,41 @@
 
-%section#forms
-  .page-header
-    %h1 Login
-  .row
-    .span4
-      %h2 Connect to the admin space
-      %p If you do not wish to connect without your X509 certificate, please use this form
-    .span12
+.row
+
+  .span4
+
+    %ul.menu.well
+      %li
+        %a.icon_user
+          %span.title Users
+      %li
+        %a.icon_server-medium
+          %span.title Machines
+          %span.label.warning.count 2
+      %li
+        %a.icon_sticky-notes-stack
+          %span.title Tasks
+      %li
+        %a.icon_traffic-light-single
+          %span.title Status
+      %li
+        %a.icon_documents-stack
+          %span.title Logs
+          %span.label.important.count 2
+  
+  .span12
+
+    %ul.breadcrumb
+      %li
+        %a{:href => "#"} Home
+        %span.divider /
+      %li.active Login
+  
+    %section#forms
+      .page-header
+        %h1 Login
+      
+      //%h2 Connect to the admin space
+      //%p If you do not wish to connect without your X509 certificate, please use this form
       = form_tag sessions_path do
         %fieldset
           %legend Login form
@@ -20,3 +49,4 @@
               = text_field_tag :pass, params[:pass], :size => 30
         .actions
           = submit_tag 'Save', :class => "btn primary"
+
