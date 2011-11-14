@@ -3,7 +3,9 @@
 // and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
 // the top of the compiled file, but it's generally better to create a new file per style scope.
 
-// = require bootstrap
+// //= require bootstrap
+
+@import "bootstrap"
 
 // = require_self
 
@@ -11,6 +13,7 @@ $color-topbar: #222
 
 body
   //background-color: #F5F6F6
+  font-family: "Lucida Sans", "Lucida Grande"
 
 #main
   //background-color: #F5F6F6
@@ -40,6 +43,7 @@ body
 
         li a
           padding: 12px 12px 10px
+          font-size: 14px
 
 
 .breadcrumb
@@ -52,27 +56,38 @@ a, a:hover
 
 ul.menu
   position: relative
-  top: -20px
-  padding: 16px 6px 6px 6px
-  height: 100%
-  background: whiteSmoke
+  //padding: 16px 6px 6px 6px
+  height: 30px
+  overflow: hidden
   list-style: none
   margin: 0
 
+  top: -12px
+
+
   li
-    width: inherit
-    line-height: 24px
-    padding: 6px
+    @extend .breadcrumb
+    //@extend .well
+    float: left
+    //width: inherit
+    //padding: 6px
+
+    width: 90px
+    padding: 4px 8px 3px
+    margin-right: 10px
    
     &:hover
       background-color: #ddd
+      cursor: pointer
+      opacity: 1.2
 
     a
-      background: transparent no-repeat 0px 1px
-      padding-left: 24px
-      color: #404040
+      background: transparent no-repeat 0px 0px
+      padding-left: 20px
+      color: #606060
       font:
-        size: 16px
+        size: 12px
+        weight: bold
 
       @each $icon in user, documents-stack, traffic-light-single, sticky-notes-stack, server-medium
         &.icon_#{$icon}
@@ -80,13 +95,11 @@ ul.menu
 
       .count
         right: 16px
-        position: absolute
         height: 16px
         vertical-align: middle
         line-height: 12px
         height: 12px
         width: 12px
         border-radius: 8px
-        -webkit-box-shadow: inset 0 0 5px#DDD
         text-align: center
         margin-top: 6px
