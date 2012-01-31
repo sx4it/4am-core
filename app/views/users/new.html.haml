@@ -1,23 +1,27 @@
-%h1 Sign Up
+%h1 Register a user
 
 = form_for @user do |f|
   -if @user.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
-      %ul
-        - @user.errors.full_messages.each do |msg|
-          %li= msg
+    .alert-message.error
+      %p
+        %strong= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+        %ul
+          - @user.errors.full_messages.each do |msg|
+            %li
+              %p= msg
   
-  .field
+  .clearfix.field
     = f.label :login
-    = f.text_field :login  
+    .input
+      = f.text_field :login  
 
-  .field
+  .clearfix.field
     = f.label :pass
-    = f.password_field :pass  
+    .input
+      = f.password_field :pass  
 
   .actions
-    = f.submit 'Submit'
+    = f.submit 'Submit', :class => "btn primary"
 
 
 = link_to 'Back', users_path

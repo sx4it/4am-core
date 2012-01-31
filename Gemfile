@@ -23,6 +23,12 @@ gem 'jquery-rails'
 gem 'haml'
 gem 'haml-rails'
 
+# gem 'zmq'
+gem 'ffi'
+gem 'ffi-rzmq'
+
+gem 'mongrel'
+
 
 
 
