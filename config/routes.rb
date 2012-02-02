@@ -1,15 +1,19 @@
 Eip::Application.routes.draw do
 
+  resources :keys
+
   get "login" => "sessions#new", :as => "login"
-  get "signup" => "users#new", :as => "signup"
+  get "logout" => "sessions#destroy", :as => "logout"
 
 
   get "zmq" => "zmq#test", :as => "zmq"
 
-  resources :users
+  resources :users do
+    resources :keys
+  end
   resources :sessions
 
-  root :to => "users#new"
+  root :to => 'users#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

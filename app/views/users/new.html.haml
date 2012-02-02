@@ -1,5 +1,5 @@
 
-%h2 Register a user
+%h2 Add a user
 
 %br
 
@@ -19,9 +19,14 @@
       = f.text_field :login  
 
   .clearfix.field
-    = f.label :pass
+    = f.label :password
     .input
-      = f.password_field :pass  
+      = f.password_field :password  
+
+  .clearfix.field
+    = f.label :password_confirmation
+    .input
+      = f.password_field :password_confirmation
 
   .actions
     = f.submit 'Submit', :class => "btn success"

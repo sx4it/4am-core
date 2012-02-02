@@ -1,53 +1,19 @@
 
-%ul.menu
-  %li
-    %a.icon_traffic-light-single
-      %span.title Status
-  %li
-    %a.icon_user
-      %span.title Users
-  %li
-    %a.icon_server-medium
-      %span.title Machines
-  %li
-    %a.icon_sticky-notes-stack
-      %span.title Tasks
-  %li
-    %a.icon_documents-stack
-      %span.title Logs
-
-.row{style: 'margin-top:10px;'}
+%section#forms
+  %h2Login
   
-  //.span4
-  //  .content This is a test.
-
-  .span16
-
-    -#
-      %ul.breadcrumb
-        %li
-          %a{:href => "#"} Home
-          %span.divider /
-        %li.active Login
-    
-  
-    %section#forms
-      .page-header
-        %h1{style: 'font-size:22px;'}Login
-      
-      //%h2 Connect to the admin space
-      //%p If you do not wish to connect without your X509 certificate, please use this form
-      = form_tag sessions_path do
-        %fieldset
-          %legend Login form
-          .clearfix
-            = label_tag :login
-            .input
-              = text_field_tag :login, params[:login], :size => 30
-          .clearfix
-            = label_tag :pass
-            .input
-              = text_field_tag :pass, params[:pass], :size => 30
-        .actions
-          = submit_tag 'Save', :class => "btn primary"
+  //%h2 Connect to the admin space
+  //%p If you wish to connect without your X509 certificate, please use this form
+  = form_tag sessions_path do
+    %fieldset
+      .clearfix
+        = label_tag :login
+        .input
+          = text_field_tag :login, params[:login], :size => 30
+      .clearfix
+        = label_tag :pass
+        .input
+          = password_field_tag :pass, params[:pass], :size => 30
+    .actions
+      = submit_tag 'Login', :class => "btn primary"
 
