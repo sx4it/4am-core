@@ -14,7 +14,7 @@ group :assets do
   gem 'sass-rails'
   gem 'coffee-rails', '~> 3.1.1'
   gem 'uglifier', '>= 1.0.3'
-  gem 'bootstrap-sass', '1.4.0'
+  gem 'bootstrap-sass', '1.4.4'
   #gem 'compass'
 end
 

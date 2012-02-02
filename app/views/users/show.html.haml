@@ -1,12 +1,10 @@
-%p#notice= notice
 
-%p
+%p.clearfix.field
   %b Login:
   = @user.login
-%p
+%p.clearfix.field
   %b Pass:
   = @user.pass
 
-= link_to 'Edit', edit_user_path(@user)
-\|
-= link_to 'Back', users_path
+= link_to 'Edit', edit_user_path(@user), :class => "btn warning"
+= link_to 'Back', users_path, :class => "btn"

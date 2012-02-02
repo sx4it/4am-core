@@ -1,4 +1,4 @@
-%h1 Listing users
+%h2 Listing users
 
 %table
   %tr
@@ -12,10 +12,10 @@
     %tr
       %td= user.login
       %td= user.pass
-      %td= link_to 'Show', user
-      %td= link_to 'Edit', edit_user_path(user)
-      %td= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete
+      %td= link_to 'Show', user, :class => "btn info"
+      %td= link_to 'Edit', edit_user_path(user), :class => "btn warning"
+      %td= link_to 'Destroy', user, :class => "btn danger", :confirm => 'Are you sure?', :method => :delete
 
 %br
 
-= link_to 'New User', new_user_path
+= link_to 'New User', new_user_path, :class => "btn success"

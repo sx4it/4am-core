@@ -22,13 +22,19 @@
           .container
             %a.brand
             %ul.nav
-              %li
-                %a{:href => "#overview"} Login
+              %li.dropdown
+                %a.dropdown-toggle{:data => { :toggle => "dropdown"}} Users
+                %ul.dropdown-menu
+                  %li Action
+                  %li Another action
+                  %li Something else
+                  %li.divider
+                  %li Sep link
               %li
                 %a{:href => "#about"} About
       
 
-      .container{style: 'padding-top:60px;'}
+      .container.well{style: 'padding-top:60px;'}
 
         - if flash[:notice]
           .alert-message.warning
