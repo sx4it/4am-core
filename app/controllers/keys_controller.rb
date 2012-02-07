@@ -40,12 +40,12 @@ class KeysController < ApplicationController
   # POST /keys
   # POST /keys.json
   def create
-    @key = Key.new(params[:key])
+    @key = current_user.keys.create(params[:key])
 
     respond_to do |format|
       if @key.save
-        format.html { redirect_to @key, notice: 'Key was successfully added.' }
-        format.json { render json: @key, status: :created, location: @key }
+        format.html { redirect_to keys_url, notice: 'Key was successfully added.' }
+        format.json { render json: keys_url, status: :created, location: @key }
       else
         format.html { render action: "new" }
         format.json { render json: @key.errors, status: :unprocessable_entity }
@@ -60,7 +60,8 @@ class KeysController < ApplicationController
 
     respond_to do |format|
       if @key.update_attributes(params[:key])
-        format.html { redirect_to @key, notice: 'Key was successfully updated.' }
+        format.html { redirect_to keys_url, notice: 'Key was successfully updated.' }
+        #format.html { redirect_to @key, notice: 'Key was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }

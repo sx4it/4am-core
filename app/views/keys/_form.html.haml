@@ -1,23 +1,26 @@
-= form_for @key, html: { class: 'form-horizontal' } do |f|
-  -if @key.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@key.errors.count, "error")} prohibited this key from being saved:"
-      %ul
-        - @key.errors.full_messages.each do |msg|
-          %li= msg
 
+= form_for @key, html: { class: 'form-horizontal' } do |f|
+
+  -if @key.errors.any?
+    .control-group
+      .alert.alert-error
+        %a.close{href: "#", data:{ dismiss:'alert' }} ×
+        %h4.alert-heading= "#{pluralize(@key.errors.count, "error")} prohibited this key from being saved:"
+        %ul
+          - @user.errors.full_messages.each do |msg|
+            %li
+              %p= msg
+  
   .control-group
     = f.label :name
     .controls
-      = f.text_field :name
+      = f.text_field :name  
+
   .control-group
     = f.label :value
     .controls
-      = f.text_field :value
-  .control-group
-    = f.label :user
-    .controls
-      = f.text_field :user
+      = f.text_area :value
 
   .form-actions
-    = f.submit 'Save', :class => "btn btn-success"
+    = f.submit 'Save', class: "btn btn-success"
+
