@@ -1,0 +1,19 @@
+%li.dropdown
+  %a.dropdown-toggle{data: { toggle: "dropdown"}}
+    Users
+    %b.caret
+  %ul.dropdown-menu
+    %li
+      = link_to 'List', controller: 'users'
+    %li.divider
+    %li
+      = link_to 'Keys', 'keys'
+
+%li.dropdown
+  %a.dropdown-toggle{data: { toggle: "dropdown"}}
+    Machines
+    %b.caret
+  %ul.dropdown-menu
+    %li
+      %a List
+    %li.divider

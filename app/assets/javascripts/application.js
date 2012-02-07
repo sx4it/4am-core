@@ -6,14 +6,10 @@
 
 
 //= require jquery
+//= require jquery-ui
 //= require jquery_ujs
-//= require_tree .
-
 
 // Loads all Bootstrap javascripts
 //= require bootstrap
 
-// Alternatively, you can load individual modules
-// require bootstrap-scrollspy
-// require bootstrap-modal
-// require bootstrap-dropdown
+//= require_self

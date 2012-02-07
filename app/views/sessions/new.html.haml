@@ -1,19 +1,19 @@
 
 %section#forms
-  %h2Login
+  %h2 Login
   
   //%h2 Connect to the admin space
   //%p If you wish to connect without your X509 certificate, please use this form
-  = form_tag sessions_path do
+  = form_tag sessions_path, :class => 'form-horizontal' do
     %fieldset
-      .clearfix
+      .control-group
         = label_tag :login
-        .input
+        .controls
           = text_field_tag :login, params[:login], :size => 30
-      .clearfix
+      .control-group
         = label_tag :pass
-        .input
+        .controls
           = password_field_tag :pass, params[:pass], :size => 30
-    .actions
-      = submit_tag 'Login', :class => "btn primary"
+    .form-actions
+      = submit_tag 'Login', :class => "btn btn-success"
 

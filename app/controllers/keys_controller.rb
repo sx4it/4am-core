@@ -44,7 +44,7 @@ class KeysController < ApplicationController
 
     respond_to do |format|
       if @key.save
-        format.html { redirect_to @key, notice: 'Key was successfully created.' }
+        format.html { redirect_to @key, notice: 'Key was successfully added.' }
         format.json { render json: @key, status: :created, location: @key }
       else
         format.html { render action: "new" }

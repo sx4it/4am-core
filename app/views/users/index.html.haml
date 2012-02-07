@@ -1,9 +1,10 @@
+
 %h2 Listing users
 
-%table
+%table.table.table-striped.table-bordered.table-condensed
   %tr
     %th Login
-    %th Pass
+    %th Keys
     %th
     %th
     %th
@@ -11,11 +12,11 @@
   - @users.each do |user|
     %tr
       %td= user.login
-      %td= user.pass
-      %td= link_to 'Show', user, :class => "btn info"
-      %td= link_to 'Edit', edit_user_path(user), :class => "btn warning"
-      %td= link_to 'Destroy', user, :class => "btn danger", :confirm => 'Are you sure?', :method => :delete
+      %td= user.keys.count
+      %td= link_to 'Show', user, :class => "btn btn-info"
+      %td= link_to 'Edit', edit_user_path(user), :class => "btn btn-warning"
+      %td= button_to 'Destroy', user, :class => "btn btn-danger", :method => :delete
 
 %br
 
-= link_to 'New User', new_user_path, :class => "btn success"
+= link_to 'New User', new_user_path, :class => "btn btn-success"

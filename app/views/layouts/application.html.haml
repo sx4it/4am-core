@@ -17,41 +17,30 @@
 
     #main
 
-      .topbar{"data-scrollspy" => "scrollspy"}
-        .topbar-inner
+      .navbar.navbar-fixed-top{"data-scrollspy" => "scrollspy"}
+        .navbar-inner
           .container
             %a.brand
             %ul.nav
-              %li.dropdown
-                %a.dropdown-toggle{:data => { :toggle => "dropdown"}} Users
-                %ul.dropdown-menu
-                  %li Action
-                  %li Another action
-                  %li Something else
-                  %li.divider
-                  %li Sep link
+              - if current_user
+                = render file: 'layouts/menu'
               %li
-                %a{:href => "#about"} About
-
+                %a{href: "#about"} About
 
             - if current_user
-              = link_to 'Logout', 'logout', :class => 'btn error'
-      
+              = link_to 'Logout', 'logout', class: 'logout btn btn-danger'
 
-      .container.well{style: 'padding-top:60px;'}
+      .container.well
 
         - if flash[:notice]
-          .alert-message.warning
-            %a.close{href: "#"} ×
-            %p
-              %strong= flash[:notice]
+          #flash_warning.alert
+            %a.close{href: "#", data:{ dismiss:'alert' }} ×
+            %strong= flash[:notice]
   
         - if flash[:error]
-          .alert-message.error
-            %a.close{href: "#"} ×
-            %p
-              %strong= flash[:error]
-
+          #flash_error.alert.alert-error
+            %a.close{href: "#", data:{ dismiss:'alert' }} ×
+            %strong= flash[:error]
 
         = yield
 

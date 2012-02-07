@@ -3,7 +3,6 @@
 // and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
 // the top of the compiled file, but it's generally better to create a new file per style scope.
 
-// //= require bootstrap
 
 @import "bootstrap"
 
@@ -14,17 +13,34 @@ $color-topbar: #222
 body
   //background-color: #F5F6F6
   font-family: "Lucida Sans", "Lucida Grande"
+  background: url(http://subtlepatterns.com/patterns/wood_pattern.png)
+
+  .container
+    position: relative
+    &.well
+      background: #fff
+      padding-top: 60px
+    h2
+      padding-bottom: 16px
+
+
+
+.table
+  form
+    margin: 0px
+    input 
+      margin: 0px
 
 #main
   //background-color: #F5F6F6
 
-.topbar
+.navbar
   box-shadow: 0 0 15px rgba(0,0,0,0.15)
-  border-bottom: 1px solid #F4F4F4
+  //border-bottom: 1px solid #F4F4F4
   height: 50px
 
 
-  .topbar-inner
+  .navbar-inner
     height: 100%
     background-color: $color-topbar
 
@@ -37,6 +53,11 @@ body
         width: 100px
         margin: 0px
         padding: 0px
+
+      .logout
+        position: absolute
+        right: 0px
+        margin-top: 10px
     
       ul
         height: inherit
@@ -44,6 +65,10 @@ body
         li a
           padding: 12px 12px 10px
           font-size: 14px
+
+      .dropdown
+        li a
+          padding: 3px 15px
 
 
 .breadcrumb
