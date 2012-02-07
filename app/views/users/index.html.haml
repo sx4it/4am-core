@@ -5,17 +5,16 @@
   %tr
     %th Login
     %th Keys
-    %th
-    %th
-    %th
+    %th Actions
 
   - @users.each do |user|
     %tr
       %td= user.login
       %td= user.keys.count
-      %td= link_to 'Show', user, :class => "btn btn-info"
-      %td= link_to 'Edit', edit_user_path(user), :class => "btn btn-warning"
-      %td= button_to 'Destroy', user, :class => "btn btn-danger", :method => :delete
+      %td
+        = link_to 'Show', user, class: "btn btn-info"
+        = link_to 'Edit', edit_user_path(user), class: "btn btn-warning"
+        = button_to 'Destroy', user, :method => :delete, class: "btn btn-danger"
 
 %br
 

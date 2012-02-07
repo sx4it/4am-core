@@ -1,23 +1,21 @@
-%h1 Listing keys
 
-%table
+%h2 Listing keys
+
+%table.table.table-striped.table-bordered.table-condensed
   %tr
     %th Name
     %th Value
-    %th User
-    %th
-    %th
-    %th
+    %th Actions
 
   - @keys.each do |key|
     %tr
       %td= key.name
       %td= key.value
-      %td= key.user
-      %td= link_to 'Show', key
-      %td= link_to 'Edit', edit_key_path(key)
-      %td= link_to 'Destroy', key, :confirm => 'Are you sure?', :method => :delete
+      %td
+        = link_to 'Show', key, class: "btn btn-info"
+        = link_to 'Edit', edit_key_path(key), :class => "btn btn-warning"
+        = button_to 'Destroy', key, :method => :delete, :class => "btn btn-danger"
 
 %br
 
-= link_to 'New Key', new_key_path
+= link_to 'Add Key', new_key_path, :class => "btn btn-success"
