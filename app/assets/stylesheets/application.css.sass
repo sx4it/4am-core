@@ -25,11 +25,34 @@ body
 
 
 
+// Hack for aligning delete button
 .table
   form
     margin: 0px
+    position: relative
+    display: inline-block
+    top: -2px
     input 
       margin: 0px
+
+// Hack to use twitter bootstrap with field_with_errors
+.form-horizontal
+  .control-group
+    .field_with_errors
+      label
+        float: left
+        width: 140px
+        padding-top: 5px
+        text-align: right
+        color: #B94A48
+
+      input
+        color: #B94A48
+        border-color: #953B39
+
+
+
+
 
 #main
   //background-color: #F5F6F6
@@ -131,13 +154,15 @@ ul.menu
 
 
 
-.alert-message
+// Hack to use ul in alert
+.alert
   ul
     margin-bottom: 0px
     li
-      color: white
+      //color: white
       p
         font-style: italic
+        margin: 0
 
 .field
   label
