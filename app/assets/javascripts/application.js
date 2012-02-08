@@ -12,4 +12,6 @@
 // Loads all Bootstrap javascripts
 //= require bootstrap
 
-//= require_self
+
+//= require_tree .
+

@@ -1,20 +1,12 @@
 
 %h2 Listing users
 
-%table.table.table-striped.table-bordered.table-condensed
-  %tr
-    %th Login
-    %th Keys
-    %th Actions
-
-  - @users.each do |user|
-    %tr
-      %td= user.login
-      %td= user.keys.count
-      %td
-        = link_to 'Show', user, class: "btn btn-info"
-        = link_to 'Edit', edit_user_path(user), class: "btn btn-warning"
-        = button_to 'Destroy', user, :method => :delete, class: "btn btn-danger"
+= form_tag users_path, :method => 'get', :id => "users_search" do
+  %p
+    = text_field_tag :search, params[:search]
+    = submit_tag "Search", :name => nil, class: "btn btn-success"
+  #users
+    = render 'users'
 
 %br
 

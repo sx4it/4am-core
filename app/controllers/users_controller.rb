@@ -1,16 +1,23 @@
 class UsersController < ApplicationController
 
-  #skip_before_filter :require_login
+  skip_before_filter :require_login
+  helper_method :sort_column, :sort_direction
 
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    # @users = User.all
+    @users = User.search(params[:search], params[:page]).paginate(per_page: 5, page: params[:page]).order(sort_column + ' ' + sort_direction)
+    #@users = User.page(params[:page])
+    #@users = User.paginate(per_page: 10, :page => params[:page])
+
 
     respond_to do |format|
       format.html # index.html.erb
+      format.js
       format.json { render json: @users }
     end
+
   end
 
   # GET /users/1
@@ -84,4 +91,21 @@ class UsersController < ApplicationController
       format.json { head :ok }
     end
   end
+
+
+
+
+
+
+
+
+
+  def sort_column
+    User.column_names.include?(params[:sort]) ? params[:sort] : "login"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
 end

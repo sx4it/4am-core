@@ -32,6 +32,7 @@ gem 'ffi-rzmq'
 
 #gem 'mongrel'
 
+gem "will_paginate"
 
 
 
