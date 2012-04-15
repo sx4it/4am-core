@@ -1,5 +1,9 @@
 Eip::Application.routes.draw do
 
+  resources :machines
+
+  resources :machine_tpls
+
   resources :keys
 
   get "login" => "sessions#new", :as => "login"

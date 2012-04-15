@@ -8,14 +8,22 @@
 
 @import "paginate"
 
+
 // = require_self
 
-$color-topbar: #222
+
+@import "icons"
+
+$color-topbar: #fff
+$topbar-height: 44px
+//$color-topbar: #222
 
 body
   //background-color: #F5F6F6
-  font-family: "Lucida Sans", "Lucida Grande"
-  background: url(image_path("wood_pattern.png"))
+  //font-family: "Arial"
+  //font-family: "Lucida Sans", "Lucida Grande"
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+  background: url(image_path("bg.wood1.png"))
 
   .container
     position: relative
@@ -61,19 +69,27 @@ body
 
 .navbar
   box-shadow: 0 0 15px rgba(0,0,0,0.15)
-  //border-bottom: 1px solid #F4F4F4
-  height: 50px
-
+  height: $topbar-height
 
   .navbar-inner
     height: 100%
     background-color: $color-topbar
 
+    -webkit-box-shadow: 1px 0 0 #fff inset, 0 1px 0 #fff inset
+    -moz-box-shadow: 1px 0 0 #fff inset, 0 1px 0 #fff inset
+    -webkit-border-radius: 0
+    -webkit-box-shadow: 0 0 46px rgba(0,0,0,0.5)
+    box-shadow: 0 0 46px rgba(0,0,0,0.5)
+
+    background-image: -webkit-linear-gradient(top, white, #D4D4D4)
+    background-image: -o-linear-gradient(top, white, #D4D4D4)
+    background-image: linear-gradient(top, white, #D4D4D4)
+
     .container
       height: 100%
   
       .brand
-        background: url(image_path("logo.4am.white.80.png")) no-repeat 0px 7px
+        background: url(image_path("logo.4am.black.80.png")) no-repeat 0px 5px
         height: inherit
         width: 100px
         margin: 0px
@@ -83,13 +99,63 @@ body
         position: absolute
         right: 0px
         margin-top: 10px
-    
-      ul
-        height: inherit
 
-        li a
-          padding: 12px 12px 10px
-          font-size: 14px
+      ul
+
+        &.nav
+
+          .dropdown-toggle
+            .caret
+              border-top-color: #BD362F
+
+          .icon
+            background-repeat: no-repeat
+
+          > li
+            height: $topbar-height
+            border-right: 1px dotted #AAA
+            margin-left: 10px
+
+            &.icon
+              background-position: 0px 15px
+              padding-left: 8px
+            // Color of font in the menu
+            > a
+              color: black
+              text-transform: lowercase
+              font-weight: 600
+              text-shadow: none
+
+              &:hover
+                color: #444
+
+            .dropdown-menu
+
+              //.dropdown-menu li > a:hover, .dropdown-menu .active > a, .dropdown-menu .active > a:hover {
+
+
+              > li
+                .icon
+                  background-position: 5px 4px
+                  padding-left: 26px
+                // Color of font in the dropdown menu
+                > a
+                  color: #222
+                  text-transform: lowercase
+                  font-weight: bold
+                  text-shadow: none
+                  font-size: 12px
+                  &:hover
+                    background-color: #ddd
+
+        li
+          cursor: pointer
+          a
+            cursor: pointer
+            padding: 12px 12px 10px
+            font-size: 14px
+
+
 
       .dropdown
         li a
@@ -104,7 +170,10 @@ a, a:hover
 
 
 
-ul.menu
+
+
+/*
+  ul.menu
   position: relative
   //padding: 16px 6px 6px 6px
   height: 30px
@@ -113,7 +182,6 @@ ul.menu
   margin: 0
 
   top: -12px
-
 
   li
     @extend .breadcrumb
@@ -139,9 +207,13 @@ ul.menu
         size: 12px
         weight: bold
 
-      @each $icon in user, documents-stack, traffic-light-single, sticky-notes-stack, server-medium
+
+      /* @each $icon in user, documents-stack, traffic-light-single, sticky-notes-stack, server-medium
         &.icon_#{$icon}
           background-image: url(image_path('icons/fugue/#{$icon}.png'))
+
+
+
 
       .count
         right: 16px
@@ -153,6 +225,8 @@ ul.menu
         border-radius: 8px
         text-align: center
         margin-top: 6px
+
+
 
 
 
@@ -169,3 +243,8 @@ ul.menu
 .field
   label
     font-weight: bold
+
+
+.form-actions 
+  border: 1px solid #DDD
+  border-radius: 4px

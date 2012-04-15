@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  skip_before_filter :require_login
+  # skip_before_filter :require_login
   helper_method :sort_column, :sort_direction
 
   # GET /users

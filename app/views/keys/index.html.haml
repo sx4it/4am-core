@@ -1,5 +1,9 @@
 
-%h2 Listing keys
+.page-header
+  %h1
+    SSH Key
+    %small
+      list all your registered keys
 
 %table.table.table-striped.table-bordered.table-condensed
   %tr
@@ -12,9 +16,8 @@
       %td= key.name
       %td= key.value
       %td
-        = link_to 'Show', key, class: "btn btn-small btn-info"
         = link_to 'Edit', edit_key_path(key), :class => "btn btn-small btn-warning"
-        = button_to 'Destroy', key, :method => :delete, :class => "btn btn-small btn-danger"
+        = link_to 'Delete', key, :method => :delete, :class => "btn btn-small btn-danger"
 
 %br
 

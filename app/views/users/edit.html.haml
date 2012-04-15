@@ -1,5 +1,10 @@
 
-%h2 Edit user
+.page-header
+  %h1
+    Users
+    %small
+      edit information of
+      %code= @user.login
 
 = render 'form'
 

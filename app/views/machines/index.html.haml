@@ -1,0 +1,23 @@
+%h1 Listing machines
+
+%table
+  %tr
+    %th Name
+    %th Ip
+    %th Machine tpl
+    %th
+    %th
+    %th
+
+  - @machines.each do |machine|
+    %tr
+      %td= machine.name
+      %td= machine.ip
+      %td= machine.machine_tpl
+      %td= link_to 'Show', machine
+      %td= link_to 'Edit', edit_machine_path(machine)
+      %td= link_to 'Destroy', machine, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Machine', new_machine_path

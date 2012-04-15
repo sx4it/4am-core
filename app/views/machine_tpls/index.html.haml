@@ -1,0 +1,19 @@
+%h1 Listing machine_tpls
+
+%table
+  %tr
+    %th Name
+    %th
+    %th
+    %th
+
+  - @machine_tpls.each do |machine_tpl|
+    %tr
+      %td= machine_tpl.name
+      %td= link_to 'Show', machine_tpl
+      %td= link_to 'Edit', edit_machine_tpl_path(machine_tpl)
+      %td= link_to 'Destroy', machine_tpl, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Machine tpl', new_machine_tpl_path

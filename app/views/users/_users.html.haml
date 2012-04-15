@@ -7,7 +7,6 @@
     %th= sortable 'login'
     %th Keys
     %th Actions
-
   
   - @users.each do |user|
     %tr
@@ -16,7 +15,7 @@
       %td
         = link_to 'Show', user, class: "btn btn-small btn-info"
         = link_to 'Edit', edit_user_path(user), class: "btn btn-small btn-warning"
-        = button_to 'Destroy', user, :method => :delete, class: "btn btn-small btn-danger"
+        = link_to 'Destroy', user, method: :delete, class: "btn btn-small btn-danger"
 
 = will_paginate @users
 

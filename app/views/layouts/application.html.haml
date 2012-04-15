@@ -24,7 +24,9 @@
             %ul.nav
               - if current_user
                 = render file: 'layouts/menu'
-              %li
+              %li.icon.icon_help
+                %a{href: "#about"} Help
+              %li.icon.icon_info
                 %a{href: "#about"} About
 
             - if current_user

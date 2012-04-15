@@ -1,10 +1,25 @@
 
-%p.clearfix.field
-  %b Login:
-  = @user.login
-%p.clearfix.field
-  %b Pass:
-  = @user.pass
+.page-header
+  %h1
+    Users
+    %small
+      more information on
+      %code= @user.login
 
-= link_to 'Edit', edit_user_path(@user), :class => "btn warning"
-= link_to 'Back', users_path, :class => "btn"
+
+%form.form-horizontal
+  %fieldset
+
+    .control-group
+      %label Login
+      .controls
+        %span.input-xlarge.uneditable-input= @user.login
+  
+    .control-group
+      %label Password
+      .controls
+        %span.input-xlarge.uneditable-input (hidden)
+
+    .form-actions
+      = link_to 'Edit', edit_user_path(@user), :class => "btn btn-warning"
+

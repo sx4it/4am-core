@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @machine_tpl.name
+
+= link_to 'Edit', edit_machine_tpl_path(@machine_tpl)
+\|
+= link_to 'Back', machine_tpls_path

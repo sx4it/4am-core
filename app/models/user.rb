@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
 
   has_secure_password
 
-  attr_accessible :login
+  attr_accessible :login, :password, :password_confirmation
 
   has_many :keys
 
