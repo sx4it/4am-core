@@ -30,7 +30,12 @@
                 %a{href: "#about"} About
 
             - if current_user
-              = link_to 'Logout', 'logout', class: 'logout btn btn-danger'
+
+
+              %a{ href: 'logout', class: 'logout btn btn-danger' } 
+                %i.icon-white.icon-remove
+                Logout
+              //= link_to 'Logout', 'logout', class: 'logout btn btn-danger'
 
       .container.well
 

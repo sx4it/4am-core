@@ -12,12 +12,12 @@
               %p= msg
   
   .control-group
-    = f.label :name
+    = f.label :name, class: 'control-label' 
     .controls
       = f.text_field :name  
 
   .control-group
-    = f.label :value
+    = f.label :value, class: 'control-label' 
     .controls
       = f.text_area :value
 

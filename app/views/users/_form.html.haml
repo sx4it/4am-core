@@ -12,17 +12,17 @@
               %p= msg
   
   .control-group
-    = f.label :login
+    = f.label :login, class: 'control-label' 
     .controls
       = f.text_field :login  
 
   .control-group
-    = f.label :password
+    = f.label :password, class: 'control-label' 
     .controls
       = f.password_field :password  
 
   .control-group
-    = f.label :password_confirmation
+    = f.label :password_confirmation, class: 'control-label' 
     .controls
       = f.password_field :password_confirmation
 

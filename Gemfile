@@ -16,7 +16,7 @@ group :assets do
   gem 'coffee-rails'
   gem 'uglifier', '>= 1.0.3'
 
-  gem 'bootstrap-sass', '~> 2.0.0'
+  gem 'bootstrap-sass', '~> 2.0.2'
 
   gem "jquery-rails", "~> 1.0.0"
   #gem 'compass'

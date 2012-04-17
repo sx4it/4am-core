@@ -4,21 +4,25 @@
     SSH Key
     %small
       list all your registered keys
+    %a{ href: new_key_path, class: 'btn btn-success' } 
+      %i.icon-white.icon-plus-sign
+      New key
 
-%table.table.table-striped.table-bordered.table-condensed
-  %tr
-    %th Name
-    %th Value
-    %th Actions
-
-  - @keys.each do |key|
+%table.table.table-striped.table-condensed.table-bordered
+  %tbody
     %tr
-      %td= key.name
-      %td= key.value
-      %td
-        = link_to 'Edit', edit_key_path(key), :class => "btn btn-small btn-warning"
-        = link_to 'Delete', key, :method => :delete, :class => "btn btn-small btn-danger"
+      %th Name
+      %th Value
+
+    - @keys.each do |key|
+      %tr
+        %td.key_name
+          %code= key.name
+          = link_to 'Edit', edit_key_path(key), :class => "btn btn-mini btn-warning"
+          = link_to 'Delete', key, :method => :delete, :class => "btn btn-mini btn-danger"
+        %td.key_value
+          %pre= key.value
 
 %br
 
-= link_to 'Add another public key', new_key_path, :class => "btn btn-success"
+

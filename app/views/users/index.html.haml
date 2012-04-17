@@ -4,9 +4,12 @@
     Users
     %small
       list all the users
+    %a{ href: new_user_path, class: 'btn btn-success' } 
+      %i.icon-white.icon-plus-sign
+      New user
 
 = form_tag users_path, :method => 'get', :id => 'users_search' do
-  %p
+  %p.searchbox
     = text_field_tag :search, params[:search]
     = submit_tag 'Search', :name => nil, class: 'btn btn-primary'
   #users
@@ -14,4 +17,6 @@
 
 %br
 
-= link_to 'Add a new user', new_user_path, class: 'btn btn-success'
+
+
+//= link_to 'Add a new user', new_user_path, class: 'btn btn-success'

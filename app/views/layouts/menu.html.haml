@@ -4,14 +4,14 @@
     %b.caret
   %ul.dropdown-menu
     %li
-      = link_to 'Add', user_path(@user), class: 'icon icon_plus'
+      = link_to 'List', user_path, class: 'icon icon_list'
     %li
-      = link_to 'List', user_path(@user), class: 'icon icon_list'
+      = link_to 'Add', new_user_path, class: 'icon icon_plus'
     %li
-      = link_to 'Group', user_path(@user), class: 'icon icon_group'
+      = link_to 'Group', user_path, class: 'icon icon_group'
     %li.divider
     %li
-      = link_to 'Keys', key_path(@key), class: 'icon icon_key'
+      = link_to 'Keys', key_path, class: 'icon icon_key'
 
 %li.dropdown.icon.icon_machine
   %a.dropdown-toggle{data: { toggle: "dropdown"}}
@@ -19,11 +19,11 @@
     %b.caret
   %ul.dropdown-menu
     %li
-      = link_to 'Add', user_path(@user), class: 'icon icon_plus'
+      = link_to 'List', user_path, class: 'icon icon_list'
     %li
-      %a.icon.icon_list List
+      = link_to 'Add', new_user_path, class: 'icon icon_plus'
     %li
-      = link_to 'Group', user_path(@user), class: 'icon icon_group'
+      = link_to 'Group', user_path, class: 'icon icon_group'
 
 %li.dropdown.icon.icon_tpl
   %a.dropdown-toggle{data: { toggle: "dropdown"}}

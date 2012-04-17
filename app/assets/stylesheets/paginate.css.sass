@@ -13,6 +13,34 @@
 
 
 
+
+// Custom
+.pagination
+  @extend .form-actions
+  padding: 2px 2px
+  text-align: center
+  font-style: normal
+  font-size: 11px
+  font-weight: bold
+
+  .disabled
+    display: none
+    color: #f2f2f2
+  a[rel=next]:not(:last-child)
+    @extend .badge
+  a[rel=next]
+  .current
+    @extend .badge
+    @extend .badge-inverse
+  a
+    text-transform:capitalize
+    color: #222
+    &:hover, &:focus
+      color: #fff
+
+
+
+
 .digg_pagination
   background: white
   cursor: default
@@ -61,7 +89,7 @@
     overflow: hidden
 
 //Apple
-.pagination
+.apple_pagination
   background: #f1f1f1
   border: 1px solid #e5e5e5
   text-align: center
