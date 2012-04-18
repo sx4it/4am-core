@@ -14,12 +14,12 @@
   .control-group
     = f.label :name, class: 'control-label' 
     .controls
-      = f.text_field :name  
+      = f.text_field :name, class: 'input-xxlarge'
 
   .control-group
     = f.label :value, class: 'control-label' 
     .controls
-      = f.text_area :value
+      = f.text_area :value, class: 'input-xxlarge'
 
   .form-actions
     = f.submit 'Save', class: "btn btn-info"
