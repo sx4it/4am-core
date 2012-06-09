@@ -11,21 +11,35 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120202170415) do
+ActiveRecord::Schema.define(:version => 20120208063110) do
 
   create_table "keys", :force => true do |t|
     t.string   "name"
     t.string   "value"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "machine_tpls", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "machines", :force => true do |t|
+    t.string   "name"
+    t.string   "ip"
+    t.integer  "machine_tpl_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "users", :force => true do |t|
     t.string   "login"
     t.string   "pass"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.string   "password_digest"
   end
 

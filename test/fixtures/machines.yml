@@ -3,9 +3,9 @@
 one:
   name: MyString
   ip: MyString
-  machine_tpl: 
+  machine_tpl_id:
 
 two:
   name: MyString
   ip: MyString
-  machine_tpl: 
+  machine_tpl_id:

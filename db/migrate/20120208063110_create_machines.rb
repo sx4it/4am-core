@@ -3,7 +3,7 @@ class CreateMachines < ActiveRecord::Migration
     create_table :machines do |t|
       t.string :name
       t.string :ip
-      t.reference :machine_tpl
+      t.references :machine_tpl
 
       t.timestamps
     end
