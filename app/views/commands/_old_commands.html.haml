@@ -1,0 +1,25 @@
+
+= hidden_field_tag :direction, params[:direction]
+= hidden_field_tag :sort, params[:sort]
+
+= link_to 'Clear all finished commands', {:controller => :machines, :id => @machine, :action => :clear_olds }, class: "btn btn-mini btn-warning"
+%table.table.table-striped.table-condensed.table-bordered
+  %tbody
+    %tr
+      %th Command Name
+      %th Command
+      %th Status
+      %th When
+
+    - @old_command.each do |c, time, status, id|
+      %tr
+        %td
+          = link_to c.name, command_path(c.id)
+          = link_to 'stop', {:controller => :machines, :id => @machine, :action => :stop_command, :command_id => id}, class: "btn btn-mini btn-danger pull-right"
+        %td
+          %code= c.command
+        %td
+          = status
+        %td
+          = time
+

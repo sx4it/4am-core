@@ -28,6 +28,7 @@ class CommandsController < ApplicationController
     @machine = Machine.find(params[:machine_id])
     @command = Command.find(params[:command_id])
 
+    @machine.execute(@command)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: [@command, @machine] }
