@@ -1,6 +1,12 @@
 Eip::Application.routes.draw do
 
-  resources :machines
+  resources :commands
+
+  resources :machines do
+    resources :commands, :only => [:index, :show] do
+      get 'exec'
+    end
+  end
 
   resources :machine_tpls
 
