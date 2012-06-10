@@ -10,8 +10,6 @@ Eip::Application.routes.draw do
   get "logout" => "sessions#destroy", :as => "logout"
 
 
-  get "zmq" => "zmq#test", :as => "zmq"
-
   resources :users do
     resources :keys
   end
