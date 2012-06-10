@@ -10,21 +10,9 @@ class MachinesController < ApplicationController
     end
   end
 
-  def clear_olds
-    @machine = Machine.find(params[:id])
-    @machine.clear_olds_commands
-    redirect_to @machine
-  end
-
-  def stop_command
-    @machine = Machine.find(params[:id])
-    @machine.stop_command params[:command_id]
-    redirect_to @machine
-  end
-
   def show
     @machine = Machine.find(params[:id])
-    @old_command = @machine.cmd_all
+    @old_command = Cmd.all(params[:id])
     @commands = Command.all
 
     respond_to do |format|

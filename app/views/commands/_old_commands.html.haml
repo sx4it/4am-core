@@ -2,7 +2,7 @@
 = hidden_field_tag :direction, params[:direction]
 = hidden_field_tag :sort, params[:sort]
 
-= link_to 'Clear all finished commands', {:controller => :machines, :id => @machine, :action => :clear_olds }, class: "btn btn-mini btn-warning"
+= link_to 'Clear all finished commands', {:controller => :cmd, :machine_id => @machine, :action => :clear}, class: "btn btn-mini btn-warning"
 %table.table.table-striped.table-condensed.table-bordered
   %tbody
     %tr
@@ -11,15 +11,16 @@
       %th Status
       %th When
 
-    - @old_command.each do |c, time, status, id|
+    - @old_command.each do |cmd|
       %tr
         %td
-          = link_to c.name, command_path(c.id)
-          = link_to 'stop', {:controller => :machines, :id => @machine, :action => :stop_command, :command_id => id}, class: "btn btn-mini btn-danger pull-right"
+          = link_to cmd.command.name, command_path(cmd.command.id)
+          = link_to 'delete', machine_cmd_path(@machine, cmd.id), :method => :delete, class: "btn btn-mini btn-danger pull-right"
+          = link_to 'stop', machine_cmd_path(@machine, cmd.id), :method => :put, class: "btn btn-mini btn-warning pull-right"
         %td
-          %code= c.command
+          %code= cmd.command.command
         %td
-          = status
+          = cmd.status
         %td
-          = time
+          = cmd.time
 

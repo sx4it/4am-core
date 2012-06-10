@@ -3,11 +3,9 @@ Eip::Application.routes.draw do
   resources :commands
 
   resources :machines do
-    member do
-      get "clear_olds"
-      get "stop_command"
-      resources :commands, :only => [] do
-        get 'exec'
+    resources :cmd do
+      collection do
+        get "clear"
       end
     end
   end

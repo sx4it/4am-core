@@ -22,19 +22,6 @@ class CommandsController < ApplicationController
     end
   end
 
-  # GET /commands/1/exec
-  # GET /commands/1/exec.json
-  def exec
-    @machine = Machine.find(params[:machine_id])
-    @command = Command.find(params[:command_id])
-
-    @machine.execute(@command)
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: [@command, @machine] }
-    end
-  end
-
   # GET /commands/new
   # GET /commands/new.json
   def new
