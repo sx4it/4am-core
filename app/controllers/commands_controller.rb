@@ -25,11 +25,12 @@ class CommandsController < ApplicationController
   # GET /commands/1/exec
   # GET /commands/1/exec.json
   def exec
-    @command = Command.find(params[:id])
+    @machine = Machine.find(params[:machine_id])
+    @command = Command.find(params[:command_id])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @command }
+      format.json { render json: [@command, @machine] }
     end
   end
 

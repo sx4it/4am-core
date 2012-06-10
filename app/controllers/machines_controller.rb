@@ -14,6 +14,7 @@ class MachinesController < ApplicationController
   # GET /machines/1.json
   def show
     @machine = Machine.find(params[:id])
+    @commands = Command.all
 
     respond_to do |format|
       format.html # show.html.erb

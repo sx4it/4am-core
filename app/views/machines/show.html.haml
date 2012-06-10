@@ -10,6 +10,10 @@
   %b Machine tpl:
   = @machine.machine_tpl_id
 
+%h3 Commands
+%p
+  = render 'commands/commands'
+
 = link_to 'Edit', edit_machine_path(@machine)
 \|
 = link_to 'Back', machines_path

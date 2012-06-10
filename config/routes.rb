@@ -3,7 +3,7 @@ Eip::Application.routes.draw do
   resources :commands
 
   resources :machines do
-    resources :commands, :only => [:index, :show] do
+    resources :commands, :only => [] do
       get 'exec'
     end
   end

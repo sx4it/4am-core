@@ -1,0 +1,21 @@
+
+= hidden_field_tag :direction, params[:direction]
+= hidden_field_tag :sort, params[:sort]
+
+%table.table.table-striped.table-condensed.table-bordered
+  %tbody
+    %tr
+      %th Name
+      %th Command
+      %th Actions
+
+    - @commands.each do |cmd|
+      %tr
+        %td
+          cmd.name
+        %td
+          %code= cmd.command
+        %td
+          = link_to 'View', cmd, class: "btn btn-mini btn-info"
+          = link_to 'Execute', {:controller => :commands, :action => :exec, :machine_id => @machine, :command_id => @commands}, class: "btn btn-mini btn-warning"
+
