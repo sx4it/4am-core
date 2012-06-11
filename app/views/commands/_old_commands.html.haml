@@ -3,24 +3,35 @@
 = hidden_field_tag :sort, params[:sort]
 
 = link_to 'Clear all finished commands', {:controller => :cmd, :machine_id => @machine, :action => :clear}, class: "btn btn-mini btn-warning"
+
 %table.table.table-striped.table-condensed.table-bordered
   %tbody
     %tr
       %th Command Name
       %th Command
       %th Status
-      %th When
-
+      %th Status Code
+      %th Executed
     - @old_command.each do |cmd|
       %tr
         %td
-          = link_to cmd.command.name, command_path(cmd.command.id)
+          = popover(:a, [], cmd.command.name, 'Log', cmd.log, command_path(cmd.command.id))
           = link_to 'delete', machine_cmd_path(@machine, cmd.id), :method => :delete, class: "btn btn-mini btn-danger pull-right"
           = link_to 'stop', machine_cmd_path(@machine, cmd.id), :method => :put, class: "btn btn-mini btn-warning pull-right"
         %td
-          %code= cmd.command.command
+          %center
+            = popover(:code, [], cmd.command.command, 'Log', cmd.log)
         %td
-          = cmd.status
+          %center
+            = popover(:span, %w{label label-info}, cmd.status, 'Log', cmd.log)
         %td
-          = cmd.time
-
+          %center
+            - if cmd.status_code.nil?
+              = popover(:span, %w{badge badge}, '-', 'Log', cmd.log)
+            - elsif cmd.status_code == 0
+              = popover(:span, %w{badge badge-success}, cmd.status_code, 'Log', cmd.log)
+            - elsif cmd.status_code > 0
+              = popover(:span, %w{badge badge-warning}, cmd.status_code, 'Log', cmd.log)
+        %td
+          %center
+            = cmd.time
