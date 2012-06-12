@@ -10,6 +10,16 @@ Eip::Application.routes.draw do
     end
   end
 
+  resources :host_groups do
+    get "add_host"
+    get "del_host"
+    resources :cmd do
+      collection do
+        get "clear"
+      end
+    end
+  end
+
   resources :machine_tpls
 
   resources :keys

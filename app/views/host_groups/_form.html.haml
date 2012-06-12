@@ -1,0 +1,22 @@
+= form_for @host_group do |f|
+  -if @host_group.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@host_group.errors.count, "error")} prohibited this host_group from being saved:"
+      %ul
+        - @host_group.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    Hosts:
+    - @host_group.machine.each do |h|
+      = link_to h.name, {:controller => :host_groups, :host_group_id => @host_group, :machine_id => h, :action => :del_host, :method => :get}, class: "btn btn-mini btn-danger"
+  .field
+    Add Host
+    - @hosts.each do |h|
+      - unless @host_group.machine.include? h
+        = link_to h.name, {:controller => :host_groups, :host_group_id => @host_group, :machine_id => h, :action => :add_host, :method => :get}, class: "btn btn-mini btn-success"
+  .actions
+    = f.submit 'Save'

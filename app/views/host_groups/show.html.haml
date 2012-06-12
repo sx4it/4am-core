@@ -1,0 +1,14 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @host_group.name
+%p
+  %b Hosts:
+  - @host_group.machine.each do |h|
+    %p
+      .btn= link_to h.name, h
+
+= link_to 'Edit', edit_host_group_path(@host_group)
+\|
+= link_to 'Back', host_groups_path

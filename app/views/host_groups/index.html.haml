@@ -1,0 +1,19 @@
+%h1 Listing host_groups
+
+%table
+  %tr
+    %th Name
+    %th
+    %th
+    %th
+
+  - @host_groups.each do |host_group|
+    %tr
+      %td= host_group.name
+      %td= link_to 'Show', host_group
+      %td= link_to 'Edit', edit_host_group_path(host_group)
+      %td= link_to 'Destroy', host_group, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Host group', new_host_group_path
