@@ -26,6 +26,7 @@ class HostGroupsController < ApplicationController
   # GET /host_groups/new.json
   def new
     @host_group = HostGroup.new
+    @hosts = Machine.all
 
     respond_to do |format|
       format.html # new.html.erb

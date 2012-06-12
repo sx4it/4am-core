@@ -1,5 +1,10 @@
 Eip::Application.routes.draw do
 
+  resources :user_groups do
+    get "add_user"
+    get "del_user"
+  end
+
   resources :commands
 
   resources :machines do

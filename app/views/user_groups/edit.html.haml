@@ -1,0 +1,16 @@
+%h1 Editing user_group
+
+= render 'form'
+.field
+  Users:
+  - @user_group.user.each do |u|
+    = link_to u.login, {:controller => :user_groups, :user_group_id => @user_group, :user_id => u, :action => :del_user}, class: "btn btn-mini btn-danger"
+.field
+  Add User
+  - @users.each do |u|
+    - unless @user_group.user.include? u
+      = link_to u.login, {:controller => :user_groups, :user_group_id => @user_group, :user_id => u, :action => :add_user}, class: "btn btn-mini btn-success"
+
+= link_to 'Show', @user_group
+\|
+= link_to 'Back', user_groups_path

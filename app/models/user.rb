@@ -6,9 +6,11 @@ class User < ActiveRecord::Base
 
   has_many :keys
 
+  belongs_to :user_group
+
   validates_uniqueness_of :login
-  validates_presence_of :password, :on => :create 
-  validates_length_of :password, :within => 6..40
+  validates_presence_of :password, :on => :create
+  validates_length_of :password, :within => 6..40, :on => :create
 
 
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120612143729) do
+ActiveRecord::Schema.define(:version => 20120612160618) do
 
   create_table "commands", :force => true do |t|
     t.string   "name"
@@ -49,12 +49,19 @@ ActiveRecord::Schema.define(:version => 20120612143729) do
     t.integer  "host_group_id"
   end
 
+  create_table "user_groups", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "users", :force => true do |t|
     t.string   "login"
     t.string   "pass"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "password_digest"
+    t.integer  "user_group_id"
   end
 
 end
