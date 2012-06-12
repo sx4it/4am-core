@@ -1,14 +1,23 @@
-%p#notice= notice
+.page-header
+  %h1
+    Host Groups
+    %small
+      view information of
+      %code= @host_group.name
 
-%p
-  %b Name:
-  = @host_group.name
-%p
-  %b Hosts:
-  - @host_group.machine.each do |h|
-    %p
-      .btn= link_to h.name, h
+%form.form-horizontal
+  %fieldset
 
-= link_to 'Edit', edit_host_group_path(@host_group)
-\|
-= link_to 'Back', host_groups_path
+    .control-group
+      %label.control-label Name
+      .controls
+        %span.input-xlarge.uneditable-input= @host_group.name
+    .control-group
+      %label.control-label hosts
+      .controls
+        - @host_group.machine.each do |u|
+          %p
+            %span.label= link_to u.name, u
+
+    .form-actions
+      = link_to 'Edit', edit_host_group_path(@host_group), :class => "btn btn-warning"

@@ -1,19 +1,21 @@
-%h1 Listing host_groups
+.page-header
+  %h1
+    User Groups
+    %small
+      list user groups
+    %a{ href: new_host_group_path, class: 'btn btn-success' } 
+      %i.icon-white.icon-plus-sign
+      New Host Group
 
-%table
+%table.table.table-striped.table-condensed.table-bordered
   %tr
     %th Name
-    %th
-    %th
-    %th
+    %th Action
 
   - @host_groups.each do |host_group|
     %tr
       %td= host_group.name
-      %td= link_to 'Show', host_group
-      %td= link_to 'Edit', edit_host_group_path(host_group)
-      %td= link_to 'Destroy', host_group, :confirm => 'Are you sure?', :method => :delete
-
-%br
-
-= link_to 'New Host group', new_host_group_path
+      %td
+        = link_to 'Show', host_group, class: "btn btn-mini btn-info"
+        = link_to 'Edit', edit_host_group_path(host_group), class: "btn btn-mini btn-warning"
+        = link_to 'Destroy', host_group, :confirm => 'Are you sure?', :method => :delete, class: "btn btn-mini btn-danger"

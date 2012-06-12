@@ -1,16 +1,8 @@
-%h1 Editing host_group
+.page-header
+  %h1
+    Host Groups
+    %small
+      edit information of
+      %code= @host_group.name
 
 = render 'form'
-.field
-  Hosts:
-  - @host_group.machine.each do |h|
-    = link_to h.name, {:controller => :host_groups, :host_group_id => @host_group, :machine_id => h, :action => :del_host}, class: "btn btn-mini btn-danger"
-.field
-  Add Host
-  - @hosts.each do |h|
-    - unless @host_group.machine.include? h
-      = link_to h.name, {:controller => :host_groups, :host_group_id => @host_group, :machine_id => h, :action => :add_host}, class: "btn btn-mini btn-success"
-
-= link_to 'Show', @host_group
-\|
-= link_to 'Back', host_groups_path

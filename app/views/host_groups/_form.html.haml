@@ -1,13 +1,32 @@
-= form_for @host_group do |f|
+= form_for @host_group , html: { class: 'form-horizontal' } do |f|
   -if @host_group.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@host_group.errors.count, "error")} prohibited this host_group from being saved:"
-      %ul
-        - @host_group.errors.full_messages.each do |msg|
-          %li= msg
-
-  .field
-    = f.label :name
-    = f.text_field :name
-  .actions
-    = f.submit 'Save'
+    .control-group
+      .alert.alert-error
+        %a.close{href: "#", data:{ dismiss:'alert' }} ×
+        %h4.alert-heading= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+        %ul
+          - @user.errors.full_messages.each do |msg|
+            %li
+              %p= msg
+  .control-group
+    = f.label :name, class: "control-label"
+    .controls
+      = f.text_field :name
+  - unless @host_group.id.nil?
+    .control-group
+      %label.control-label Hosts in group
+      .controls
+        - @host_group.machine.each do |u|
+          %a.btn.btn-small.btn-danger{href: url_for({:controller => :host_groups, :host_group_id => @host_group, :machine_id => u, :action => :del_host})}
+            %i.icon-white.icon-remove
+            =u.name
+    .control-group
+      %label.control-label Hosts available
+      .controls
+        - @hosts.each do |u|
+          - unless @host_group.machine.include? u
+            %a.btn.btn-small.btn-success{href: url_for({:controller => :host_groups, :host_group_id => @host_group, :machine_id => u, :action => :add_host})}
+              %i.icon-white.icon-plus-sign
+              =u.name
+  .form-actions
+    = f.submit 'Save', class: "btn btn-info"
