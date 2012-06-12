@@ -1,23 +1,25 @@
-%h1 Listing machines
+.page-header
+  %h1
+    Hosts
+    %small
+      list all the hosts
+    %a{ href: new_machine_path, class: 'btn btn-success' } 
+      %i.icon-white.icon-plus-sign
+      New host
 
-%table
+%table.table.table-striped.table-condensed.table-bordered
   %tr
     %th Name
     %th Ip
-    %th Machine tpl
-    %th
-    %th
-    %th
+    %th Host template
+    %th Action
 
   - @machines.each do |machine|
     %tr
       %td= machine.name
       %td= machine.ip
       %td= machine.machine_tpl_id
-      %td= link_to 'Show', machine
-      %td= link_to 'Edit', edit_machine_path(machine)
-      %td= link_to 'Destroy', machine, :confirm => 'Are you sure?', :method => :delete
-
-%br
-
-= link_to 'New Machine', new_machine_path
+      %td
+        = link_to 'Show', machine, class: "btn btn-mini btn-info"
+        = link_to 'Edit', edit_machine_path(machine), class: "btn btn-mini btn-warning"
+        = link_to 'Delete', machine, :confirm => 'Are you sure?', :method => :delete, class: "btn btn-mini btn-danger"

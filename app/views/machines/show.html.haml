@@ -1,15 +1,10 @@
-%p#notice= notice
-
-%p
-  %b Name:
-  = @machine.name
-%p
-  %b Ip:
-  = @machine.ip
-%p
-  %b Machine tpl:
-  = @machine.machine_tpl_id
-
+.page-header
+  %h1
+    Hosts
+    %small
+      view host:
+      %b= @machine.name
+      %code= @machine.ip
 %h3 Commands
 %p
   = render 'commands/commands'
@@ -17,6 +12,4 @@
 %p
   = render 'commands/old_commands'
 
-= link_to 'Edit', edit_machine_path(@machine)
-\|
-= link_to 'Back', machines_path
+= link_to 'Edit', edit_machine_path(@machine), :class => "btn btn-warning"
