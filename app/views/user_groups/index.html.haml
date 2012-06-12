@@ -1,19 +1,20 @@
-%h1 Listing user_groups
-
-%table
+.page-header
+  %h1
+    User Groups
+    %small
+      list all the user groups
+    %a{ href: new_user_group_path, class: 'btn btn-success' } 
+      %i.icon-white.icon-plus-sign
+      New User Group
+%table.table.table-striped.table-condensed.table-bordered
   %tr
     %th Name
-    %th
-    %th
-    %th
+    %th Action
 
   - @user_groups.each do |user_group|
     %tr
       %td= user_group.name
-      %td= link_to 'Show', user_group
-      %td= link_to 'Edit', edit_user_group_path(user_group)
-      %td= link_to 'Destroy', user_group, :confirm => 'Are you sure?', :method => :delete
-
-%br
-
-= link_to 'New User group', new_user_group_path
+      %td
+        = link_to 'Show', user_group, class: "btn btn-mini btn-info"
+        = link_to 'Edit', edit_user_group_path(user_group), class: "btn btn-mini btn-warning"
+        = link_to 'Destroy', user_group, :confirm => 'Are you sure?', :method => :delete, class: "btn btn-mini btn-danger"
