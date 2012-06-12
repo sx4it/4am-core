@@ -20,7 +20,7 @@ class CmdController < ApplicationController
   end
 
   def new
-    @cmd = Cmd.exec(params[:machine_id], params[:command_id])
+    @cmd = Cmd.exec(params[:machine_id], params[:command_id], @current_user)
     redirect_to machine_path(params[:machine_id])
   end
 
