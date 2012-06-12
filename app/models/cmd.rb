@@ -14,9 +14,7 @@ class Cmd
   def self.find(machine_id, id)
       res = $redis.get "cmd-host:#{machine_id}:#{id}"
       return nil unless res
-      Command.class
-      Machine.class
-      Marshal.load(res)
+      Cmd.from_json(res)
   end
 
   def self.all(id)
@@ -34,29 +32,45 @@ class Cmd
   def self.exec(machine_id, command, current_user)
     max = $redis.incr "#{machine_id}:max"
     cmd = Cmd.new(:command => Command.find(command), :hosts => [Machine.find(machine_id.to_i)], :id => max, :current_user => current_user)
-    $redis.set "cmd-host:#{machine_id}:#{max}", Marshal.dump(cmd)
+    $redis.set "cmd-host:#{machine_id}:#{max}", cmd.get_json
     $redis.publish '4am-command', "cmd-host:#{machine_id}:#{max}"
     cmd
   end
 
   def self.exec_group(machine_ids, command)
     max = $redis.incr "#{machine_id}:max"
-    cmd = Cmd.new(:command => Command.find(command), :hosts => Machine.find_all_id(machine_ids), :id => max)
-    $redis.set "cmd-group:#{machine_id}:#{max}", Marshal.dump(cmd)
+    cmd = Cmd.new(:command => Command.find(command), :hosts => Machine.find(machine_ids), :id => max)
+    $redis.set "cmd-group:#{machine_id}:#{max}", cmd.get_json
     $redis.publish '4am-command', "cmd-group:#{machine_id}:#{max}"
+    cmd
+  end
+
+  def get_json
+      dup = self.dup
+      dup.command = dup.command.id
+      dup.hosts = dup.hosts.map do |h| [h.id, h.ip] end
+      dup.current_user = dup.current_user.id
+      dup.to_json
+  end
+
+  def self.from_json json
+    cmd = Cmd.new JSON.parse(json)
+    cmd.command = Command.find(cmd.command)
+    cmd.hosts = Machine.find(cmd.hosts.map do |h| h[0] end)
+    cmd.current_user = User.find(cmd.current_user)
     cmd
   end
 
   def stop
       @status = "stopped"
-      $redis.set "cmd-host:#{@hosts[0].id}:#{@id}", Marshal.dump(self)
+      $redis.set "cmd-host:#{@hosts[0].id}:#{@id}", self.get_json
   end
 
   def self.clear(machine_id)
     $redis.keys("cmd-host:#{machine_id}:*").each do |c|
         Command.class
         Machine.class
-        cmd = Marshal.load($redis.get c)
+        cmd = Cmd.from_json($redis.get c)
         if %w{stopped finished}.include? cmd.status
           cmd.destroy
         end
