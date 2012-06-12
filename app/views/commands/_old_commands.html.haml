@@ -20,7 +20,7 @@
           = link_to 'stop', machine_cmd_path(@machine, cmd.id), :method => :put, class: "btn btn-mini btn-warning pull-right"
         %td
           %center
-            = popover(:code, [], cmd.command.command, 'Log', cmd.log)
+            = popover(:code, [], cmd.script, 'Log', cmd.log)
         %td
           %center
             = popover(:span, %w{label label-info}, cmd.status, 'Log', cmd.log)

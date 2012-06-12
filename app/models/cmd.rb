@@ -1,5 +1,5 @@
 class Cmd
-  attr_accessor :id, :status, :time, :command, :log, :status_code, :hosts, :current_user
+  attr_accessor :id, :status, :time, :command, :log, :status_code, :hosts, :current_user, :hosts_id, :script
 
   def initialize(hash = {})
     hash.each do |k, v|
@@ -37,18 +37,17 @@ class Cmd
     cmd
   end
 
-  def self.exec_group(machine_ids, command)
-    max = $redis.incr "#{machine_id}:max"
-    cmd = Cmd.new(:command => Command.find(command), :hosts => Machine.find(machine_ids), :id => max)
-    $redis.set "cmd-group:#{machine_id}:#{max}", cmd.get_json
-    $redis.publish '4am-command', "cmd-group:#{machine_id}:#{max}"
-    cmd
+  def expand_template
+      erb = ERB.new @command.command
+      @script = erb.result binding
   end
 
   def get_json
       dup = self.dup
+      dup.expand_template
       dup.command = dup.command.id
-      dup.hosts = dup.hosts.map do |h| [h.id, h.ip] end
+      dup.hosts_id = dup.hosts.map do |h| h.id end
+      dup.hosts = dup.hosts.map do |h| h.ip end
       dup.current_user = dup.current_user.id
       dup.to_json
   end
@@ -56,8 +55,9 @@ class Cmd
   def self.from_json json
     cmd = Cmd.new JSON.parse(json)
     cmd.command = Command.find(cmd.command)
-    cmd.hosts = Machine.find(cmd.hosts.map do |h| h[0] end)
+    cmd.hosts = Machine.find(cmd.hosts_id)
     cmd.current_user = User.find(cmd.current_user)
+    cmd.expand_template
     cmd
   end
 
