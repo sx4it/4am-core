@@ -1,21 +1,23 @@
-%h1 Listing commands
-
-%table
+.page-header
+  %h1
+    Commands
+    %small
+      list all the commands
+    %a{ href: new_command_path, class: 'btn btn-success' } 
+      %i.icon-white.icon-plus-sign
+      New Command
+%table.table.table-striped.table-condensed.table-bordered
   %tr
     %th Name
     %th Command
-    %th
-    %th
-    %th
+    %th Action
 
   - @commands.each do |command|
     %tr
       %td= command.name
-      %td= command.command
-      %td= link_to 'Show', command
-      %td= link_to 'Edit', edit_command_path(command)
-      %td= link_to 'Destroy', command, :confirm => 'Are you sure?', :method => :delete
-
-%br
-
-= link_to 'New Command', new_command_path
+      %td
+        %code= command.command
+      %td
+        =link_to 'Show', command, class: "btn btn-mini btn-info"
+        = link_to 'Edit', edit_command_path(command), class: "btn btn-mini btn-warning"
+        = link_to 'Destroy', command, :confirm => 'Are you sure?', :method => :delete, class: "btn btn-mini btn-danger"

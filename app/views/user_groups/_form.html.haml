@@ -3,13 +3,13 @@
     .control-group
       .alert.alert-error
         %a.close{href: "#", data:{ dismiss:'alert' }} ×
-        %h4.alert-heading= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+        %h4.alert-heading= "#{pluralize(@user_group.errors.count, "error")} prohibited this user from being saved:"
         %ul
         - @user_group.errors.full_messages.each do |msg|
           %li= msg
 
   .control-group
-    = f.label :name, class: 'control-label' 
+    = f.label :name, class: 'control-label'
     .controls
       = f.text_field :name
   - unless @user_group.id.nil?

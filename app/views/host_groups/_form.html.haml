@@ -3,9 +3,9 @@
     .control-group
       .alert.alert-error
         %a.close{href: "#", data:{ dismiss:'alert' }} ×
-        %h4.alert-heading= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+        %h4.alert-heading= "#{pluralize(@host_group.errors.count, "error")} prohibited this user from being saved:"
         %ul
-          - @user.errors.full_messages.each do |msg|
+          - @host_group.errors.full_messages.each do |msg|
             %li
               %p= msg
   .control-group

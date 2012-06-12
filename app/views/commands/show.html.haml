@@ -1,12 +1,19 @@
-%p#notice= notice
+.page-header
+  %h1
+    Commands
+    %small
+      viewing command:
+      %code= @command.name
+%form.form-horizontal
+  %fieldset
 
-%p
-  %b Name:
-  = @command.name
-%p
-  %b Command:
-  = @command.command
-
-= link_to 'Edit', edit_command_path(@command)
-\|
-= link_to 'Back', commands_path
+    .control-group
+      %label.control-label Name
+      .controls
+        %span.input-xlarge.uneditable-input= @command.name
+    .control-group
+      %label.control-label Command
+      .controls
+        %textarea.input-xxlarge.uneditable-input= @command.command
+    .form-actions
+      = link_to 'Edit', edit_command_path(@command), :class => "btn btn-warning"
