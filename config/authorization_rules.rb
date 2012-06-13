@@ -8,10 +8,15 @@ authorization do
       has_permission_on :authorization_rules, :to => :read
   end
 
-  role :view do
+  role :guest do
       has_permission_on [:users], :to => [:show, :edit] do
         if_attribute :id => is { user.id }
       end
+  end
+
+  role :view do
+      includes :guest
+
       has_permission_on [:hosts], :to => [:show, :index] do
         if_attribute :host_acl => {:users => is { user }}
         if_attribute :host_acl => {:users => { :user => contains { user } }}

@@ -30,10 +30,17 @@
 
             - if current_user
 
-
-              %a{ href: logout_path, class: 'logout btn btn-danger' } 
-                %i.icon-white.icon-remove
-                Logout
+              %div.logout.btn-group
+                %a.btn.btn-primary{ href: user_path(current_user)}
+                  %i.icon-white.icon-user
+                  = current_user.login.capitalize
+                %a.btn.btn-primary.dropdown-toggle{ href: '#', :data => {:toggle => "dropdown"}}
+                  %span.caret
+                %ul.dropdown-menu
+                  %li
+                    %a{ href: logout_path }
+                      %i.icon-off
+                      Logout
 
       .container.well
 
@@ -41,7 +48,7 @@
           #flash_warning.alert
             %a.close{href: "#", data:{ dismiss:'alert' }} ×
             %strong= flash[:notice]
-  
+
         - if flash[:error]
           #flash_error.alert.alert-error
             %a.close{href: "#", data:{ dismiss:'alert' }} ×
