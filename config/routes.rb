@@ -53,7 +53,7 @@ Eip::Application.routes.draw do
   end
   resources :sessions
 
-  root :to => 'hosts#index'
+  root :to => 'dashboard#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

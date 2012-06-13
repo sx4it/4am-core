@@ -19,7 +19,7 @@
       .navbar.navbar-fixed-top{"data-scrollspy" => "scrollspy"}
         .navbar-inner
           .container
-            %a.brand
+            %a.brand{href: "/"}
             %ul.nav
               - if current_user
                 = render file: 'layouts/menu'
