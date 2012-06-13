@@ -1,5 +1,6 @@
 
 class RolesController < ApplicationController
+  filter_resource_access
   def index
     @roles = Role.all
     @new_role = Role.new

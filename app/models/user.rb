@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :keys
 
   has_and_belongs_to_many :user_group
+  has_many :host_acl, :as => :users
   has_and_belongs_to_many :roles, :uniq => true
 
   validates_uniqueness_of :login
@@ -23,6 +24,15 @@ class User < ActiveRecord::Base
     end
   end
 
+  def role_symbols
+    roles.map do |role|
+      role.name.underscore.to_sym
+    end
+  end
+
+  def user
+    []
+  end
 
   #def self.search(search)
   #  if search

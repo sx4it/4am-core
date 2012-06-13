@@ -11,13 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120613155756) do
+ActiveRecord::Schema.define(:version => 20120613190524) do
 
   create_table "commands", :force => true do |t|
     t.string   "name"
     t.string   "command"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "host_acls", :force => true do |t|
+    t.integer "hosts_id"
+    t.string  "hosts_type"
+    t.integer "users_id"
+    t.string  "users_type"
   end
 
   create_table "host_groups", :force => true do |t|

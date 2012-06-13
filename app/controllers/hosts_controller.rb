@@ -1,4 +1,5 @@
 class HostsController < ApplicationController
+  filter_resource_access
   # GET /hosts
   # GET /hosts.json
   def index

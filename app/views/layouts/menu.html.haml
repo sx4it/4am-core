@@ -1,17 +1,18 @@
-%li.dropdown.icon.icon_user
-  %a.dropdown-toggle{data: { toggle: "dropdown"}}
-    Users
-    %b.caret
-  %ul.dropdown-menu
-    %li
-      = link_to 'List', users_path, class: 'icon icon_list'
-    %li
-      = link_to 'Add', new_user_path, class: 'icon icon_plus'
-    %li
-      = link_to 'Group', user_groups_path, class: 'icon icon_group'
-    %li.divider
-    %li
-      = link_to 'Keys', user_keys_path(current_user), class: 'icon icon_key'
+- if permitted_to? :index, :users
+  %li.dropdown.icon.icon_user
+    %a.dropdown-toggle{data: { toggle: "dropdown"}}
+      Users
+      %b.caret
+    %ul.dropdown-menu
+      %li
+        = link_to 'List', users_path, class: 'icon icon_list'
+      %li
+        = link_to 'Add', new_user_path, class: 'icon icon_plus'
+      %li
+        = link_to 'Group', user_groups_path, class: 'icon icon_group'
+      %li.divider
+      %li
+        = link_to 'Keys', user_keys_path(current_user), class: 'icon icon_key'
 
 %li.dropdown.icon.icon_host
   %a.dropdown-toggle{data: { toggle: "dropdown"}}

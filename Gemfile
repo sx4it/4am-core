@@ -33,7 +33,9 @@ gem 'haml-rails'
 
 gem "will_paginate"
 
-
+# getting it from git because the other one does not reload in dev mod
+gem "declarative_authorization", :git => 'https://github.com/stffn/declarative_authorization.git'
+gem "ruby_parser"
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
