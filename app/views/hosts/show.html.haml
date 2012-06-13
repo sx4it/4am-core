@@ -5,6 +5,12 @@
       view host:
       %b= @host.name
       %code= @host.ip
+
+%h3 Groups
+- @host.host_group.each do |u|
+  %p
+    %span.label= link_to u.name, u
+
 %h3 Commands
 %p
   = render 'commands/commands'
