@@ -36,14 +36,14 @@ class UserGroupsController < ApplicationController
   end
 
   def add_user
-    @user_group = UserGroup.find(params[:user_group_id])
+    @user_group = UserGroup.find(params[:id])
     @user = User.find(params[:user_id])
     @user_group.user << @user
     redirect_to edit_user_group_path(@user_group)
   end
 
   def del_user
-    @user_group = UserGroup.find(params[:user_group_id])
+    @user_group = UserGroup.find(params[:id])
     @user = User.find(params[:user_id])
     @user_group.user.delete @user
     redirect_to edit_user_group_path(@user_group)

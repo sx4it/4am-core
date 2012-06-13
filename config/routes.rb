@@ -12,8 +12,10 @@ Eip::Application.routes.draw do
   end
 
   resources :user_groups do
-    get "add_user"
-    get "del_user"
+    member do
+      get :add_user
+      get :del_user
+    end
   end
 
   resources :commands
@@ -27,11 +29,13 @@ Eip::Application.routes.draw do
   end
 
   resources :host_groups do
-    get "add_host"
-    get "del_host"
+    member do
+      get :add_host
+      get :del_host
+    end
     resources :cmd do
       collection do
-        get "clear"
+          get :clear
       end
     end
   end

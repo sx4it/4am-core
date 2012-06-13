@@ -17,7 +17,7 @@
       %label.control-label Users in group
       .controls
         - @user_group.user.each do |u|
-          %a.btn.btn-small.btn-danger{href: url_for({:controller => :user_groups, :user_group_id => @user_group, :user_id => u, :action => :del_user})}
+          %a.btn.btn-small.btn-danger{href: url_for({:controller => :user_groups, :id => @user_group, :user_id => u, :action => :del_user})}
             %i.icon-white.icon-remove
             =u.login
     .control-group
@@ -25,7 +25,7 @@
       .controls
         - @users.each do |u|
           - unless @user_group.user.include? u
-            %a.btn.btn-small.btn-success{href: url_for({:controller => :user_groups, :user_group_id => @user_group, :user_id => u, :action => :add_user})}
+            %a.btn.btn-small.btn-success{href: url_for({:controller => :user_groups, :id => @user_group, :user_id => u, :action => :add_user})}
               %i.icon-white.icon-plus-sign
               =u.login
   .form-actions

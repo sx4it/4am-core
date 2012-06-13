@@ -16,37 +16,44 @@
       %li
         = link_to 'All Keys', keys_path, class: 'icon icon_key'
 
-%li.dropdown.icon.icon_host
-  %a.dropdown-toggle{data: { toggle: "dropdown"}}
-    Machines
-    %b.caret
-  %ul.dropdown-menu
-    %li
-      = link_to 'List', hosts_path, class: 'icon icon_list'
-    %li
-      = link_to 'Add', new_host_path, class: 'icon icon_plus'
-    %li
-      = link_to 'Group', host_groups_path, class: 'icon icon_group'
+- if permitted_to? :index, :hosts
+  %li.dropdown.icon.icon_host
+    %a.dropdown-toggle{data: { toggle: "dropdown"}}
+      Machines
+      %b.caret
+    %ul.dropdown-menu
+      - if permitted_to? :index, :hosts
+        %li
+          = link_to 'List', hosts_path, class: 'icon icon_list'
+      - if permitted_to? :new, :hosts
+        %li
+          = link_to 'Add', new_host_path, class: 'icon icon_plus'
+      - if permitted_to? :index, :host_groups
+        %li
+          = link_to 'Group', host_groups_path, class: 'icon icon_group'
 
-%li.dropdown.icon.icon_tpl
-  %a.dropdown-toggle{data: { toggle: "dropdown"}}
-    Templates
-    %b.caret
-  %ul.dropdown-menu
-    %li
-      = link_to 'Add', new_host_tpl_path, class: 'icon icon_plus'
-    %li
-      = link_to 'List', host_tpls_path, class: 'icon icon_list'
-
-%li.dropdown.icon.icon_terminal
-  %a.dropdown-toggle{data: { toggle: "dropdown"}}
-    Commands
-    %b.caret
-  %ul.dropdown-menu
-    %li
-      = link_to 'Add', new_command_path, class: 'icon icon_plus'
-    %li
-      = link_to 'List', commands_path, class: 'icon icon_list'
+//%li.dropdown.icon.icon_tpl
+//  %a.dropdown-toggle{data: { toggle: "dropdown"}}
+//    Templates
+//    %b.caret
+//  %ul.dropdown-menu
+//    %li
+//      = link_to 'Add', new_host_tpl_path, class: 'icon icon_plus'
+//    %li
+//      = link_to 'List', host_tpls_path, class: 'icon icon_list'
+//
+- if permitted_to? :index, :commands
+  %li.dropdown.icon.icon_terminal
+    %a.dropdown-toggle{data: { toggle: "dropdown"}}
+      Commands
+      %b.caret
+    %ul.dropdown-menu
+      - if permitted_to? :new, :commands
+        %li
+          = link_to 'Add', new_command_path, class: 'icon icon_plus'
+      - if permitted_to? :index, :commands
+        %li
+          = link_to 'List', commands_path, class: 'icon icon_list'
 
 %li.dropdown.icon.icon_status2
   %a.dropdown-toggle{data: { toggle: "dropdown"}}
