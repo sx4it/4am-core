@@ -38,6 +38,10 @@
                   %span.caret
                 %ul.dropdown-menu
                   %li
+                    %a{ href: keys_user_path(current_user) }
+                      %i.icon.icon-cog
+                      My Keys
+                  %li
                     %a{ href: logout_path }
                       %i.icon-off
                       Logout

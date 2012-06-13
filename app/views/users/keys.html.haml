@@ -3,7 +3,7 @@
   %h1
     SSH Key
     %small
-      list all the registered keys
+      list all your registered keys
     %a{ href: new_key_path, class: 'btn btn-success' } 
       %i.icon-white.icon-plus-sign
       New key
@@ -11,14 +11,11 @@
 %table.table.table-striped.table-condensed.table-bordered
   %tbody
     %tr
-      %th User
       %th Name
       %th Value
 
     - @keys.each do |key|
       %tr
-        %td
-          = link_to key.user.login , key.user, :class => "btn btn-success"
         %td.key_name
           %code= key.name
           = link_to 'Edit', edit_key_path(key), :class => "btn btn-mini btn-warning"
