@@ -13,14 +13,14 @@ class Cmd
 
 
   def self.find(host_id, id)
-      res = $redis.get "#{@type}:#{host_id}:#{id}"
+      res = $redis.get "cmd-host:#{host_id}:#{id}"
       return nil unless res
       Cmd.from_json(res)
   end
 
   def self.all(id)
       cmds = []
-      $redis.keys("#{@type}:#{id}:*").each do |c|
+      $redis.keys("cmd-host:#{id}:*").each do |c|
         cmds << self.find(id, c.split(':').last)
       end
       cmds
@@ -33,8 +33,8 @@ class Cmd
   def self.exec(host_id, command, current_user)
     max = $redis.incr "#{host_id}:max"
     cmd = Cmd.new(:command => Command.find(command), :hosts => [Host.find(host_id.to_i)], :id => max, :current_user => current_user)
-    $redis.set "#{@type}:#{host_id}:#{max}", cmd.get_json
-    $redis.publish '4am-command', "#{@type}:#{host_id}:#{max}"
+    $redis.set "cmd-host:#{host_id}:#{max}", cmd.get_json
+    $redis.publish '4am-command', "cmd-host:#{host_id}:#{max}"
     cmd
   end
 
