@@ -25,6 +25,16 @@
     .controls
       = f.password_field :password_confirmation
 
+  -unless @user.id.nil?
+    .control-group
+      = f.label 'User Roles', class: 'control-label'
+      .controls
+        = render 'role_list'
+  -unless @user.id.nil?
+    .control-group
+      = f.label 'Add Roles', class: 'control-label'
+      .controls
+        = render 'available_role_list'
+
   .form-actions
     = f.submit 'Save', class: "btn btn-info"
-

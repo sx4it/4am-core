@@ -1,0 +1,7 @@
+#RoleList
+  %ul
+    - @user.roles.each do |role|
+      %li.active
+        %b.label
+          = role.name
+          #{link_to 'x', {:id => @user, :role => role, :action => :delete_role}, :remote => true, :method=>:delete}

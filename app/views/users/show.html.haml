@@ -25,6 +25,10 @@
         - @user.user_group.each do |u|
           %p
             %span.label= link_to u.name, u
+    .control-group
+      %label.control-label Roles
+      .controls
+        = render 'role_list'
 
     .form-actions
       = link_to 'Edit', edit_user_path(@user), :class => "btn btn-warning"

@@ -45,6 +45,10 @@ Eip::Application.routes.draw do
 
 
   resources :users do
+    member do
+      post :add_role
+      delete :delete_role
+    end
     resources :keys
   end
   resources :sessions

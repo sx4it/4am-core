@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120613125038) do
+ActiveRecord::Schema.define(:version => 20120613155756) do
 
   create_table "commands", :force => true do |t|
     t.string   "name"
@@ -60,10 +60,8 @@ ActiveRecord::Schema.define(:version => 20120613125038) do
   end
 
   create_table "roles_users", :force => true do |t|
-    t.integer  "role_id"
-    t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer "role_id"
+    t.integer "user_id"
   end
 
   create_table "user_groups", :force => true do |t|

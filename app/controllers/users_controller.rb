@@ -44,8 +44,8 @@ class UsersController < ApplicationController
 
   def add_role
     @user = User.find params[:id]
-    role = Role.find_by_name params[:role]
-    @user.roles.push role if role
+    role = Role.find params[:role]
+    @user.roles << role if role
     redisplay_roles
   end
 
@@ -59,6 +59,7 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
+    @roles = Role.all
   end
 
   # POST /users
@@ -118,9 +119,10 @@ class UsersController < ApplicationController
   private
 
   def redisplay_roles
-      @user = User.find params[:id]
+    @roles = Role.all
+    @user = User.find params[:id]
     respond_to do |format|
-      format.html { redirect_to [@user] }
+      format.html { redirect_to edit_user_path(@user) }
       format.js { render :redisplay_roles }
     end
   end
