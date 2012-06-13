@@ -17,5 +17,5 @@
           %code= cmd.command
         %td
           = link_to 'View', cmd, class: "btn btn-mini btn-info"
-          = link_to 'Execute', new_machine_cmd_path(@machine, {:command_id => cmd}), class: "btn btn-mini btn-warning"
+          = link_to 'Execute', new_host_cmd_path(@host, {:command_id => cmd}), class: "btn btn-mini btn-warning"
 

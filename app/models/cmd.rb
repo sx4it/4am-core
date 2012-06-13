@@ -12,8 +12,8 @@ class Cmd
   end
 
 
-  def self.find(machine_id, id)
-      res = $redis.get "#{@type}:#{machine_id}:#{id}"
+  def self.find(host_id, id)
+      res = $redis.get "#{@type}:#{host_id}:#{id}"
       return nil unless res
       Cmd.from_json(res)
   end
@@ -30,11 +30,11 @@ class Cmd
         $redis.del "#{@type}:#{@hosts[0].id}:#{@id}"
   end
 
-  def self.exec(machine_id, command, current_user)
-    max = $redis.incr "#{machine_id}:max"
-    cmd = Cmd.new(:command => Command.find(command), :hosts => [Machine.find(machine_id.to_i)], :id => max, :current_user => current_user)
-    $redis.set "#{@type}:#{machine_id}:#{max}", cmd.get_json
-    $redis.publish '4am-command', "#{@type}:#{machine_id}:#{max}"
+  def self.exec(host_id, command, current_user)
+    max = $redis.incr "#{host_id}:max"
+    cmd = Cmd.new(:command => Command.find(command), :hosts => [Host.find(host_id.to_i)], :id => max, :current_user => current_user)
+    $redis.set "#{@type}:#{host_id}:#{max}", cmd.get_json
+    $redis.publish '4am-command', "#{@type}:#{host_id}:#{max}"
     cmd
   end
 
@@ -56,7 +56,7 @@ class Cmd
   def self.from_json json
     cmd = Cmd.new JSON.parse(json)
     cmd.command = Command.find(cmd.command)
-    cmd.hosts = Machine.find(cmd.hosts_id)
+    cmd.hosts = Host.find(cmd.hosts_id)
     cmd.current_user = User.find(cmd.current_user)
     cmd.expand_template
     cmd
@@ -67,10 +67,10 @@ class Cmd
       $redis.set "#{@type}:#{@hosts[0].id}:#{@id}", self.get_json
   end
 
-  def self.clear(machine_id)
-    $redis.keys("#{@type}:#{machine_id}:*").each do |c|
+  def self.clear(host_id)
+    $redis.keys("#{@type}:#{host_id}:*").each do |c|
         Command.class
-        Machine.class
+        Host.class
         cmd = Cmd.from_json($redis.get c)
         if %w{stopped finished}.include? cmd.status
           cmd.destroy

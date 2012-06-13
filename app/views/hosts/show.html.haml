@@ -3,8 +3,8 @@
     Hosts
     %small
       view host:
-      %b= @machine.name
-      %code= @machine.ip
+      %b= @host.name
+      %code= @host.ip
 %h3 Commands
 %p
   = render 'commands/commands'
@@ -12,4 +12,4 @@
 %p
   = render 'commands/old_commands'
 
-= link_to 'Edit', edit_machine_path(@machine), :class => "btn btn-warning"
+= link_to 'Edit', edit_host_path(@host), :class => "btn btn-warning"

@@ -15,7 +15,7 @@
     .control-group
       %label.control-label hosts
       .controls
-        - @host_group.machine.each do |u|
+        - @host_group.host.each do |u|
           %p
             %span.label= link_to u.name, u
 

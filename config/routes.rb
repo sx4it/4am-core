@@ -7,7 +7,7 @@ Eip::Application.routes.draw do
 
   resources :commands
 
-  resources :machines do
+  resources :hosts do
     resources :cmd do
       collection do
         get "clear"
@@ -25,7 +25,7 @@ Eip::Application.routes.draw do
     end
   end
 
-  resources :machine_tpls
+  resources :host_tpls
 
   resources :keys
 

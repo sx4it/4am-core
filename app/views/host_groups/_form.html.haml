@@ -16,16 +16,16 @@
     .control-group
       %label.control-label Hosts in group
       .controls
-        - @host_group.machine.each do |u|
-          %a.btn.btn-small.btn-danger{href: url_for({:controller => :host_groups, :host_group_id => @host_group, :machine_id => u, :action => :del_host})}
+        - @host_group.host.each do |u|
+          %a.btn.btn-small.btn-danger{href: url_for({:controller => :host_groups, :host_group_id => @host_group, :host_id => u, :action => :del_host})}
             %i.icon-white.icon-remove
             =u.name
     .control-group
       %label.control-label Hosts available
       .controls
         - @hosts.each do |u|
-          - unless @host_group.machine.include? u
-            %a.btn.btn-small.btn-success{href: url_for({:controller => :host_groups, :host_group_id => @host_group, :machine_id => u, :action => :add_host})}
+          - unless @host_group.host.include? u
+            %a.btn.btn-small.btn-success{href: url_for({:controller => :host_groups, :host_group_id => @host_group, :host_id => u, :action => :add_host})}
               %i.icon-white.icon-plus-sign
               =u.name
   .form-actions

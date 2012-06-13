@@ -1,27 +1,27 @@
 class CmdController < ApplicationController
   def index
-    @cmd = Cmd.all(params[:machine_id])
+    @cmd = Cmd.all(params[:host_id])
 
-    redirect_to machine_path(params[:machine_id])
+    redirect_to host_path(params[:host_id])
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @machine }
+      format.json { render json: @host }
     end
   end
 
   def show
-    @cmd = Cmd.find(params[:machine_id], params[:id])
-    redirect_to machine_path(params[:machine_id])
+    @cmd = Cmd.find(params[:host_id], params[:id])
+    redirect_to host_path(params[:host_id])
   end
 
   def clear
-    Cmd.clear(params[:machine_id])
-    redirect_to machine_path(params[:machine_id])
+    Cmd.clear(params[:host_id])
+    redirect_to host_path(params[:host_id])
   end
 
   def new
-    @cmd = Cmd.exec(params[:machine_id], params[:command_id], @current_user)
-    redirect_to machine_path(params[:machine_id])
+    @cmd = Cmd.exec(params[:host_id], params[:command_id], @current_user)
+    redirect_to host_path(params[:host_id])
   end
 
   def edit
@@ -31,14 +31,14 @@ class CmdController < ApplicationController
   end
 
   def update
-    @cmd = Cmd.find(params[:machine_id], params[:id])
+    @cmd = Cmd.find(params[:host_id], params[:id])
     @cmd.stop
-    redirect_to machine_path(params[:machine_id])
+    redirect_to host_path(params[:host_id])
   end
 
   def destroy
-    @cmd = Cmd.find(params[:machine_id], params[:id])
+    @cmd = Cmd.find(params[:host_id], params[:id])
     @cmd.destroy
-    redirect_to machine_path(params[:machine_id])
+    redirect_to host_path(params[:host_id])
   end
 end

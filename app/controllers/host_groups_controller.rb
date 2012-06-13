@@ -26,7 +26,7 @@ class HostGroupsController < ApplicationController
   # GET /host_groups/new.json
   def new
     @host_group = HostGroup.new
-    @hosts = Machine.all
+    @hosts = Host.all
 
     respond_to do |format|
       format.html # new.html.erb
@@ -36,22 +36,22 @@ class HostGroupsController < ApplicationController
 
   def add_host
     @host_group = HostGroup.find(params[:host_group_id])
-    @host = Machine.find(params[:machine_id])
-    @host_group.machine << @host
+    @host = Host.find(params[:host_id])
+    @host_group.host << @host
     redirect_to edit_host_group_path(@host_group)
   end
 
   def del_host
     @host_group = HostGroup.find(params[:host_group_id])
-    @host = Machine.find(params[:machine_id])
-    @host_group.machine.delete @host
+    @host = Host.find(params[:host_id])
+    @host_group.host.delete @host
     redirect_to edit_host_group_path(@host_group)
   end
 
   # GET /host_groups/1/edit
   def edit
     @host_group = HostGroup.find(params[:id])
-    @hosts = Machine.all
+    @hosts = Host.all
   end
 
   # POST /host_groups

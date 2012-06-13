@@ -1,4 +1,4 @@
 class HostGroup < ActiveRecord::Base
   attr_accessible :name
-  has_many :machine
+  has_many :host
 end
