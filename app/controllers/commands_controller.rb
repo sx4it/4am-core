@@ -1,5 +1,6 @@
 
 class CommandsController < ApplicationController
+  filter_resource_access
   # GET /commands
   # GET /commands.json
   def index

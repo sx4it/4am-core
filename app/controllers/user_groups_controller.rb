@@ -1,5 +1,6 @@
 
 class UserGroupsController < ApplicationController
+  filter_resource_access
   # GET /user_groups
   # GET /user_groups.json
   def index

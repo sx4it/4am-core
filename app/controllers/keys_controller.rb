@@ -1,4 +1,5 @@
 class KeysController < ApplicationController
+  filter_resource_access
   # GET /keys
   # GET /keys.json
   def index

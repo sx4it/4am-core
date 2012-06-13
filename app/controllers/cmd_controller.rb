@@ -1,4 +1,6 @@
 class CmdController < ApplicationController
+  before_filter :has_permission
+
   def index
     @cmd = Cmd.all(params[:host_id])
 
@@ -41,4 +43,14 @@ class CmdController < ApplicationController
     @cmd.destroy
     redirect_to host_path(params[:host_id])
   end
+
+  private
+  def has_permission
+    @host = Host.find params[:host_id]
+    unless permitted_to? :execute, @host
+      flash[:error] = "Sorry, you are not allowed to do that."
+      redirect_to root_url
+    end
+  end
+
 end

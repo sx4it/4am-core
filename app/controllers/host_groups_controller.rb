@@ -1,5 +1,6 @@
 
 class HostGroupsController < ApplicationController
+  filter_resource_access
   # GET /host_groups
   # GET /host_groups.json
   def index
