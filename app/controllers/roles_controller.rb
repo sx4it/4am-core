@@ -1,5 +1,5 @@
 
-class Admin::RolesController < ApplicationController
+class RolesController < ApplicationController
   def index
     @roles = Role.all
     @new_role = Role.new
@@ -27,7 +27,7 @@ class Admin::RolesController < ApplicationController
 
   def redisplay_roles
     respond_to do |format|
-      format.html { redirect_to admin_roles_path }
+      format.html { redirect_to roles_path }
       format.js {
         @roles = Role.all
         @new_role = Role.new

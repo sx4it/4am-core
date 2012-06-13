@@ -42,6 +42,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def add_role
+    @user = User.find params[:id]
+    role = Role.find_by_name params[:role]
+    @user.roles.push role if role
+    redisplay_roles
+  end
+
+  def delete_role
+    @user = User.find params[:id]
+    @user.roles.delete(Role.find params[:role])
+    redisplay_roles
+  end
+
+
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
@@ -92,20 +106,23 @@ class UsersController < ApplicationController
     end
   end
 
-
-
-
-
-
-
-
-
   def sort_column
     User.column_names.include?(params[:sort]) ? params[:sort] : "login"
   end
   
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
+
+  private
+
+  def redisplay_roles
+      @user = User.find params[:id]
+    respond_to do |format|
+      format.html { redirect_to [@user] }
+      format.js { render :redisplay_roles }
+    end
   end
 
 end

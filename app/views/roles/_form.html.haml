@@ -1,5 +1,5 @@
 #add_role_form
-  = form_for [:admin, @new_role], html: { class: 'form-inline' }, :remote => true do |f|
+  = form_for @new_role, html: { class: 'form-inline' }, :remote => true do |f|
     -if @new_role.errors.any?
       .control-group
         .alert.alert-error

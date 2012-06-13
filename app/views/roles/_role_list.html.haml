@@ -4,4 +4,4 @@
       %li.active
         %b.label
           = role.name
-          #{link_to 'x', [:admin, role], :remote => true, :method=>:delete, :confirm=>'You sure?'}
+          #{link_to 'x', role, :remote => true, :method=>:delete, :confirm=>'You sure?'}

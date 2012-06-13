@@ -1,5 +1,6 @@
 Eip::Application.routes.draw do
 
+  resources :roles, :only=>[:index, :create, :destroy]
   namespace :admin do
     resources :roles, :only=>[:index, :create, :destroy]
     resources :users do
