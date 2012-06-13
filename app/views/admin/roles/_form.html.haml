@@ -1,0 +1,13 @@
+#add_role_form
+  = form_for [:admin, @new_role], html: { class: 'form-inline' }, :remote => true do |f|
+    -if @new_role.errors.any?
+      .control-group
+        .alert.alert-error
+          %a.close{href: "#", data:{ dismiss:'alert' }} ×
+          %h4.alert-heading= "#{pluralize(@new_role.errors.count, "error")} "
+          %ul
+            - @new_role.errors.full_messages.each do |msg|
+              %li
+                %p= msg
+    = f.text_field :name, :placeholder => 'New Role Name'
+    = f.submit 'New Role', class: "btn btn-info"

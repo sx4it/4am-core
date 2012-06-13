@@ -1,5 +1,15 @@
 Eip::Application.routes.draw do
 
+  namespace :admin do
+    resources :roles, :only=>[:index, :create, :destroy]
+    resources :users do
+      member do
+        post :add_role
+        delete :delete_role
+      end
+    end
+  end
+
   resources :user_groups do
     get "add_user"
     get "del_user"

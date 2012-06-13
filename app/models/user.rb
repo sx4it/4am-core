@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :keys
 
   has_and_belongs_to_many :user_group
+  has_and_belongs_to_many :roles, :uniq => true
 
   validates_uniqueness_of :login
   validates_presence_of :password, :on => :create

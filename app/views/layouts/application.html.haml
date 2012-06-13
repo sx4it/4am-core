@@ -31,10 +31,9 @@
             - if current_user
 
 
-              %a{ href: 'logout', class: 'logout btn btn-danger' } 
+              %a{ href: logout_path, class: 'logout btn btn-danger' } 
                 %i.icon-white.icon-remove
                 Logout
-              //= link_to 'Logout', 'logout', class: 'logout btn btn-danger'
 
       .container.well
 
