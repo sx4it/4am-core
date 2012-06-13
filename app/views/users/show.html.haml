@@ -14,11 +14,17 @@
       %label.control-label Login
       .controls
         %span.input-xlarge.uneditable-input= @user.login
-  
+
     .control-group
       %label.control-label Password
       .controls
         %span.input-xlarge.uneditable-input (hidden)
+    .control-group
+      %label.control-label Groups
+      .controls
+        - @user.user_group.each do |u|
+          %p
+            %span.label= link_to u.name, u
 
     .form-actions
       = link_to 'Edit', edit_user_path(@user), :class => "btn btn-warning"
