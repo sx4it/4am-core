@@ -27,4 +27,12 @@ class ApplicationController < ActionController::Base
     flash[:error] = "Sorry, you are not allowed to access that page."
     redirect_to root_url
   end
+
+  def verified_request?
+    if request.content_type == "application/json"
+      true
+    else
+      super()
+    end
+  end
 end
