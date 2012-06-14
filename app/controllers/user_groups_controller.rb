@@ -4,7 +4,7 @@ class UserGroupsController < ApplicationController
   # GET /user_groups
   # GET /user_groups.json
   def index
-    @user_groups = UserGroup.all
+    @user_groups = UserGroup.with_permissions_to(:show)
 
     respond_to do |format|
       format.html # index.html.erb

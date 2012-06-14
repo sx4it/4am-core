@@ -19,5 +19,6 @@
           %p
             %span.label= link_to u.name, u
 
-    .form-actions
-      = link_to 'Edit', edit_host_group_path(@host_group), :class => "btn btn-warning"
+    - if permitted_to? :edit, @host_group
+      .form-actions
+        = link_to 'Edit', edit_host_group_path(@host_group), :class => "btn btn-warning"

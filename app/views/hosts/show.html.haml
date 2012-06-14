@@ -6,16 +6,19 @@
       %b= @host.name
       %code= @host.ip
 
-%h3 Groups
-- @host.host_group.each do |u|
-  %p
-    %span.label= link_to u.name, u
+- unless @host.host_group.empty?
+  %h3 Groups
+  - @host.host_group.each do |u|
+    %p
+      %span.label= link_to u.name, u
 
-%h3 Commands
-%p
-  = render 'commands/commands'
+- if permitted_to? :execute, @host
+  %h3 Commands
+  %p
+    = render 'commands/commands'
 %h3 Old Commands
 %p
   = render 'commands/old_commands'
 
-= link_to 'Edit', edit_host_path(@host), :class => "btn btn-warning"
+- if permitted_to? :edit, @host
+  = link_to 'Edit', edit_host_path(@host), :class => "btn btn-warning"

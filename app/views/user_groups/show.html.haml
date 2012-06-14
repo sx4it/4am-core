@@ -12,7 +12,7 @@
       %label.control-label Name
       .controls
         %span.input-xlarge.uneditable-input= @user_group.name
-  
+
     .control-group
       %label.control-label Users
       .controls
@@ -20,5 +20,6 @@
           %p
             %span.label= link_to u.login, u
 
-    .form-actions
-      = link_to 'Edit', edit_user_group_path(@user_group), :class => "btn btn-warning"
+    - if permitted_to? :edit, @user_group
+      .form-actions
+        = link_to 'Edit', edit_user_group_path(@user_group), :class => "btn btn-warning"

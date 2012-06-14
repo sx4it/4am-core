@@ -30,6 +30,7 @@
       .controls
         = render 'role_list'
 
-    .form-actions
-      = link_to 'Edit', edit_user_path(@user), :class => "btn btn-warning"
+    - if permitted_to? :edit, @user
+      .form-actions
+        = link_to 'Edit', edit_user_path(@user), :class => "btn btn-warning"
 

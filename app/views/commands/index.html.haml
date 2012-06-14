@@ -3,9 +3,10 @@
     Commands
     %small
       list all the commands
-    %a{ href: new_command_path, class: 'btn btn-success' } 
-      %i.icon-white.icon-plus-sign
-      New Command
+    - if permitted_to? :new, :commands
+      %a{ href: new_command_path, class: 'btn btn-success' } 
+        %i.icon-white.icon-plus-sign
+        New Command
 %table.table.table-striped.table-condensed.table-bordered
   %tr
     %th Name
@@ -18,6 +19,9 @@
       %td
         %code= command.command
       %td
-        =link_to 'Show', command, class: "btn btn-mini btn-info"
-        = link_to 'Edit', edit_command_path(command), class: "btn btn-mini btn-warning"
-        = link_to 'Destroy', command, :confirm => 'Are you sure?', :method => :delete, class: "btn btn-mini btn-danger"
+        - if permitted_to? :show, command
+          = link_to 'Show', command, class: "btn btn-mini btn-info"
+        - if permitted_to? :edit, command
+          = link_to 'Edit', edit_command_path(command), class: "btn btn-mini btn-warning"
+        - if permitted_to? :destroy, command
+          = link_to 'Destroy', command, :confirm => 'Are you sure?', :method => :delete, class: "btn btn-mini btn-danger"

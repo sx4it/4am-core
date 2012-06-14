@@ -15,5 +15,6 @@
       %label.control-label Command
       .controls
         %textarea.input-xxlarge.uneditable-input= @command.command
-    .form-actions
-      = link_to 'Edit', edit_command_path(@command), :class => "btn btn-warning"
+    - if permitted_to? :edit, @command
+      .form-actions
+        = link_to 'Edit', edit_command_path(@command), :class => "btn btn-warning"

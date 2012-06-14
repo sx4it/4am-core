@@ -2,7 +2,8 @@
 = hidden_field_tag :direction, params[:direction]
 = hidden_field_tag :sort, params[:sort]
 
-= link_to 'Clear all finished commands', {:controller => :cmd, :host_id => @host, :action => :clear}, class: "btn btn-mini btn-warning"
+- if permitted_to? :execute, @host
+  = link_to 'Clear all finished commands', {:controller => :cmd, :host_id => @host, :action => :clear}, class: "btn btn-mini btn-warning"
 
 %table.table.table-striped.table-condensed.table-bordered
   %tbody
@@ -16,8 +17,10 @@
       %tr
         %td
           = popover(:a, [], cmd.command.name, 'Log', cmd.log, command_path(cmd.command.id))
-          = link_to 'delete', host_cmd_path(@host, cmd.id), :method => :delete, class: "btn btn-mini btn-danger pull-right"
-          = link_to 'stop', host_cmd_path(@host, cmd.id), :method => :put, class: "btn btn-mini btn-warning pull-right"
+          - if permitted_to? :execute, @host
+            = link_to 'delete', host_cmd_path(@host, cmd.id), :method => :delete, class: "btn btn-mini btn-danger pull-right"
+          - if permitted_to? :execute, @host
+            = link_to 'stop', host_cmd_path(@host, cmd.id), :method => :put, class: "btn btn-mini btn-warning pull-right"
         %td
           %center
             = popover(:code, [], cmd.script, 'Log', cmd.log)

@@ -7,7 +7,8 @@
     %tr
       %th Name
       %th Command
-      %th Actions
+      - if permitted_to? :show, :commands
+        %th Actions
 
     - @commands.each do |cmd|
       %tr
@@ -15,7 +16,10 @@
           = cmd.name
         %td
           %code= cmd.command
-        %td
-          = link_to 'View', cmd, class: "btn btn-mini btn-info"
-          = link_to 'Execute', new_host_cmd_path(@host, {:command_id => cmd}), class: "btn btn-mini btn-warning"
+        - if permitted_to? :show, cmd
+          %td
+            - if permitted_to? :show, cmd
+              = link_to 'View', cmd, class: "btn btn-mini btn-info"
+            - if permitted_to? :execute, @host
+              = link_to 'Execute', new_host_cmd_path(@host, {:command_id => cmd}), class: "btn btn-mini btn-warning"
 
