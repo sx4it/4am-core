@@ -4,7 +4,7 @@ class HostGroupsController < ApplicationController
   # GET /host_groups
   # GET /host_groups.json
   def index
-    @host_groups = HostGroup.all
+    @host_groups = HostGroup.with_permissions_to(:show)
 
     respond_to do |format|
       format.html # index.html.erb

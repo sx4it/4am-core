@@ -3,7 +3,9 @@ class HostsController < ApplicationController
   # GET /hosts
   # GET /hosts.json
   def index
-    @hosts = Host.all
+    #@hosts = Host.all
+    @hosts = Host.with_permissions_to(:show)
+    #@hosts = User.with_permissions_to(:show, :context => :hosts)
 
     respond_to do |format|
       format.html # index.html.erb

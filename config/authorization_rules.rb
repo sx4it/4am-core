@@ -2,17 +2,17 @@ authorization do
 
   role :guest do
       has_permission_on [:keys], :to => [:new, :create]
-      has_permission_on [:keys], :to => [:show, :new, :create, :edit, :update, :destroy] do
+      has_permission_on [:keys], :to => [:index, :show, :new, :create, :edit, :update, :destroy] do
         if_attribute :user => is { user }
       end
       has_permission_on [:users], :to => [:show, :edit, :keys] do
         if_attribute :id => is { user.id }
       end
-      has_permission_on [:hosts], :to => [:show] do
+      has_permission_on [:hosts], :to => [:show, :index] do
         if_attribute :host_acl => {:users => is { user }}
         if_attribute :host_acl => {:users => { :user => contains { user } }}
       end
-      has_permission_on [:host_groups], :to => [:show] do
+      has_permission_on [:host_groups], :to => [:show, :index] do
         if_attribute :host_acl => {:users => is { user }}
         if_attribute :host_acl => {:users => { :user => contains { user } }}
       end
