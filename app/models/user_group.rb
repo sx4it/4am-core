@@ -9,4 +9,7 @@ class UserGroup < ActiveRecord::Base
       t.permitted_to? permission
     end
   end
+  def type
+    t = self.class.to_s
+  end
 end

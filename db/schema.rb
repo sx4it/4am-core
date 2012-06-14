@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120614151800) do
+ActiveRecord::Schema.define(:version => 20120614202912) do
 
   create_table "commands", :force => true do |t|
     t.string   "name"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20120614151800) do
     t.string  "hosts_type"
     t.integer "users_id"
     t.string  "users_type"
+    t.string  "type"
   end
 
   create_table "host_groups", :force => true do |t|

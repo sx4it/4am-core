@@ -1,0 +1,22 @@
+- rights = %w{Read Edit Exec Sudo}
+%table.table.table-striped.table-condensed.table-bordered
+  %tr
+    %th Host/Group
+    %th User/Group
+    - rights.each do |w|
+      %th= w
+
+  - @acls.each do |acl|
+    %tr
+      %td
+        - render_icon acl.hosts_type
+        = host_render acl.hosts
+      %td
+        - render_icon acl.users_type
+        = link_to acl.users.name, acl.users
+      - rights.each do |w|
+        %td
+          - if w == acl.type
+            %i.custom-icon.icon-key
+          - else
+            ='-'

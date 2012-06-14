@@ -20,7 +20,8 @@ group :assets do
 
   gem 'bootstrap-sass', '~> 2.0.2'
 
-  gem "jquery-rails", "~> 1.0.0"
+  gem "jquery-rails", "~> 1.0.12"
+  gem "jquery-ui-rails"
   #gem 'compass'
 end
 
@@ -35,6 +36,8 @@ gem "will_paginate"
 
 gem 'authlogic'
 gem "authlogic_haapi"
+
+gem 'rails3-jquery-autocomplete'
 
 # getting it from git because the other one does not reload in dev mod
 gem "declarative_authorization", :git => 'https://github.com/stffn/declarative_authorization.git'

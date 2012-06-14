@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  filter_resource_access
+  autocomplete :user, :login
   helper_method :sort_column, :sort_direction
 
   # GET /users

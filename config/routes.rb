@@ -1,14 +1,9 @@
 Eip::Application.routes.draw do
 
-  get "host_acls", :action => :index, :controller => :host_acls
-  post "host_acls", :action => :create, :controller => :host_acls
-  delete "host_acls", :action => :delete, :controller => :host_acls
-
-  get "new_user", :action => :new, :controller => :new_user
-
-  post "new_user", :action => :create, :controller => :new_user
-
+  resources :new_user, :only=>[:new, :create]
+  resources :host_acls, :only=>[:index, :create, :destroy]
   resources :roles, :only=>[:index, :create, :destroy]
+
   namespace :admin do
     resources :roles, :only=>[:index, :create, :destroy]
     resources :users do
@@ -57,6 +52,7 @@ Eip::Application.routes.draw do
 
 
   resources :users do
+    get :autocomplete_user_login, :on => :collection
     member do
       get :keys
       post :add_role

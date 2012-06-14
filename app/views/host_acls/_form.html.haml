@@ -1,0 +1,12 @@
+#add_acl_form
+  - rights = %w{Read Edit Exec Sudo}
+  %div
+    - @hosts.each do |h|
+      = form_for @new_acl, html: { class: 'form-inline'} do |f|
+        - render_icon h.type
+        = f.label h.name, class: 'input-small uneditable-input'
+        = f.autocomplete_field :users, autocomplete_user_login_users_path, :placeholder => 'New Role Name'
+        - rights.each do |r|
+          = f.label r
+          = f.radio_button('type', r)
+        = f.submit 'Create', class: "btn btn-info"
