@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    UserSession.create :login => params[:login], :password => params[:password]
+    UserSession.create params
     if not current_user.nil?
       redirect_to root_url, :notice => "Logged in!"
     else

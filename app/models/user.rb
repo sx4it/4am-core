@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
 
   acts_as_authentic do |c|
+    # only for tests
+    c.validate_email_field = false
   end
 
   has_many :keys
