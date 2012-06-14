@@ -33,6 +33,8 @@ gem 'haml-rails'
 
 gem "will_paginate"
 
+gem 'authlogic'
+
 # getting it from git because the other one does not reload in dev mod
 gem "declarative_authorization", :git => 'https://github.com/stffn/declarative_authorization.git'
 gem "ruby_parser"

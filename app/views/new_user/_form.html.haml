@@ -1,5 +1,4 @@
-
-= form_for @user, html: { class: 'form-horizontal' } do |f|
+= form_for [@user], :url => new_user_path, html: { class: 'form-horizontal' } do |f|
 
   -if @user.errors.any?
     .control-group
@@ -30,17 +29,16 @@
     .controls
       = f.password_field :password_confirmation
 
-  - if permitted_to? :edit, :roles
-    -unless @user.id.nil?
-      .control-group
-        = f.label 'User Roles', class: 'control-label'
-        .controls
-          = render 'role_list'
-    -unless @user.id.nil?
-      .control-group
-        = f.label 'Add Roles', class: 'control-label'
-        .controls
-          = render 'available_role_list'
+  -unless @user.id.nil?
+    .control-group
+      = f.label 'User Roles', class: 'control-label'
+      .controls
+        = render 'role_list'
+  -unless @user.id.nil?
+    .control-group
+      = f.label 'Add Roles', class: 'control-label'
+      .controls
+        = render 'available_role_list'
 
   .form-actions
     = f.submit 'Save', class: "btn btn-info"

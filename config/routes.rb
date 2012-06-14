@@ -1,5 +1,9 @@
 Eip::Application.routes.draw do
 
+  get "new_user", :action => :new, :controller => :new_user
+
+  post "new_user", :action => :create, :controller => :new_user
+
   resources :roles, :only=>[:index, :create, :destroy]
   namespace :admin do
     resources :roles, :only=>[:index, :create, :destroy]

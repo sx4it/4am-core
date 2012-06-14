@@ -1,20 +1,13 @@
 class User < ActiveRecord::Base
-  using_access_control
-  has_secure_password
 
-  attr_accessible :login, :password, :password_confirmation
+  acts_as_authentic do |c|
+  end
 
   has_many :keys
 
   has_and_belongs_to_many :user_group
   has_many :host_acl, :as => :users
   has_and_belongs_to_many :roles, :uniq => true
-
-  validates_uniqueness_of :login
-  validates_presence_of :password, :on => :create
-  validates_length_of :password, :within => 6..40, :on => :create
-
-
 
   def self.search(search, page)
     if search
@@ -33,13 +26,5 @@ class User < ActiveRecord::Base
   def user
     []
   end
-
-  #def self.search(search)
-  #  if search
-  #    where('login LIKE ?', "%#{search}%")
-  #  else
-  #    scoped
-  #  end
-  #end
 
 end

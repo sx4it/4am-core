@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120613190524) do
+ActiveRecord::Schema.define(:version => 20120614151800) do
 
   create_table "commands", :force => true do |t|
     t.string   "name"
@@ -84,10 +84,17 @@ ActiveRecord::Schema.define(:version => 20120613190524) do
 
   create_table "users", :force => true do |t|
     t.string   "login"
-    t.string   "pass"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-    t.string   "password_digest"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.string   "email"
+    t.string   "crypted_password"
+    t.string   "password_salt"
+    t.string   "persistence_token"
+    t.string   "single_access_token"
+    t.string   "perishable_token"
+    t.integer  "failed_login_count"
+    t.string   "current_login_ip"
+    t.string   "last_login_ip"
   end
 
 end
