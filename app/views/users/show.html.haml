@@ -29,6 +29,11 @@
       %label.control-label Roles
       .controls
         = render 'role_list'
+    - if permitted_to? :edit, @user
+      .control-group
+        %label.control-label API Token
+        .controls
+          %code= @user.single_access_token
 
     - if permitted_to? :edit, @user
       .form-actions
