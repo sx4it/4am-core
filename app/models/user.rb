@@ -28,5 +28,9 @@ class User < ActiveRecord::Base
   def user
     []
   end
+  def as_json(options = {})
+    options[:only] ||= [:login, :email, :id, :password]
+    super(options)
+  end
 
 end
