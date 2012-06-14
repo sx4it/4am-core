@@ -1,5 +1,9 @@
 Eip::Application.routes.draw do
 
+  get "host_acls", :action => :index, :controller => :host_acls
+  post "host_acls", :action => :create, :controller => :host_acls
+  delete "host_acls", :action => :delete, :controller => :host_acls
+
   get "new_user", :action => :new, :controller => :new_user
 
   post "new_user", :action => :create, :controller => :new_user
