@@ -13,28 +13,38 @@
       %th Status
       %th Status Code
       %th Executed
+      %th Log
     - @old_command.each do |cmd|
       %tr
         %td
-          = popover(:a, [], cmd.command.name, 'Log', cmd.log, command_path(cmd.command.id))
+          = link_to cmd.command.name, command_path(cmd.command.id)
           - if permitted_to? :execute, @host
             = link_to 'delete', host_cmd_path(@host, cmd.id), :method => :delete, class: "btn btn-mini btn-danger pull-right"
           - if permitted_to? :execute, @host
             = link_to 'stop', host_cmd_path(@host, cmd.id), :method => :put, class: "btn btn-mini btn-warning pull-right"
         %td
           %center
-            = popover(:code, [], cmd.script, 'Log', cmd.log)
+            %code= cmd.script
         %td
           %center
-            = popover(:span, %w{label label-info}, cmd.status, 'Log', cmd.log)
+            %span.label.label-info= cmd.status
         %td
           %center
             - if cmd.status_code.nil?
-              = popover(:span, %w{badge badge}, '-', 'Log', cmd.log)
+              %span.badge.badge= '-'
             - elsif cmd.status_code == 0
-              = popover(:span, %w{badge badge-success}, cmd.status_code, 'Log', cmd.log)
+              %span.badge.badge= cmd.status_code
             - elsif cmd.status_code > 0
-              = popover(:span, %w{badge badge-warning}, cmd.status_code, 'Log', cmd.log)
+              %span.badge.badge-warning= cmd.status_code
         %td
           %center
             = cmd.time
+        %td
+          %div#log.modal.hide
+            %div.modal-header
+              %button.close{:data => {:dismiss => :modal}} x
+              %h3 Logs
+            %div.modal-body
+              = cmd.log
+          %center
+            = link_to "Show Logs", '#log', :data => {:toggle => :modal}, :class => "btn btn-info"
