@@ -43,11 +43,11 @@
           %center
             = cmd.time
         %td
-          %div.modal.hide{:id => "log#{cmd.id}"}
+          %div.modal.large.hide{:id => "log#{cmd.id}"}
             %div.modal-header
               %button.close{:data => {:dismiss => :modal}} x
               %h3 Logs
             %div.modal-body
-              %code= cmd.log
+              %pre= cmd.log
           %center
             = link_to "Show Logs", '#log' + cmd.id.to_s, :data => {:toggle => :modal}, :class => "btn btn-info"

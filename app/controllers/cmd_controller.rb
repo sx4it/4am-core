@@ -40,6 +40,7 @@ class CmdController < ApplicationController
 
   def destroy
     @cmd = Cmd.find(params[:host_id], params[:id])
+    @cmd.stop
     @cmd.destroy
     redirect_to host_path(params[:host_id])
   end

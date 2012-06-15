@@ -21,17 +21,12 @@ class Cmd
   def self.all(*id)
       host_id = id.first
       cmds = []
-      puts "all"
       if not id.empty?
         $redis.keys("cmd-host:#{host_id}:*").each do |c|
           cmds << self.find(host_id, c.split(':').last)
         end
       else
-         puts "CMM"
         $redis.keys("cmd-host:*:*").each do |c|
-          puts "Command"
-          puts c.split(':')[1]
-          puts c.split(':').last
           cmds << self.find(c.split(':')[1], c.split(':').last)
         end
       end
@@ -44,7 +39,7 @@ class Cmd
 
   def self.exec(host_id, command, current_user)
     max = $redis.incr "#{host_id}:max"
-    cmd = Cmd.new(:command => Command.find(command), :hosts => [Host.find(host_id.to_i)], :id => max, :current_user => current_user, :log => "--Executing--\n")
+    cmd = Cmd.new(:command => Command.find(command), :hosts => [Host.find(host_id.to_i)], :id => max, :current_user => current_user, :log => "--contacting remote executor--\n")
     $redis.set "cmd-host:#{host_id}:#{max}", cmd.get_json
     $redis.publish '4am-command', "cmd-host:#{host_id}:#{max}"
     cmd
@@ -89,15 +84,14 @@ class Cmd
   end
 
   def stop
-      $redis.publish "4am-command-stop", "#{@type}:#{@hosts[0].id}:#{@id}"
+      $redis.publish "4am-command", "#{@type}:#{@hosts[0].id}:#{@id}:stop"
   end
 
   def self.clear(host_id)
-    $redis.keys("#{@type}:#{host_id}:*").each do |c|
-        Command.class
-        Host.class
-        cmd = Cmd.from_json($redis.get c)
-        if %w{stopped finished}.include? cmd.status
+    $redis.keys("cmd-host:#{host_id}:*").each do |c|
+        cmd = JSON.parse($redis.get c)
+        if %w{stopped killed finished}.include? cmd['status']
+          cmd = Cmd.from_json($redis.get c)
           cmd.destroy
         end
     end
