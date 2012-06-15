@@ -12,7 +12,7 @@
   = form_tag sessions_path, :class => 'form-horizontal' do
     %fieldset
       .control-group
-        = label_tag :login, nil, class: 'control-label' 
+        = label_tag 'email or Login', nil, class: 'control-label' 
         .controls
           = text_field_tag :login, params[:login], :size => 30
       .control-group

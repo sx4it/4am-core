@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  #autocomplete :user, :login
-  #
+
   def autocomplete_user_login
     term = params[:term]
     data = User.where('login like ?', "#{term}%").limit(10).append(UserGroup.where('name like ?', "#{term}%").limit(10)).flatten[0..10]

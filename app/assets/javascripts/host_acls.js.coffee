@@ -17,4 +17,6 @@ $ ->
     $(u).autocomplete().data("autocomplete")._renderItem = (ul, item) ->
       type = "user" if (item.type == "User")
       type = "group" if (item.type == "UserGroup")
+      type = "host" if (item.type == "Host")
+      type = "group" if (item.type == "HostGroup")
       $( "<li></li>" ).data( "item.autocomplete", item).append( $( "<a></a>" ).text(" " + item.label ).prepend("<i class='custom-icon icon_" + type + "'>") ).appendTo( ul )

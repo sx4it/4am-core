@@ -1,27 +1,22 @@
 #add_acl_form
   - rights = %w{Read Edit Exec Sudo}
   %div
-    - @hosts.each do |h|
-      = form_for @new_acl, html: { class: 'form-inline'} do |f|
-        - render_icon h.type
-        = f.label h.name, class: 'input-small uneditable-input'
-        = f.hidden_field :user_id, :value => ""
-        = f.hidden_field :user_type, :value => ""
-        = f.hidden_field :host_type, :value => "Host"
-        = f.autocomplete_field :users, autocomplete_user_login_users_path, :update_elements => {:id => '#host_acl_user_id', :type => '#host_acl_user_type'}, :placeholder => 'New Role Name'
-        - rights.each do |r|
-          = f.label r
-          = f.radio_button('type', r)
-        = f.submit 'Create', class: "btn btn-info"
-    - @host_groups.each do |h|
-      = form_for @new_acl, html: { class: 'form-inline'} do |f|
-        - render_icon h.type
-        = f.label h.name, class: 'input-small uneditable-input'
-        = f.hidden_field :user_id, :value => ""
-        = f.hidden_field :user_type, :value => ""
-        = f.hidden_field :host_type, :value => "HostGroup"
-        = f.autocomplete_field :users, autocomplete_user_login_users_path, :update_elements => {:id => '#host_acl_user_id', :type => '#host_acl_user_type'}, :placeholder => 'New Role Name'
-        - rights.each do |r|
-          = f.label r
-          = f.radio_button('type', r)
-        = f.submit 'Create', class: "btn btn-info"
+    = form_for @new_acl, :url => {:controller => :host_acls, :action => :create}, :remote => true, html: { class: 'form-inline'} do |f|
+      -if @new_acl.errors.any?
+        .alert.alert-error
+          %a.close{href: "#", data:{ dismiss:'alert' }} ×
+          %h4.alert-heading= "#{pluralize(@new_acl.errors.count, "error")} "
+          %ul
+            - @new_acl.errors.full_messages.each do |msg|
+              %li
+                %p= msg
+      = f.hidden_field :user_id, :value => ""
+      = f.hidden_field :user_type, :value => ""
+      = f.hidden_field :host_type, :value => ""
+      = f.hidden_field :host_id, :value => ""
+      = f.autocomplete_field :hosts, autocomplete_host_name_hosts_path, :update_elements => {:id => '#acl_form_host_id', :type => '#acl_form_host_type'}, :placeholder => 'Add Host'
+      = f.autocomplete_field :users, autocomplete_user_login_users_path, :update_elements => {:id => '#acl_form_user_id', :type => '#acl_form_user_type'}, :placeholder => 'Add User'
+      - rights.each do |r|
+        = f.label r
+        = f.radio_button 'type', r, :checked => true
+      = f.submit 'Create Acl', class: "btn btn-info"

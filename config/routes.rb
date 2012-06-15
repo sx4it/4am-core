@@ -24,6 +24,7 @@ Eip::Application.routes.draw do
   resources :commands
 
   resources :hosts do
+    get :autocomplete_host_name, :on => :collection
     resources :cmd do
       collection do
         get "clear"

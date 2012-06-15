@@ -34,7 +34,7 @@
       - if permitted_to? :new, :hosts
         %li
           = link_to 'Add', new_host_path, class: 'icon icon_plus'
-      - if permitted_to? :edit, :roles
+      - if permitted_to? :index, :host_acls
         %li
           = link_to 'Acls', host_acls_path, class: 'icon icon_group'
       - if permitted_to? :index, :host_groups

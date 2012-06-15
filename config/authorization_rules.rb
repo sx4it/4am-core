@@ -27,6 +27,7 @@ authorization do
       has_permission_on [:host_groups], :to => [:crud, :execute]
       has_permission_on [:users], :to => [:crud, :add_role, :delete_role]
       has_permission_on [:roles], :to => [:crud]
+      has_permission_on [:host_acls], :to => [:crud]
       has_permission_on [:keys], :to => [:crud]
       has_permission_on [:user_groups], :to => [:crud, :add_user, :del_user]
       has_permission_on [:host_groups], :to => [:crud, :add_host, :del_host]

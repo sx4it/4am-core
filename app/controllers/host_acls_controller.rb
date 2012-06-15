@@ -1,14 +1,22 @@
 class HostAclsController < ApplicationController
+  filter_resource_access
   def index
     @acls = HostAcl.all
-    @hosts = Host.all
-    @host_groups = HostGroup.all
-    @new_acl = HostAcl.new
+    @new_acl = AclForm.new
   end
 
   def create
-    flash[:error] = params
-    redisplay_acl
+    flash[:error] = params[:acl_form]
+    @new_acl = AclForm.new params[:acl_form]
+    if @new_acl.valid?
+      redisplay_acl
+    else
+      @acls = HostAcl.all
+      respond_to do |format|
+        format.html { render :index }
+        format.js { render :redisplay_acl }
+      end
+    end
   end
 
   def destroy
@@ -21,7 +29,8 @@ class HostAclsController < ApplicationController
       format.html { redirect_to host_acls_path }
       format.js {
         @acls = HostAcl.all
-        render :redisplay_roles
+        @new_acl = AclForm.new
+        render :redisplay_acl
       }
    end
   end
