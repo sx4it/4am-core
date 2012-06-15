@@ -12,4 +12,7 @@ class HostGroup < ActiveRecord::Base
   def type
     t = self.class.to_s
   end
+  def host_group
+    []
+  end
 end

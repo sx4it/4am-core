@@ -11,28 +11,40 @@ authorization do
       has_permission_on [:user_groups], :to => [:show, :index] do
         if_attribute :user => contains { user }
       end
-      has_permission_on [:hosts], :to => [:show, :index] do
+      has_permission_on [:hosts, :host_groups], :to => [:show, :index] do
         if_attribute :host_acl => {:users => is { user }}
         if_attribute :host_acl => {:users => { :user => contains { user } }}
+        if_attribute :host_group => {:host_acl => {:users => { :user => contains { user } }}}
+        if_attribute :host_group => {:host_acl => {:users => is { user } }}
       end
-      has_permission_on [:host_groups], :to => [:show, :index] do
-        if_attribute :host_acl => {:users => is { user }}
-        if_attribute :host_acl => {:users => { :user => contains { user } }}
+      has_permission_on [:hosts, :host_groups], :to => [:show, :index] do
+        if_attribute :host_acl => {:acl_type => is { "Read" }, :users => is { user }}
+        if_attribute :host_acl => {:acl_type => is { "Read" }, :users => { :user => contains { user } }}
+        if_attribute :host_group => {:host_acl => {:acl_type => is { "Read" }, :users => {  :user => contains { user } }}}
+        if_attribute :host_group => {:host_acl => {:acl_type => is { "Read" }, :users => is { user } }}
+      end
+      has_permission_on [:hosts, :host_groups], :to => [:show, :index, :edit, :update] do
+        if_attribute :host_acl => {:acl_type => is { "Edit" }, :users => is { user }}
+        if_attribute :host_acl => {:acl_type => is { "Edit" }, :users => { :user => contains { user } }}
+        if_attribute :host_group => {:host_acl => {:acl_type => is { "Edit" }, :users => {  :user => contains { user } }}}
+        if_attribute :host_group => {:host_acl => {:acl_type => is { "Edit" }, :users => is { user } }}
+      end
+      has_permission_on [:hosts, :host_groups], :to => [:show, :index, :edit, :update, :execute] do
+        if_attribute :host_acl => {:acl_type => is { "Exec" }, :users => is { user }}
+        if_attribute :host_acl => {:acl_type => is { "Exec" }, :users => { :user => contains { user } }}
+        if_attribute :host_group => {:host_acl => {:acl_type => is { "Exec" }, :users => {  :user => contains { user } }}}
+        if_attribute :host_group => {:host_acl => {:acl_type => is { "Exec" }, :users => is { user } }}
+      end
+      has_permission_on [:hosts, :host_groups], :to => [:show, :index, :edit, :update, :execute, :sudo] do
+        if_attribute :host_acl => {:acl_type => is { "Sudo" }, :users => is { user }}
+        if_attribute :host_acl => {:acl_type => is { "Sudo" }, :users => { :user => contains { user } }}
+        if_attribute :host_group => {:host_acl => {:acl_type => is { "Sudo" }, :users => {  :user => contains { user } }}}
+        if_attribute :host_group => {:host_acl => {:acl_type => is { "Sudo" }, :users => is { user } }}
       end
   end
 
   role :admin do
-      includes :guest
-      has_permission_on [:hosts], :to => [:crud, :execute]
-      has_permission_on [:host_groups], :to => [:crud, :execute]
-      has_permission_on [:users], :to => [:crud, :add_role, :delete_role]
-      has_permission_on [:roles], :to => [:crud]
-      has_permission_on [:host_acls], :to => [:crud]
-      has_permission_on [:keys], :to => [:crud]
-      has_permission_on [:user_groups], :to => [:crud, :add_user, :del_user]
-      has_permission_on [:host_groups], :to => [:crud, :add_host, :del_host]
-      has_permission_on [:commands], :to => [:crud]
-      has_permission_on :authorization_rules, :to => :read
+      has_omnipotence
   end
 
   role :view do
@@ -72,7 +84,10 @@ end
 privileges do
   privilege :execute do
   end
+  privilege :sudo do
+  end
   privilege :crud do
     includes :index, :show, :new, :create, :edit, :update, :destroy
   end
+  privilege :access
 end

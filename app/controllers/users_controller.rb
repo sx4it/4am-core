@@ -1,10 +1,5 @@
 class UsersController < ApplicationController
-
-  def autocomplete_user_login
-    term = params[:term]
-    data = User.where('login like ?', "#{term}%").limit(10).append(UserGroup.where('name like ?', "#{term}%").limit(10)).flatten[0..10]
-    render :json => json_for_autocomplete(data, :name, [:type])
-  end
+  filter_resource_access
 
   helper_method :sort_column, :sort_direction
 

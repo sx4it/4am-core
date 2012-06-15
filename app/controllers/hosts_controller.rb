@@ -1,10 +1,5 @@
 class HostsController < ApplicationController
-
-  def autocomplete_host_name
-    term = params[:term]
-    data = Host.where('name like ?', "#{term}%").limit(10).append(HostGroup.where('name like ?', "#{term}%").limit(10)).flatten[0..10]
-    render :json => json_for_autocomplete(data, :name, [:type])
-  end
+  filter_resource_access
 
   # GET /hosts
   # GET /hosts.json

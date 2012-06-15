@@ -23,8 +23,9 @@ Eip::Application.routes.draw do
 
   resources :commands
 
+  get :autocomplete_host_name, :controller => :autocomplete
+  get :autocomplete_user_login, :controller => :autocomplete
   resources :hosts do
-    get :autocomplete_host_name, :on => :collection
     resources :cmd do
       collection do
         get "clear"
@@ -53,7 +54,6 @@ Eip::Application.routes.draw do
 
 
   resources :users do
-    get :autocomplete_user_login, :on => :collection
     member do
       get :keys
       post :add_role

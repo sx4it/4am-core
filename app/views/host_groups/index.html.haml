@@ -1,8 +1,8 @@
 .page-header
   %h1
-    User Groups
+    Host Groups
     %small
-      list user groups
+      list host groups
     - if permitted_to? :new, :host_groups
       %a{ href: new_host_group_path, class: 'btn btn-success' } 
         %i.icon-white.icon-plus-sign
