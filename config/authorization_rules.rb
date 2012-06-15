@@ -68,6 +68,10 @@ authorization do
       end
   end
 
+  role :manage_acl do
+      includes :view
+      has_permission_on :host_acls, :to => [:crud]
+  end
   role :edit do
       includes :view
       has_permission_on [:commands], :to => [:crud]

@@ -12,3 +12,4 @@ u.save
 Role.create :name => 'edit'
 Role.create :name => 'exec'
 Role.create :name => 'view'
+Role.create :name => 'manage_acl'
