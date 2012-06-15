@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
     c.validate_email_field = false
   end
 
-  has_many :keys
+  has_many :keys, :dependent => :delete_all
 
   has_and_belongs_to_many :user_group
   has_many :host_acl, :as => :users, :dependent => :delete_all
