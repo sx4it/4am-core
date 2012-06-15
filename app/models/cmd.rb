@@ -89,8 +89,7 @@ class Cmd
   end
 
   def stop
-      @status = "stopped"
-      $redis.set "#{@type}:#{@hosts[0].id}:#{@id}", self.get_json
+      $redis.publish "4am-command-stop" "#{@type}:#{@hosts[0].id}:#{@id}"
   end
 
   def self.clear(host_id)

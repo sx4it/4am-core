@@ -23,8 +23,8 @@
             = cmd.script
           - if permitted_to? :execute, @host
             = link_to 'delete', host_cmd_path(@host, cmd.id), :method => :delete, class: "btn btn-mini btn-danger pull-right"
-          //- if permitted_to? :execute, @host
-          //  = link_to 'stop', host_cmd_path(@host, cmd.id), :method => :put, class: "btn btn-mini btn-warning pull-right"
+          - if permitted_to? :execute, @host
+            = link_to 'stop', host_cmd_path(@host, cmd.id), :method => :put, class: "btn btn-mini btn-warning pull-right"
         %td
           %center
             %code= cmd.script
