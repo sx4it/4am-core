@@ -21,8 +21,8 @@
     %h2= "#{pluralize(@hosts.count, 'Host & Group')}"
     - @hosts.each do |k|
       %li
-        - if k.hosts_type == 'HostGroup'
+        - if k.type == 'HostGroup'
           %i.icon-tags
         - else
           %i.icon-tag
-        = link_to k.hosts.name, k.hosts
+        = link_to k.name, k
