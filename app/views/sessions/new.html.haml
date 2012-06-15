@@ -9,7 +9,7 @@
 
   //%h2 Connect to the admin space
   //%p If you wish to connect without your X509 certificate, please use this form
-  = form_tag sessions_path, :class => 'form-horizontal' do
+  = form_tag login_path, :method => :post, :class => 'form-horizontal' do
     %fieldset
       .control-group
         = label_tag 'email or Login', nil, class: 'control-label' 

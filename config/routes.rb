@@ -50,6 +50,7 @@ Eip::Application.routes.draw do
   resources :keys
 
   get "login" => "sessions#new", :as => "login"
+  post "login" => "sessions#create"
   get "logout" => "sessions#destroy", :as => "logout"
 
 
@@ -60,8 +61,6 @@ Eip::Application.routes.draw do
       delete :delete_role
     end
   end
-  resources :sessions
-
   root :to => 'dashboard#index'
 
   # The priority is based upon order of creation:

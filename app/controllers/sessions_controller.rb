@@ -10,8 +10,8 @@ class SessionsController < ApplicationController
   end
 
   def create
-    UserSession.create params
-    if not current_user.nil?
+    @session = UserSession.create params
+    if session
       redirect_to root_url, :notice => "Logged in!"
     else
       flash[:error] = "Invalid email or password"
