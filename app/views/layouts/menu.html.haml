@@ -64,6 +64,7 @@
         %li
           = link_to 'Add', new_command_path, class: 'icon icon_plus'
 
-%li.dropdown.icon.icon_status2
-  %a.dropdown-toggle{data: { toggle: "dropdown"}}
-    Status
+- if permitted_to? :index, :log
+  %li.dropdown.icon.icon_status2
+    %a.dropdown-toggle{:href => log_path}
+      Status

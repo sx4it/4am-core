@@ -1,5 +1,5 @@
 class Cmd
-  attr_accessor :id, :status, :time, :command, :log, :status_code, :hosts, :current_user, :hosts_id, :script, :type
+  attr_accessor :id, :status, :time, :command, :log, :status_code, :hosts, :current_user, :hosts_id, :script, :type, :hosts_ip
 
   def initialize(hash = {})
     hash.each do |k, v|
@@ -18,10 +18,21 @@ class Cmd
       Cmd.from_json(res)
   end
 
-  def self.all(id)
+  def self.all(*id)
+      host_id = id.first
       cmds = []
-      $redis.keys("cmd-host:#{id}:*").each do |c|
-        cmds << self.find(id, c.split(':').last)
+      puts "all"
+      if not id.empty?
+        $redis.keys("cmd-host:#{host_id}:*").each do |c|
+          cmds << self.find(host_id, c.split(':').last)
+        end
+      else
+         puts "CMM"
+        $redis.keys("cmd-host:*:*").each do |c|
+          puts "Command"
+          puts c
+          cmds << self.find(c.split(':')[1], c.split(':').last)
+        end
       end
       cmds
   end
@@ -62,8 +73,12 @@ class Cmd
                   else
                     nil
                   end
-    cmd.hosts = Host.find(cmd.hosts_id)
-    cmd.current_user = User.find(cmd.current_user)
+    cmd.hosts_ip = cmd.hosts.dup
+    cmd.hosts = []
+    cmd.hosts_id.each do |h|
+      cmd.hosts << Host.find(cmd.hosts_id).first if Host.exists?(h)
+    end
+    cmd.current_user = User.find(cmd.current_user) if User.exists?(cmd.current_user)
     cmd.expand_template
     cmd
   end

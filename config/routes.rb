@@ -1,5 +1,7 @@
 Eip::Application.routes.draw do
 
+  get "log" => "log#index"
+
   resources :new_user, :only=>[:new, :create]
   resources :host_acls, :only=>[:index, :create, :destroy]
   resources :roles, :only=>[:index, :create, :destroy]
