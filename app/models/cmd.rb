@@ -39,8 +39,10 @@ class Cmd
   end
 
   def expand_template
-      erb = ERB.new @command.command
-      @script = erb.result binding
+      if @command
+        erb = ERB.new @command.command
+        @script = erb.result binding
+      end
   end
 
   def get_json
@@ -55,7 +57,11 @@ class Cmd
 
   def self.from_json json
     cmd = Cmd.new JSON.parse(json)
-    cmd.command = Command.find(cmd.command)
+    cmd.command = if Command.exists?(cmd.command)
+                    Command.find(cmd.command)
+                  else
+                    nil
+                  end
     cmd.hosts = Host.find(cmd.hosts_id)
     cmd.current_user = User.find(cmd.current_user)
     cmd.expand_template

@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   has_many :keys
 
   has_and_belongs_to_many :user_group
-  has_many :host_acl, :as => :users
+  has_many :host_acl, :as => :users, :dependent => :delete_all
   has_and_belongs_to_many :roles, :uniq => true
 
   def self.search(search, page)

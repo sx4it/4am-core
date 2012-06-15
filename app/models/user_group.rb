@@ -1,7 +1,7 @@
 class UserGroup < ActiveRecord::Base
   attr_accessible :name
   has_and_belongs_to_many :user
-  has_many :host_acl, :as => :users
+  has_many :host_acl, :as => :users, :dependent => :delete_all
 
   def self.with_permissions_to(permission, *args)
     options = args.extract_options!.dup
