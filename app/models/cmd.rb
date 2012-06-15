@@ -30,7 +30,8 @@ class Cmd
          puts "CMM"
         $redis.keys("cmd-host:*:*").each do |c|
           puts "Command"
-          puts c
+          puts c.split(':')[1]
+          puts c.split(':').last
           cmds << self.find(c.split(':')[1], c.split(':').last)
         end
       end
