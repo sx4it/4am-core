@@ -18,15 +18,16 @@ class CmdController < ApplicationController
 
   def clear
     Cmd.clear(params[:host_id])
-    redirect_to host_path(params[:host_id])
+    redisplay
   end
 
   def new
     @cmd = Cmd.exec(params[:host_id], params[:command_id], @current_user)
-    redirect_to host_path(params[:host_id])
+    redisplay
   end
 
-  def edit
+  def refresh
+    redisplay
   end
 
   def create
@@ -35,17 +36,32 @@ class CmdController < ApplicationController
   def update
     @cmd = Cmd.find(params[:host_id], params[:id])
     @cmd.stop
-    redirect_to host_path(params[:host_id])
+    redisplay
+    #redirect_to host_path(params[:host_id])
   end
 
   def destroy
     @cmd = Cmd.find(params[:host_id], params[:id])
     @cmd.stop
     @cmd.destroy
-    redirect_to host_path(params[:host_id])
+    redisplay
   end
 
   private
+
+  def redisplay
+    respond_to do |format|
+      format.html {
+        redirect_to host_path(params[:host_id])
+        }
+      format.js {
+        @host = Host.find params[:host_id]
+        @old_command = Cmd.all(params[:host_id])
+        render 'commands/old_commands_list'
+      }
+   end
+  end
+
   def has_permission
     @host = Host.find params[:host_id]
     unless permitted_to? :view, @host

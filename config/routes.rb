@@ -31,6 +31,7 @@ Eip::Application.routes.draw do
     resources :cmd do
       collection do
         get "clear"
+        get "refresh"
       end
     end
   end
