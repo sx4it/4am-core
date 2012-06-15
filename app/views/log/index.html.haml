@@ -2,6 +2,7 @@
   %tbody
     %tr
       %th Host
+      %th User
       %th Command Name
       %th Command
       %th Status
@@ -15,6 +16,11 @@
             = link_to h.name, h
           - cmd.hosts_ip.each do |h|
             = h
+        %td
+          - if cmd.current_user
+            = link_to cmd.current_user.login, cmd.current_user
+          - else
+            [unknown]
         %td
           - if cmd.command
             = link_to cmd.command.name, command_path(cmd.command.id)

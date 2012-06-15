@@ -79,7 +79,11 @@ class Cmd
     cmd.hosts_id.each do |h|
       cmd.hosts << Host.find(cmd.hosts_id).first if Host.exists?(h)
     end
-    cmd.current_user = User.find(cmd.current_user) if User.exists?(cmd.current_user)
+    cmd.current_user = if User.exists?(cmd.current_user)
+                        User.find(cmd.current_user)
+                       else
+                         nil
+                       end
     cmd.expand_template
     cmd
   end
