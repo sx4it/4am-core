@@ -89,7 +89,7 @@ class Cmd
   end
 
   def stop
-      $redis.publish "4am-command-stop" "#{@type}:#{@hosts[0].id}:#{@id}"
+      $redis.publish "4am-command-stop", "#{@type}:#{@hosts[0].id}:#{@id}"
   end
 
   def self.clear(host_id)
