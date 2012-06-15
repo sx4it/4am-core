@@ -38,6 +38,7 @@ authorization do
   role :view do
       includes :guest
       has_permission_on [:users], :to => [:index, :show]
+      has_permission_on [:host_acls], :to => [:index, :show]
       has_permission_on [:user_groups], :to => [:index, :show]
       has_permission_on [:commands], :to => [:index, :show]
       has_permission_on [:host_groups], :to => [:index, :show]

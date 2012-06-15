@@ -1,5 +1,5 @@
 class AclForm
-  attr_accessor :user_id, :user_type, :host_id, :host_type, :users, :type, :hosts
+  attr_accessor :user_id, :user_type, :host_id, :host_type, :users, :type, :hosts, :user, :host
   include ActiveModel::Validations
   include ActiveModel::Conversion
   extend ActiveModel::Naming
@@ -19,5 +19,18 @@ class AclForm
   end
   def persisted?
     false
+  end
+  def valid?
+    if (@user_type == "User")
+      @user = User.find user_id
+    elsif (@user_type == "UserGroup")
+      @user = UserGroup.find user_id
+    end
+    if (@host_type == "Host")
+      @host = Host.find host_id
+    elsif (@host_type == "HostGroup")
+      @host = HostGroup.find host_id
+    end
+    super()
   end
 end

@@ -14,6 +14,7 @@
 #  }
 $ ->
   $("input[data-autocomplete]").each (i, u) ->
+    $(u).autocomplete().data("autocomplete").options.minLength = 0
     $(u).autocomplete().data("autocomplete")._renderItem = (ul, item) ->
       type = "user" if (item.type == "User")
       type = "group" if (item.type == "UserGroup")

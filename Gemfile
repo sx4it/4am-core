@@ -37,7 +37,7 @@ gem "will_paginate"
 gem 'authlogic'
 gem "authlogic_haapi"
 
-gem 'rails3-jquery-autocomplete'
+gem 'rails3-jquery-autocomplete', :git => 'https://github.com/coat/rails3-jquery-autocomplete.git'
 
 # getting it from git because the other one does not reload in dev mod
 gem "declarative_authorization", :git => 'https://github.com/stffn/declarative_authorization.git'

@@ -5,4 +5,5 @@
       list all the host acls
 
 = render 'acl_list'
-= render 'form'
+- if permitted_to? :create, :host_acls
+  = render 'form'

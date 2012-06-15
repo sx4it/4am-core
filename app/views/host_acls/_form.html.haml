@@ -14,8 +14,8 @@
       = f.hidden_field :user_type, :value => ""
       = f.hidden_field :host_type, :value => ""
       = f.hidden_field :host_id, :value => ""
-      = f.autocomplete_field :hosts, autocomplete_host_name_hosts_path, :update_elements => {:id => '#acl_form_host_id', :type => '#acl_form_host_type'}, :placeholder => 'Add Host'
-      = f.autocomplete_field :users, autocomplete_user_login_users_path, :update_elements => {:id => '#acl_form_user_id', :type => '#acl_form_user_type'}, :placeholder => 'Add User'
+      = f.autocomplete_field :hosts, autocomplete_host_name_hosts_path, :update_elements => {:id => '#acl_form_host_id', :type => '#acl_form_host_type'}, :data => {'min-length' => 0}, :placeholder => 'Add Host'
+      = f.autocomplete_field :users, autocomplete_user_login_users_path, :update_elements => {:id => '#acl_form_user_id', :type => '#acl_form_user_type'}, :data => {'min-length' => 0}, :placeholder => 'Add User'
       - rights.each do |r|
         = f.label r
         = f.radio_button 'type', r, :checked => true

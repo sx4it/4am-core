@@ -6,9 +6,10 @@ class HostAclsController < ApplicationController
   end
 
   def create
-    flash[:error] = params[:acl_form]
     @new_acl = AclForm.new params[:acl_form]
     if @new_acl.valid?
+      puts @new_acl.inspect
+      HostAcl.create :users => @new_acl.user, :hosts => @new_acl.host, :acl_type => @new_acl.type
       redisplay_acl
     else
       @acls = HostAcl.all
@@ -20,6 +21,8 @@ class HostAclsController < ApplicationController
   end
 
   def destroy
+    @acl = HostAcl.find params[:id]
+    @acl.destroy
     redisplay_acl
   end
   private
