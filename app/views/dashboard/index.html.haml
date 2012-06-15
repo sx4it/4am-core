@@ -18,8 +18,8 @@
         %i.icon-list-alt
         = link_to k.name, k
   %div.span3.well#hosts
-    %h2= "#{pluralize(current_user.host_acl.count, 'Host & Group')}"
-    - current_user.host_acl.each do |k|
+    %h2= "#{pluralize(@hosts.count, 'Host & Group')}"
+    - @hosts.each do |k|
       %li
         - if k.hosts_type == 'HostGroup'
           %i.icon-tags
