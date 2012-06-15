@@ -32,7 +32,7 @@ class Cmd
 
   def self.exec(host_id, command, current_user)
     max = $redis.incr "#{host_id}:max"
-    cmd = Cmd.new(:command => Command.find(command), :hosts => [Host.find(host_id.to_i)], :id => max, :current_user => current_user)
+    cmd = Cmd.new(:command => Command.find(command), :hosts => [Host.find(host_id.to_i)], :id => max, :current_user => current_user, :log => "--Executing--\n")
     $redis.set "cmd-host:#{host_id}:#{max}", cmd.get_json
     $redis.publish '4am-command', "cmd-host:#{host_id}:#{max}"
     cmd
