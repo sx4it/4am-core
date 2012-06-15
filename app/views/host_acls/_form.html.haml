@@ -7,6 +7,19 @@
         = f.label h.name, class: 'input-small uneditable-input'
         = f.hidden_field :user_id, :value => ""
         = f.hidden_field :user_type, :value => ""
+        = f.hidden_field :host_type, :value => "Host"
+        = f.autocomplete_field :users, autocomplete_user_login_users_path, :update_elements => {:id => '#host_acl_user_id', :type => '#host_acl_user_type'}, :placeholder => 'New Role Name'
+        - rights.each do |r|
+          = f.label r
+          = f.radio_button('type', r)
+        = f.submit 'Create', class: "btn btn-info"
+    - @host_groups.each do |h|
+      = form_for @new_acl, html: { class: 'form-inline'} do |f|
+        - render_icon h.type
+        = f.label h.name, class: 'input-small uneditable-input'
+        = f.hidden_field :user_id, :value => ""
+        = f.hidden_field :user_type, :value => ""
+        = f.hidden_field :host_type, :value => "HostGroup"
         = f.autocomplete_field :users, autocomplete_user_login_users_path, :update_elements => {:id => '#host_acl_user_id', :type => '#host_acl_user_type'}, :placeholder => 'New Role Name'
         - rights.each do |r|
           = f.label r
