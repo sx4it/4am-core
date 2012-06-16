@@ -4,10 +4,10 @@ class CmdController < ApplicationController
   def index
     @cmd = Cmd.all(params[:host_id])
 
-    redirect_to host_path(params[:host_id])
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @host }
+      { redirect_to host_path(params[:host_id]) }
+      format.json { render json: @cmd }
     end
   end
 
