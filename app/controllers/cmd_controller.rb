@@ -5,8 +5,7 @@ class CmdController < ApplicationController
     @cmd = Cmd.all(params[:host_id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      { redirect_to host_path(params[:host_id]) }
+      format.html { redirect_to host_path(params[:host_id]) }
       format.json { render json: @cmd }
     end
   end

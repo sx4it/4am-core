@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   def require_login
     respond_to do |format|
-      format.html { redirect_to :login unless current_user }
+      format.any(:html, :js) { redirect_to :login unless current_user }
       format.json { render json: {:error => "Please login first."}, :status => 403 unless current_user }
     end
   end
