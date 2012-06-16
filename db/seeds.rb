@@ -5,8 +5,16 @@
 u = User.new
 u.login = 'admin'
 u.password = 'admin'
-u.roles << Role.create(:name => 'admin')
+u.password_confirmation = 'admin'
+admin = Role.create(:name => 'admin')
+u.roles << admin
 u.save
+
+Command.create :name => 'ls', :commnand => 'ls -l'
+Command.create :name => 'uname', :commnand => 'uname -a'
+Command.create :name => 'ping google', :commnand => 'ping google.com'
+
+#TODO command add user
 
 #ading default roles
 Role.create :name => 'edit'
