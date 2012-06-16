@@ -5,7 +5,10 @@ class ApplicationController < ActionController::Base
   before_filter :require_login
 
   def require_login
-    redirect_to :login unless current_user
+    respond_to do |format|
+      format.html { redirect_to :login unless current_user }
+      format.json { render json: {:error => "Please login first."}, :status => 403 unless current_user }
+    end
   end
 
   protected
@@ -25,7 +28,11 @@ class ApplicationController < ActionController::Base
 
   def permission_denied
     flash[:error] = "Sorry, you are not allowed to access that page."
-    redirect_to root_url
+
+    respond_to do |format|
+      format.html { redirect_to root_url }
+      format.json { render json: {:error => "You dont have access."} }
+    end
   end
 
   def verified_request?
