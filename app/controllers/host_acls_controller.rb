@@ -1,4 +1,5 @@
 class HostAclsController < ApplicationController
+  attr_accessor :errors
   filter_resource_access
   def index
     @acls = HostAcl.all
@@ -7,11 +8,14 @@ class HostAclsController < ApplicationController
 
   def create
     @new_acl = AclForm.new params[:acl_form]
-    if @new_acl.valid?
-      puts @new_acl.inspect
-      HostAcl.create :users => @new_acl.user, :hosts => @new_acl.host, :acl_type => @new_acl.type
-      redisplay_acl
+    @new_acl.valid?
+    h = HostAcl.new(:users => @new_acl.user, :hosts => @new_acl.host, :acl_type => @new_acl.type)
+    if @new_acl.valid? and h.valid?
+        @errors = nil
+        h.save
+        redisplay_acl
     else
+      @errors = h.errors.dup unless h.valid?
       @acls = HostAcl.all
       respond_to do |format|
         format.html { render :index }

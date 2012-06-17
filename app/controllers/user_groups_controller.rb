@@ -66,6 +66,7 @@ class UserGroupsController < ApplicationController
         format.html { redirect_to @user_group, notice: 'User group was successfully created.' }
         format.json { render json: @user_group, status: :created, location: @user_group }
       else
+        @users = User.all
         format.html { render action: "new" }
         format.json { render json: @user_group.errors, status: :unprocessable_entity }
       end
@@ -82,6 +83,7 @@ class UserGroupsController < ApplicationController
         format.html { redirect_to @user_group, notice: 'User group was successfully updated.' }
         format.json { head :no_content }
       else
+        @users = User.all
         format.html { render action: "edit" }
         format.json { render json: @user_group.errors, status: :unprocessable_entity }
       end
