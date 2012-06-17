@@ -7,12 +7,9 @@ updateOldCommands = ->
   scroll = $(".modal-body").scrollTop()
   bottom = false
   elem = $(".modal-body")
-  if elem[0].scrollHeight - scroll == elem.outerHeight()
+  if elem && elem[0].scrollHeight - scroll == elem.outerHeight()
     bottom = true
-  console.log scroll
-  console.log $(".modal-body")[0].scrollHeight
 
-  console.log bottom
   $.getScript $("#refresh").attr("href") + ".js", ->
     $('.modal-backdrop').hide()
     $("#" + id).modal("show")
@@ -21,8 +18,8 @@ updateOldCommands = ->
     else
       $(".modal-body").scrollTop(scroll)
   if $("#OldCommands").length > 0
-    setTimeout updateOldCommands, 2000
+    setTimeout updateOldCommands, 5000
 
 $ ->
   if $("#OldCommands").length > 0
-    setTimeout updateOldCommands, 2000
+    setTimeout updateOldCommands, 5000
