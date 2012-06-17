@@ -5,7 +5,7 @@ authorization do
       has_permission_on [:keys], :to => [:index, :show, :new, :create, :edit, :update, :destroy] do
         if_attribute :user => is { user }
       end
-      has_permission_on [:users], :to => [:show, :edit, :keys, :update, :reset_api_key] do
+      has_permission_on [:users], :to => [:show, :edit, :keys, :update, :reset_api_token] do
         if_attribute :id => is { user.id }
       end
       has_permission_on [:user_groups], :to => [:show, :index] do
