@@ -26,6 +26,7 @@ group :assets do
 end
 
 
+gem 'therubyracer'
 gem 'haml'
 gem 'haml-rails'
 
