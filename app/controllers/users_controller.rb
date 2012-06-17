@@ -31,6 +31,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def reset_api_token
+    @user = User.find(params[:id])
+    flash[:notice] = "Api token reseted."
+    @user.reset_single_access_token
+    @user.save
+    respond_to do |format|
+      format.html { redirect_to @user }
+      format.json { render json: @user }
+    end
+  end
+
   def keys
     @keys = User.find(params[:id]).keys
 

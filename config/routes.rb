@@ -6,16 +6,6 @@ Eip::Application.routes.draw do
   resources :host_acls, :only=>[:index, :create, :destroy]
   resources :roles, :only=>[:index, :create, :destroy]
 
-  namespace :admin do
-    resources :roles, :only=>[:index, :create, :destroy]
-    resources :users do
-      member do
-        post :add_role
-        delete :delete_role
-      end
-    end
-  end
-
   resources :user_groups do
     member do
       post :add_user
@@ -65,6 +55,7 @@ Eip::Application.routes.draw do
       get :keys
       post :add_role
       delete :delete_role
+      post :reset_api_token
     end
   end
   root :to => 'dashboard#index'

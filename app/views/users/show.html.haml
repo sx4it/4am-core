@@ -34,6 +34,7 @@
         %label.control-label API Token
         .controls
           %code= @user.single_access_token
+          = link_to 'Reset', reset_api_token_user_path(@user), :method => :post, :class => "btn btn-danger"
 
     - if permitted_to? :edit, @user
       .form-actions
