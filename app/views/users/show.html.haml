@@ -23,8 +23,8 @@
       %label.control-label Groups
       .controls
         - @user.user_group.each do |u|
-          %p
-            %span.label= link_to u.name, u
+          %li
+            %b.label= link_to u.name, u
     .control-group
       %label.control-label Roles
       .controls

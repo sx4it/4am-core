@@ -17,16 +17,18 @@
       %label.control-label Hosts in group
       .controls
         - @host_group.host.each do |u|
-          %a.btn.btn-small.btn-danger{href: url_for({:controller => :host_groups, :id => @host_group, :host_id => u, :action => :del_host})}
-            %i.icon-white.icon-remove
-            =u.name
+          %li.active
+            %b.label
+              = u.name
+              #{link_to 'x', url_for({:controller => :host_groups, :id => @host_group, :host_id => u, :action => :del_host}), :method => :delete}
     .control-group
       %label.control-label Hosts available
       .controls
         - @hosts.each do |u|
           - unless @host_group.host.include? u
-            %a.btn.btn-small.btn-success{href: url_for({:controller => :host_groups, :id => @host_group, :host_id => u, :action => :add_host})}
-              %i.icon-white.icon-plus-sign
-              =u.name
+            %li.active
+              %b.label.label-success
+                = u.name
+                #{link_to '+', url_for({:controller => :host_groups, :id => @host_group, :host_id => u, :action => :add_host}), :method => :post}
   .form-actions
     = f.submit 'Save', class: "btn btn-info"

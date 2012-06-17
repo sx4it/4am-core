@@ -21,5 +21,5 @@
             - if permitted_to? :show, cmd
               = link_to 'View', cmd, class: "btn btn-mini btn-info"
             - if permitted_to? :execute, @host
-              = link_to 'Execute', new_host_cmd_path(@host, {:command_id => cmd}), :remote => true, class: "btn btn-mini btn-warning"
+              = link_to 'Execute', host_cmd_path(@host, {:command_id => cmd}), :method => :post, :remote => true, class: "btn btn-mini btn-warning"
 

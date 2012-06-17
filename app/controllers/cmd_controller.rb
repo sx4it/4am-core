@@ -30,13 +30,13 @@ class CmdController < ApplicationController
   end
 
   def create
+    redisplay
   end
 
   def update
     @cmd = Cmd.find(params[:host_id], params[:id])
     @cmd.stop
     redisplay
-    #redirect_to host_path(params[:host_id])
   end
 
   def destroy

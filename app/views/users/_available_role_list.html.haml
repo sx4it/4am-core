@@ -3,4 +3,6 @@
   - @roles.each do |r|
     - unless @user.roles.include? r
       %li
-        = link_to r.name + ' +',{:id => @user, :role => r, :action => :add_role}, :remote => true, :method => :post, class: 'label label-success'
+        %b.label.label-success
+          = r.name
+          = link_to '+',{:id => @user, :role => r, :action => :add_role}, :remote => true, :method => :post
