@@ -8,7 +8,7 @@
       %div.span
         = link_to 'Clear finished', {:controller => :cmd, :host_id => @host, :action => :clear}, :method => :delete, :remote => true, class: "btn btn-mini btn-warning"
       %div.pull-right
-        %a{ href: refresh_host_cmd_index_path(@host), :data => {:remote => true}, class: 'btn btn-info btn-mini pull-rigth' }
+        %a{ :id => :refresh, href: refresh_host_cmd_index_path(@host), :data => {:remote => true}, class: 'btn btn-info btn-mini pull-rigth' }
           %i.icon-white.icon-refresh
           Refresh
 
