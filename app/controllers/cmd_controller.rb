@@ -58,6 +58,7 @@ class CmdController < ApplicationController
         @old_command = Cmd.all(params[:host_id])
         render 'commands/old_commands_list'
       }
+      format.json { render json: :status => :success }
    end
   end
 
