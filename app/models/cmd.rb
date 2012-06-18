@@ -1,10 +1,11 @@
 class Cmd
-  attr_accessor :id, :status, :time, :command, :log, :status_code, :hosts, :current_user, :hosts_id, :script, :type, :hosts_ip
+  attr_accessor :id, :status, :time, :command, :log, :status_code, :hosts, :current_user, :hosts_id, :script, :type, :hosts_ip, :group, :users, :user_groups
 
   def initialize(hash = {})
     hash.each do |k, v|
       self.instance_variable_set("@#{k}", v)
     end
+    @users ||= {}
     @time ||= Time.now
     @status ||= "started"
     @log ||= "-"
@@ -37,38 +38,82 @@ class Cmd
         $redis.del "#{@type}:#{@hosts[0].id}:#{@id}"
   end
 
+  def self.add_user
+
+  end
+
+  def launch_command
+    if @hosts.nil?
+      @hosts = @group.hosts
+      @id = $redis.incr "group-#{@group.id}:max"
+      $redis.set "cmd-grp:#{@group.id}:#{@id}", self.get_json
+      $redis.publish '4am-command', "cmd-grp:#{@group.id}:#{@id}"
+    else
+      @id = $redis.incr "host-#{@hosts[0].id}:max"
+      $redis.set "cmd-host:#{@hosts[0].id}:#{@id}", self.get_json
+      $redis.publish '4am-command', "cmd-host:#{@hosts[0].id}:#{@id}"
+    end
+  end
+
   def self.exec(host_id, command, current_user)
-    max = $redis.incr "#{host_id}:max"
-    cmd = Cmd.new(:command => Command.find(command), :hosts => [Host.find(host_id.to_i)], :id => max, :current_user => current_user, :log => "--contacting remote executor--\n")
-    $redis.set "cmd-host:#{host_id}:#{max}", cmd.get_json
-    $redis.publish '4am-command', "cmd-host:#{host_id}:#{max}"
+    cmd = Cmd.new(:command => Command.find(command), :hosts => [Host.find(host_id.to_i)], :current_user => current_user, :log => "--contacting remote executor--\n")
+    cmd.launch_command
     cmd
   end
+
+  def self.exec_group(group_id, command, current_user)
+    cmd = Cmd.new(:command => Command.find(command), :group => HostGroup.find(group_id.to_i), :current_user => current_user, :log => "--contacting remote executor--\n")
+    cmd.launch_command
+    cmd
+  end
+
   class Safe
-    attr_reader :current_host, :current_user
-    class SafeUser
-      attr_accessor :login, :email, :id
-      def initialize w
-        @login = w[:login]
-        @email = w[:email]
-        @id = w[:id]
-      end
-    end
+    attr_reader :current_host, :current_user, :users
     def binding
       super
     end
     def initialize s
-      @current_host = s.hosts[0]
-      @current_user = SafeUser.new :login => s.current_user.login, :email => s.current_user.email, :id => s.current_user.id
+      @current_host = s[:hosts][0]
+      @current_user = s[:current_user]
+      @users = s[:users]
+      @hosts = s[:hosts]
     end
   end
+
   def expand_template
       if @command
         erb = ERB.new @command.command
         begin
-          t = Thread.start {
+          context = {
+            :current_user =>
+              {
+                :login => @current_user.login,
+                :email => @current_user.email,
+                :id => @current_user.id,
+                :groups => @current_user.user_group.map {|g| g.name },
+                :keys => @current_user.keys.map {|k| k.value }
+              },
+            :users => @users.map { |u|
+                {
+                  :login => u.login,
+                  :email => u.email,
+                  :id => u.id,
+                  :groups => @current_user.user_group.map {|g| g.name },
+                  :keys => u.keys.map {|k| k.value }
+                }
+            },
+            :hosts => @hosts.map { |h|
+              {
+                :ip => h.ip,
+                :name => h.name
+              }
+            }
+
+          }
+
+          t = Thread.new {
               $SAFE = 4
-              s = Safe.new self
+              s = Safe.new context
               Thread.current[:script] = erb.result s.binding
           }
           t.join
