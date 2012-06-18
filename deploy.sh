@@ -135,11 +135,12 @@ fi
  
 echo "Installing rvm."
 curl -L https://get.rvm.io | bash -s stable 
-source /opt/4am//.rvm/scripts/rvm
+source /usr/local/rvm/scripts/rvm 
 echo "Installation of rvm completed."
 
 echo "Installing  ruby through rvm."
 rvm install ${RUBYVERS}
+rvm use ${RUBYVERS}
 echo "Installation of ruby completed."
 
 echo "Installing rails."
