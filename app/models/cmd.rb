@@ -44,11 +44,38 @@ class Cmd
     $redis.publish '4am-command', "cmd-host:#{host_id}:#{max}"
     cmd
   end
-
+  class Safe
+    attr_reader :current_host, :current_user
+    class SafeUser
+      attr_accessor :login, :email, :id
+      def initialize w
+        @login = w[:login]
+        @email = w[:email]
+        @id = w[:id]
+      end
+    end
+    def binding
+      super
+    end
+    def initialize s
+      @current_host = s.hosts[0]
+      @current_user = SafeUser.new :login => s.current_user.login, :email => s.current_user.email, :id => s.current_user.id
+    end
+  end
   def expand_template
       if @command
         erb = ERB.new @command.command
-        @script = erb.result binding
+        begin
+          t = Thread.start {
+              $SAFE = 4
+              s = Safe.new self
+              Thread.current[:script] = erb.result s.binding
+          }
+          t.join
+          @script = t[:script]
+        rescue Exception => error
+          @script = "#- #{error} -"
+        end
       end
   end
 

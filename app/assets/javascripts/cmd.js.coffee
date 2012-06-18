@@ -7,7 +7,7 @@ updateOldCommands = ->
   scroll = $(".modal-body").scrollTop()
   bottom = false
   elem = $(".modal-body")
-  if elem && elem[0].scrollHeight - scroll == elem.outerHeight()
+  if elem && elem[0] && elem[0].scrollHeight - scroll == elem.outerHeight()
     bottom = true
 
   $.getScript $("#refresh").attr("href") + ".js", ->
