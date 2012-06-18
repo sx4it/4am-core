@@ -105,6 +105,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
+        Cmd::Action.update_user @user
         format.html { redirect_to user_path(@user), notice: 'User was successfully updated.' }
         #format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { head :ok }
@@ -122,6 +123,7 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user = User.find(params[:id])
+    Cmd::Action.delete_user @user
     @user.destroy
 
     respond_to do |format|
@@ -133,7 +135,7 @@ class UsersController < ApplicationController
   def sort_column
     User.column_names.include?(params[:sort]) ? params[:sort] : "login"
   end
-  
+
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
