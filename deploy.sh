@@ -140,20 +140,20 @@ echo "Installation of rvm completed."
 
 echo "Installing  ruby through rvm."
 rvm install ${RUBYVERS}
-rvm use ${RUBYVERS}
+#rvm use ${RUBYVERS}
 echo "Installation of ruby completed."
 
-echo "Installing rails."
-gem install rails
-echo "Installation of rails completed."
+#echo "Installing rails."
+#gem install rails
+#echo "Installation of rails completed."
 
 echo "Cloning the git repo."
-git clone git://github.com/sx4it/4am-ui.git
+git clone git://github.com/sx4it/4am-ui.git --depth 1 --branch v2
+echo "Entering the repo, rvmrc will be launched..."
 cd 4am-ui/
-git checkout v2
 
-echo "Installing the gem dependencies."
-bundle install
+#echo "Installing the gem dependencies."
+#bundle install
 
 #chmod +x ${DEPLOYHOME}4am-deploy.sh
 #su -l -c ${DEPLOYHOME}4am-deploy.sh 4am
