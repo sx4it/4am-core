@@ -5,6 +5,8 @@
       view host:
       %b= @host.name
       %code= @host.ip
+      port:
+      %code= @host.port
 
 - unless @host.host_group.empty?
   %h3 Groups

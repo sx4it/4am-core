@@ -12,6 +12,7 @@
   %tr
     %th Name
     %th Ip
+    %th Port
     %th Host template
     %th Action
 
@@ -19,6 +20,7 @@
     %tr
       %td= host.name
       %td= host.ip
+      %td= host.port
       %td= host.host_tpl_id
       %td
         - if permitted_to? :show, host

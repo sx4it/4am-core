@@ -84,7 +84,7 @@ class Cmd
       dup.expand_template
       dup.command = dup.command.id
       dup.hosts_id = dup.hosts.map do |h| h.id end
-      dup.hosts = dup.hosts.map do |h| h.ip end
+      dup.hosts = dup.hosts.map do |h| {:ip => h.ip, :port => h.port} end
       dup.current_user = dup.current_user.id
       dup.to_json
   end
@@ -96,7 +96,7 @@ class Cmd
                   else
                     nil
                   end
-    cmd.hosts_ip = cmd.hosts.dup
+    cmd.hosts_ip = cmd.hosts.map do |h| "#{h['ip']}:#{h['port']}" end
     cmd.hosts = []
     cmd.hosts_id.each do |h|
       cmd.hosts << Host.find(cmd.hosts_id).first if Host.exists?(h)
