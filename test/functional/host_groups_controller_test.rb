@@ -2,7 +2,7 @@ require 'test_helper'
 
 class HostGroupsControllerTest < ActionController::TestCase
   setup do
-    @host_group = host_groups(:one)
+    @host_group = create(:host_group)
   end
 
   test "should get index" do
@@ -18,7 +18,7 @@ class HostGroupsControllerTest < ActionController::TestCase
 
   test "should create host_group" do
     assert_difference('HostGroup.count') do
-      post :create, host_group: { name: @host_group.name }
+      post :create, host_group: build(:host_group, :name => "new_host_group").attributes
     end
 
     assert_redirected_to host_group_path(assigns(:host_group))

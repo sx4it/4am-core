@@ -24,4 +24,4 @@
         - if permitted_to? :edit, command
           = link_to 'Edit', edit_command_path(command), class: "btn btn-mini btn-warning"
         - if permitted_to? :destroy, command
-          = link_to 'Destroy', command, :confirm => 'Are you sure?', :method => :delete, class: "btn btn-mini btn-danger"
+          = link_to 'Destroy', command, {:data => {:confirm => 'Are you sure?'}}, :method => :delete, class: "btn btn-mini btn-danger"

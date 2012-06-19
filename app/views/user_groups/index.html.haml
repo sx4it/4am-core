@@ -22,4 +22,4 @@
           - if permitted_to? :edit, user_group
             = link_to 'Edit', edit_user_group_path(user_group), class: "btn btn-mini btn-warning"
           - if permitted_to? :destroy, user_group
-            = link_to 'Destroy', user_group, :confirm => 'Are you sure?', :method => :delete, class: "btn btn-mini btn-danger"
+            = link_to 'Destroy', user_group, {:data => {:confirm => 'Are you sure?'}}, :method => :delete, class: "btn btn-mini btn-danger"

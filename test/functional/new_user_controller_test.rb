@@ -7,8 +7,10 @@ class NewUserControllerTest < ActionController::TestCase
   end
 
   test "should get create" do
-    get :create
-    assert_response :success
+    assert_difference('User.count', 1) do
+      post :create, user: {:login => "new_user", :password => "123456", :password_confirmation => "123456", :email => "new_user@yopmail.com"}
+    end
+    assert_redirected_to root_url
   end
 
 end

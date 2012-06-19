@@ -230,49 +230,49 @@ class Cmd
     end
 
     def self.add_host_acl acl, current_user
-      cmd = Command.find_by_name(__method__.to_s)
-      if cmd.nil?
-        throw "command #{__method__} missing."
-      end
-      if acl.users.type == "User"
-        users = [acl.users]
-        group_name = ""
-      else
-        users = acl.users.user
-        group_name = acl.users.name
-      end
-      if acl.hosts.type == "Host"
-        hosts = [acl.hosts]
-        group = []
-      else
-        hosts = []
-        group = acl.hosts
-      end
-      cmd = Cmd.new(:command => cmd, :users => users, :group_name => group_name, :group => group, :hosts => hosts, :current_user => current_user, :log => "--adding new acl--\n--contacting remote executor--\n")
-      cmd.launch_command
+#      cmd = Command.find_by_name(__method__.to_s)
+#      if cmd.nil?
+#        throw "command #{__method__} missing."
+#      end
+#      if acl.users.type == "User"
+#        users = [acl.users]
+#        group_name = ""
+#      else
+#        users = acl.users.user
+#        group_name = acl.users.name
+#      end
+#      if acl.hosts.type == "Host"
+#        hosts = [acl.hosts]
+#        group = []
+#      else
+#        hosts = []
+#        group = acl.hosts
+#      end
+#      cmd = Cmd.new(:command => cmd, :users => users, :group_name => group_name, :group => group, :hosts => hosts, :current_user => current_user, :log => "--adding new acl--\n--contacting remote executor--\n")
+#      cmd.launch_command
     end
 
     def self.delete_host_acl acl, current_user
-      cmd = Command.find_by_name(__method__.to_s)
-      if cmd.nil?
-        throw "command #{__method__} missing."
-      end
-      if acl.users.type == "User"
-        users = [acl.users]
-        group_name = ""
-      else
-        users = acl.users.user
-        group_name = acl.users.name
-      end
-      if acl.hosts.type == "Host"
-        hosts = [acl.hosts]
-        group = []
-      else
-        hosts = []
-        group = acl.hosts
-      end
-      cmd = Cmd.new(:command => cmd, :users => users, :group_name => group_name, :group => group, :hosts => hosts, :current_user => current_user, :log => "--adding new acl--\n--contacting remote executor--\n")
-      cmd.launch_command
+#      cmd = Command.find_by_name(__method__.to_s)
+#      if cmd.nil?
+#        throw "command #{__method__} missing."
+#      end
+#      if acl.users.type == "User"
+#        users = [acl.users]
+#        group_name = ""
+#      else
+#        users = acl.users.user
+#        group_name = acl.users.name
+#      end
+#      if acl.hosts.type == "Host"
+#        hosts = [acl.hosts]
+#        group = []
+#      else
+#        hosts = []
+#        group = acl.hosts
+#      end
+#      cmd = Cmd.new(:command => cmd, :users => users, :group_name => group_name, :group => group, :hosts => hosts, :current_user => current_user, :log => "--adding new acl--\n--contacting remote executor--\n")
+#      cmd.launch_command
     end
 
     def self.delete_host host

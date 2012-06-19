@@ -1,5 +1,4 @@
 class Host < ActiveRecord::Base
-  using_access_control
   validates :name, :presence => true
   validates :ip, :presence => true
   validates :port, :presence => true, :numericality => true
