@@ -104,7 +104,6 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        Cmd::Action.update_user @user
         format.html { redirect_to user_path(@user), notice: 'User was successfully updated.' }
         format.json { head :ok }
       else
@@ -121,7 +120,6 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user = User.find(params[:id])
-    Cmd::Action.delete_user @user
     @user.destroy
 
     respond_to do |format|

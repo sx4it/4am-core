@@ -80,13 +80,14 @@ class Cmd
   end
 
   class Safe
-    attr_reader :current_host, :current_user, :users, :hosts, :group_name
+    attr_reader :current_host, :current_user, :users, :hosts, :group_name, :user
     def binding
       super
     end
     def initialize s
-      @current_host = s[:hosts][0]
+      @current_host = s[:hosts].first
       @current_user = s[:current_user]
+      @user = s[:users].first
       @users = s[:users]
       @hosts = s[:hosts]
       @group_name = s[:group_name]
@@ -166,7 +167,7 @@ class Cmd
     end
     cmd.hosts = []
     cmd.hosts_id.each do |h|
-      cmd.hosts << Host.find(cmd.hosts_id).first if Host.exists?(h)
+      cmd.hosts << Host.find(h) if Host.exists?(h)
     end
     cmd.current_user = if User.exists?(cmd.current_user)
                         User.find(cmd.current_user)
@@ -192,91 +193,77 @@ class Cmd
   end
 
   class Action
-    def self.add_host_in_group group, host
-    end
-
-    def self.del_host_in_group group, host
-    end
-
-    def self.add_user_in_group group, user
-    end
-
-    def self.del_user_in_group group, user
-    end
-
-    def self.update_user_group group
-    end
-
-    def self.delete_user_group group
-    end
-
-    def self.update_user user
-      #cmd = Command.find_by_name(__method__.to_s)
-      #if cmd.nil?
-      #  throw "command #{__method__} missing."
-      #end
-    end
-
-    def self.new_user_key user, key
-    end
-
-    def self.update_user_key user, key
-    end
-
-    def self.delete_user_key user, key
-    end
-
-    def self.delete_user user
-    end
 
     def self.add_host_acl acl, current_user
-#      cmd = Command.find_by_name(__method__.to_s)
-#      if cmd.nil?
-#        throw "command #{__method__} missing."
-#      end
-#      if acl.users.type == "User"
-#        users = [acl.users]
-#        group_name = ""
-#      else
-#        users = acl.users.user
-#        group_name = acl.users.name
-#      end
-#      if acl.hosts.type == "Host"
-#        hosts = [acl.hosts]
-#        group = []
-#      else
-#        hosts = []
-#        group = acl.hosts
-#      end
-#      cmd = Cmd.new(:command => cmd, :users => users, :group_name => group_name, :group => group, :hosts => hosts, :current_user => current_user, :log => "--adding new acl--\n--contacting remote executor--\n")
-#      cmd.launch_command
+      if acl.users.type == "User"
+        users = [acl.users]
+        group_name = ""
+      else
+        users = acl.users.user
+        group_name = acl.users.name
+      end
+      if acl.hosts.type == "Host"
+        hosts = [acl.hosts]
+      else
+        hosts = acl.hosts.host
+      end
+      hosts.each do |host|
+        users.each do |user|
+          add_user user, host, group_name, current_user
+        end
+      end
     end
 
     def self.delete_host_acl acl, current_user
-#      cmd = Command.find_by_name(__method__.to_s)
-#      if cmd.nil?
-#        throw "command #{__method__} missing."
-#      end
-#      if acl.users.type == "User"
-#        users = [acl.users]
-#        group_name = ""
-#      else
-#        users = acl.users.user
-#        group_name = acl.users.name
-#      end
-#      if acl.hosts.type == "Host"
-#        hosts = [acl.hosts]
-#        group = []
-#      else
-#        hosts = []
-#        group = acl.hosts
-#      end
-#      cmd = Cmd.new(:command => cmd, :users => users, :group_name => group_name, :group => group, :hosts => hosts, :current_user => current_user, :log => "--adding new acl--\n--contacting remote executor--\n")
-#      cmd.launch_command
+      if acl.users.type == "User"
+        users = [acl.users]
+        group_name = ""
+      else
+        users = acl.users.user
+        group_name = acl.users.name
+      end
+      if acl.hosts.type == "Host"
+        hosts = [acl.hosts]
+      else
+        hosts = acl.hosts.host
+      end
+      hosts.each do |host|
+        users.each do |user|
+          del_user user, host, group_name, current_user
+        end
+      end
     end
 
-    def self.delete_host host
+    private
+
+    def self.has_other_rights? user, host
+      Host.get_number_of_permissions(:execute, :user => user, :host => host) > 1
     end
+
+    def self.add_user user, host, group_name, current_user
+      unless has_other_rights?(user, host)
+        cmd = Command.find_by_name(__method__)
+        unless cmd.nil?
+          cmd = Cmd.new(:command => cmd, :users => [user], :group_name => group_name, :hosts => [host], :current_user => current_user, :log => "--adding new acl--\n--contacting remote executor--\n")
+          cmd.launch_command
+        else
+          puts "Error cannot find command #{__method__}"
+        end
+      end
+    end
+
+    def self.del_user user, host, group_name, current_user
+      unless has_other_rights?(user, host)
+        cmd = Command.find_by_name(__method__)
+        unless cmd.nil?
+          cmd = Cmd.new(:command => cmd, :users => [user], :group_name => group_name, :hosts => [host], :current_user => current_user, :log => "--adding new acl--\n--contacting remote executor--\n")
+          cmd.launch_command
+        else
+          puts "Error cannot find command #{__method__}"
+        end
+      end
+    end
+
   end
 
 end

@@ -7,8 +7,8 @@ class HostGroup < ActiveRecord::Base
 
   def self.with_permissions_to(permission, *args)
     options = args.extract_options!.dup
-    self.all(options).select do |t|
-      t.permitted_to? permission
+    self.all.select do |t|
+      t.permitted_to? permission, options
     end
   end
   def type
