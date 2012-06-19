@@ -83,17 +83,17 @@ then
     # DEBIAN
     function dependencies
     {
+        DEBIANDEP="build-essential openssl libreadline6 \
+        libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev \
+        libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf \
+        libc6-dev ncurses-dev automake libtool bison subversion"
+        DEBIANDEP=${DEBIANDEP}" libcurl4-openssl-dev"  # Needed for NGINX/Passenger
+        DEBIANDEP=${DEBIANDEP}" libmysqlclient-dev"  # Needed for NGINX/Passenger
         echo "Updating the system."
         apt-get update && apt-get dist-upgrade -y
         
         echo "Installing some interesting package."
-        /usr/bin/apt-get install -y build-essential openssl libreadline6 \
-        libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev \
-        libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf \
-        libc6-dev ncurses-dev automake libtool bison subversion \
-        libcurl4-openssl-dev # Needed for NGINX/Passenger
-        #apt-get install libcurl4-openssl-dev
-        #gcc make
+        /usr/bin/apt-get install -y $DEBIANDEP
     }
 
     function mysql_install
@@ -111,6 +111,8 @@ then
     {
         echo "Adding user..."
         adduser --system --force-badname --home $DEPLOYHOME --shell /bin/bash --disabled-password 4am
+        addgroup --system --force-badname 4am
+        adduser 4am 4am
     }
 
 elif [ -f /etc/centos-release ]
@@ -124,7 +126,10 @@ then
         yum install -y gcc-c++ patch readline readline-devel zlib zlib-devel \
         libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake \
         libtool bison git \
-        curl-devel # Needed for passenger/nginx
+        curl-devel mysql-devel # curl-dev needed for passenger/nginx and mysql-devel for...  mysql
+
+        yum install -y sqlite-devel # FIXME Useless in prod, Gemfile/rvmrc need to be improved
+        
     }
  
     function add_dedicated_user
@@ -137,11 +142,11 @@ then
     {
         #INSTALLER_LOG=/var/log/non-interactive-installer.log
         rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-7.noarch.rpm
-        rpm -i http://mirrors.servercentral.net/fedora/epel/6/i386/epel-release-6-7.noarch.rpm
 
         echo "Installing mysql and pwgen."
         yum install -y mysql-server pwgen
     
+        /etc/init.d/mysqld start
         DBPASS=$(pwgen -s 12 1)
         /usr/bin/mysqladmin -u root password "${DBPASS}"
         echo "MySQL Password set to '${DBPASS}'. Remember to delete ~/.mysql.passwd" | tee ~/.mysql.passwd
@@ -185,7 +190,7 @@ function  install_rvm
 function  install_ruby
 {
     echo "Installing  ruby through rvm."
-    rvm install ${RUBYVERS}
+    command rvm install ${RUBYVERS}
     #rvm use ${RUBYVERS}
     echo "Installation of ruby completed."
 }
@@ -196,6 +201,7 @@ install_ruby
 echo "Cloning the git repo."
 git clone git://github.com/sx4it/4am-ui.git --depth 1 --branch v2 $DEPLOYHOME/www/
 echo "Entering the repo, rvmrc will be launched..."
+rvm rvmrc trust $DEPLOYHOME/www/
 cd $DEPLOYHOME/www/
 
 ### NGINX & PASSENGER
@@ -241,7 +247,6 @@ echo -e "\n\n\n\n\n\n\n" | \
   openssl req -new -x509 -days 10000 -keyout ${NGINXHOME}/conf/ssl/server.key -out \
   ${NGINXHOME}/conf/ssl/server.crt -config ${NGINXHOME}/conf/ssl/server-openssl.cnf
 
-chown -R 4am: $DEPLOYHOME/www/
 
 mv ${NGINXHOME}/conf/nginx.conf ${NGINXHOME}/conf/nginx.conf.bak
 cat <<EOF > ${NGINXHOME}/conf/nginx.conf
@@ -285,12 +290,18 @@ http {
         ssl_ciphers  HIGH:!aNULL:!MD5;
         ssl_prefer_server_ciphers   on;
 
-        root ${DEPLOYHOME}/www/;
+        root ${DEPLOYHOME}/www/public/;
         passenger_enabled on;
         passenger_set_cgi_param X-SSL_CLIENT_CERT \$ssl_client_raw_cert;
         passenger_set_cgi_param HTTP_X_FORWARDED_PROTO https;
         passenger_use_global_queue on;
         passenger_min_instances 2;
+
+        location ~ ^/(assets)/  {
+          gzip_static on; # to serve pre-gzipped version
+          expires max;
+          add_header Cache-Control public;
+        }
     }
 
     passenger_pre_start https://\$hostname/;
@@ -309,10 +320,13 @@ production:
 EOF
 
 rake RAILS_ENV=production db:setup
+rake assets:precompile
+chown -R 4am: $DEPLOYHOME/www/
 
 cat <<EOF
-Your installation is finished you now need to init the database.
-Blabla 4am-init
+------ SUCCESS ------
+Your installation is finished.
+You basicly only need to start nginx $NGINXHOME/sbin/nginx .
 EOF
 
 exit 0
