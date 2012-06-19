@@ -86,11 +86,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
 
-
     respond_to do |format|
       if @user.save
-        format.html { redirect_to users_url, notice: 'User was successfully created.' }
-        format.json { render json: users_url, status: :created, location: @user }
+        format.html { redirect_to user_path(@user), notice: 'User was successfully created.' }
+        format.json { render json: user_path(@user), status: :created, location: @user }
       else
         format.html { render action: "new" }
         format.json { render json: @users.errors, status: :unprocessable_entity }
@@ -107,7 +106,6 @@ class UsersController < ApplicationController
       if @user.update_attributes(params[:user])
         Cmd::Action.update_user @user
         format.html { redirect_to user_path(@user), notice: 'User was successfully updated.' }
-        #format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { head :ok }
       else
         format.html {

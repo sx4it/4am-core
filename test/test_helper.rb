@@ -1,13 +1,22 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
+require 'declarative_authorization/maintenance'
+require 'authlogic/test_case'
 
 class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
+  include Authorization::TestHelper
   fixtures :all
+end
 
-  # Add more helper methods to be used by all tests here...
+class ActionController::TestCase
+  include Authorization::TestHelper
+  include FactoryGirl::Syntax::Methods
+  include Authlogic::TestCase
+  attr_reader :admin
+  setup do
+    activate_authlogic
+    @admin = create(:admin)
+    UserSession.create(@admin)
+  end
 end

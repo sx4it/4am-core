@@ -32,6 +32,7 @@ gem 'haml-rails'
 
 
 #gem 'mongrel'
+gem 'factory_girl_rails'
 
 gem "will_paginate"
 
