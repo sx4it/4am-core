@@ -13,6 +13,7 @@ class HostAclsController < ApplicationController
     if @new_acl.valid? and h.valid?
         @errors = nil
         h.save
+        Cmd::Action.add_host_acl h, current_user
         redisplay_acl
     else
       @errors = h.errors.dup unless h.valid?
@@ -26,6 +27,7 @@ class HostAclsController < ApplicationController
 
   def destroy
     @acl = HostAcl.find params[:id]
+    Cmd::Action.delete_host_acl @acl, current_user
     @acl.destroy
     redisplay_acl
   end

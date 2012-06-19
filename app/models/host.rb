@@ -2,6 +2,7 @@ class Host < ActiveRecord::Base
   using_access_control
   validates :name, :presence => true
   validates :ip, :presence => true
+  validates :port, :presence => true, :numericality => true
   validates_uniqueness_of :name
    has_and_belongs_to_many :host_group
    has_many :host_acl, :as => :hosts, :dependent => :delete_all

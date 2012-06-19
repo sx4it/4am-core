@@ -39,6 +39,7 @@ class HostGroupsController < ApplicationController
     @host_group = HostGroup.find(params[:id])
     @host = Host.find(params[:host_id])
     @host_group.host << @host
+    Cmd::Action.add_host_in_group @host_group, @host
     redirect_to edit_host_group_path(@host_group)
   end
 
@@ -46,6 +47,7 @@ class HostGroupsController < ApplicationController
     @host_group = HostGroup.find(params[:id])
     @host = Host.find(params[:host_id])
     @host_group.host.delete @host
+    Cmd::Action.del_host_in_group @host_group, @host
     redirect_to edit_host_group_path(@host_group)
   end
 

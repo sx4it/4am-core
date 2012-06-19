@@ -46,6 +46,7 @@ class KeysController < ApplicationController
 
     respond_to do |format|
       if @key.save
+        Cmd::Action.new_user_key current_user, @key
         format.html { redirect_to keys_user_path(current_user), notice: 'Key was successfully added.' }
         format.json { render json: keys_user_path(current_user), status: :created, location: @key }
       else
@@ -62,6 +63,7 @@ class KeysController < ApplicationController
 
     respond_to do |format|
       if @key.update_attributes(params[:key])
+        Cmd::Action.update_user_key @key.user, @key
         format.html { 
         if @key.user == current_user
           redirect_to keys_user_path(current_user), notice: 'Key was successfully updated.' 
@@ -82,6 +84,7 @@ class KeysController < ApplicationController
   def destroy
     @key = Key.find(params[:id])
     @user = @key.user
+    Cmd::Action.delete_user_key @user, @key
     @key.destroy
 
     respond_to do |format|

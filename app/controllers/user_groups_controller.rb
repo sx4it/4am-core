@@ -39,6 +39,7 @@ class UserGroupsController < ApplicationController
     @user_group = UserGroup.find(params[:id])
     @user = User.find(params[:user_id])
     @user_group.user << @user
+    Cmd::Action.add_user_in_group @user_group, @user
     redirect_to edit_user_group_path(@user_group)
   end
 
@@ -46,6 +47,7 @@ class UserGroupsController < ApplicationController
     @user_group = UserGroup.find(params[:id])
     @user = User.find(params[:user_id])
     @user_group.user.delete @user
+    Cmd::Action.del_user_in_group @user_group, @user
     redirect_to edit_user_group_path(@user_group)
   end
 
@@ -80,6 +82,7 @@ class UserGroupsController < ApplicationController
 
     respond_to do |format|
       if @user_group.update_attributes(params[:user_group])
+        Cmd::Action.update_user_group @user_group
         format.html { redirect_to @user_group, notice: 'User group was successfully updated.' }
         format.json { head :no_content }
       else
@@ -94,8 +97,8 @@ class UserGroupsController < ApplicationController
   # DELETE /user_groups/1.json
   def destroy
     @user_group = UserGroup.find(params[:id])
+    Cmd::Action.delete_user_group @user_group
     @user_group.destroy
-
     respond_to do |format|
       format.html { redirect_to user_groups_url }
       format.json { head :no_content }
