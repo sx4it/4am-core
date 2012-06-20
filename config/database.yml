@@ -1,10 +1,12 @@
+production:
+  adapter: mysql2
+  encoding: utf8
+  database: 4am_experimental
+  pool: 10
+  username: root
+  password: JFKssdzjFL3x
+  host: 127.0.0.1
 test:
   adapter: sqlite3
   database: db/test.sqlite3
   pool: 5
-  timeout: 5000
-development:
-  adapter: sqlite3
-  database: db/development.sqlite3
-  pool: 5
-  timeout: 5000
