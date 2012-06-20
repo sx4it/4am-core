@@ -10,16 +10,16 @@ admin = Role.create(:name => 'admin')
 u.roles << admin
 u.save
 
-Command.create :name => 'ls', :commmand => 'ls -l'
-Command.create :name => 'uname', :commmand => 'uname -a'
-Command.create :name => 'ping google', :commmand => 'ping google.com'
-Command.create :name => 'add_user', :commmand => 'useradd -m <%= user[:login] %>;
+Command.create :name => 'ls', :command => 'ls -l'
+Command.create :name => 'uname', :command => 'uname -a'
+Command.create :name => 'ping google', :command => 'ping google.com'
+Command.create :name => 'add_user', :command => 'useradd -m <%= user[:login] %>;
 mkdir ~<%=user[:login]%>/.ssh/ ;
 <% user[:keys].each do |k| %>
 echo "<%=k%>">> ~<%=user[:login]%>/.ssh/authorized_keys ;
 <% end %>
 chown -R <%=user[:login]%> ~<%=user[:login]%>/ ;'
-Command.create :name => 'del_user', :commmand => 'userdel -r -f <%= user[:login] %>;'
+Command.create :name => 'del_user', :command => 'userdel -r -f <%= user[:login] %>;'
 
 #TODO command add user
 

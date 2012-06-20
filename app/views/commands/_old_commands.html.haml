@@ -34,7 +34,7 @@
               = link_to 'stop', host_cmd_path(@host, cmd.id), :method => :put, :remote => true, class: "btn btn-mini btn-warning pull-right"
           %td
             %center
-              %code= cmd.script
+              %code= cmd.script[0..30] + (cmd.script.size > 30 ? "...": "")
           %td
             %center
               %span.label.label-info= cmd.status

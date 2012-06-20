@@ -25,10 +25,10 @@
           - if cmd.command
             = link_to cmd.command.name, command_path(cmd.command.id)
           - else
-            = cmd.script
+            = cmd.script.split[0]
         %td
           %center
-            %code= cmd.script
+            %code= cmd.script[0..30] + (cmd.script.size > 30 ? "...": "")
         %td
           %center
             %span.label.label-info= cmd.status
