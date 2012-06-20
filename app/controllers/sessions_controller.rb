@@ -7,6 +7,9 @@ class SessionsController < ApplicationController
   end
 
   def new
+    unless request.env['X-SSL_CLIENT_CERT'].nil?
+      @cert = OpenSSL::X509::Certificate.new request.env['X-SSL_CLIENT_CERT']
+    end
   end
 
   def create

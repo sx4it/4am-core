@@ -1,4 +1,4 @@
-
+// FIXME should be merged with app/views/keys/index.html.haml
 .page-header
   %h1
     SSH Key
@@ -12,6 +12,7 @@
   %tbody
     %tr
       %th Name
+      %th Type
       %th Value
 
     - @keys.each do |key|
@@ -20,6 +21,8 @@
           %code= key.name
           = link_to 'Edit', edit_key_path(key), :class => "btn btn-mini btn-warning"
           = link_to 'Delete', key, :method => :delete, :class => "btn btn-mini btn-danger"
+        %td.key_type
+          = key.keytype
         %td.key_value
           %pre= key.value
 

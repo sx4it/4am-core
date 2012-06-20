@@ -41,12 +41,15 @@ class KeysController < ApplicationController
   # POST /keys
   # POST /keys.json
   def create
-    @key = Key.create(params[:key])
-    @key.user = current_user
+    @key = Key.new do |k|
+      k.ssh_key = params[:key][:ssh_key]
+      k.name = params[:key][:name]
+      k.user = current_user
+    end
 
     respond_to do |format|
       if @key.save
-        format.html { redirect_to key_path(@key), notice: 'Key was successfully added.' }
+        format.html { redirect_to keys_user_path(current_user), notice: 'Key was successfully added.' }
         format.json { render json: key_path(@key), status: :created, location: @key }
       else
         format.html { render action: "new" }
@@ -79,6 +82,8 @@ class KeysController < ApplicationController
     @key = Key.find(params[:id])
     @user = @key.user
     @key.destroy
+
+    # FIXME Should be removed from hosts
 
     respond_to do |format|
       format.html { 

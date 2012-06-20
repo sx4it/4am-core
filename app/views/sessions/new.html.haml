@@ -7,6 +7,9 @@
         %i.icon-white.icon-plus-sign
         New Account
 
+  - unless request.env['X-SSL_CLIENT_CERT'].nil?
+    %h2 SSL Certificate detected
+    %code= @cert.public_key.class
   //%h2 Connect to the admin space
   //%p If you wish to connect without your X509 certificate, please use this form
   = form_tag login_path, :method => :post, :class => 'form-horizontal' do
