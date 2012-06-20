@@ -205,7 +205,6 @@ rvm rvmrc trust $DEPLOYHOME/www/
 cd $DEPLOYHOME/www/
 
 ### NGINX & PASSENGER
-gem install passenger
 passenger-install-nginx-module --auto --auto-download --prefix=${NGINXHOME}
 
 ## Self signed certificate for nginx and the client authentication
@@ -273,7 +272,7 @@ http {
 
     server {
         listen          443 default_server ssl;
-        server_name     \$hostname;
+        server_name     _;
 
         access_log      logs/access.log;
 
@@ -304,7 +303,7 @@ http {
         }
     }
 
-    passenger_pre_start https://\$hostname/;
+    passenger_pre_start https://localhost/;
 }
 EOF
 
