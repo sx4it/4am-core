@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserGroupsControllerTest < ActionController::TestCase
   setup do
-    @user_group = user_groups(:one)
+    @user_group = create :user_group
   end
 
   test "should get index" do
@@ -18,7 +18,7 @@ class UserGroupsControllerTest < ActionController::TestCase
 
   test "should create user_group" do
     assert_difference('UserGroup.count') do
-      post :create, user_group: { name: @user_group.name }
+      post :create, user_group: build(:user_group, :name => "new_user_group").attributes
     end
 
     assert_redirected_to user_group_path(assigns(:user_group))

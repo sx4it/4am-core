@@ -32,8 +32,11 @@ gem 'therubyracer'
 gem 'haml'
 gem 'haml-rails'
 
+gem 'ruby-prof'
+
 
 #gem 'mongrel'
+gem 'factory_girl_rails'
 
 gem "will_paginate"
 

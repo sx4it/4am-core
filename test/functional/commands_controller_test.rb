@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CommandsControllerTest < ActionController::TestCase
   setup do
-    @command = commands(:one)
+    @command = create :command
   end
 
   test "should get index" do
@@ -18,7 +18,7 @@ class CommandsControllerTest < ActionController::TestCase
 
   test "should create command" do
     assert_difference('Command.count') do
-      post :create, command: { command: @command.command, name: @command.name }
+      post :create, command: build(:command, :name => "new_command").attributes
     end
 
     assert_redirected_to command_path(assigns(:command))

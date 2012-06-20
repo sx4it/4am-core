@@ -77,7 +77,6 @@ class HostsController < ApplicationController
   # DELETE /hosts/1.json
   def destroy
     @host = Host.find(params[:id])
-    Cmd::Action.delete_host @host
     @host.destroy
 
     respond_to do |format|

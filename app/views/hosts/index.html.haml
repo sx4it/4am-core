@@ -28,4 +28,4 @@
         - if permitted_to? :edit, host
           = link_to 'Edit', edit_host_path(host), class: "btn btn-mini btn-warning"
         - if permitted_to? :destroy, host
-          = link_to 'Delete', host, :confirm => 'Are you sure?', :method => :delete, class: "btn btn-mini btn-danger"
+          = link_to 'Delete', host, {:data => {:confirm => 'Are you sure?', :method => :delete}, class: "btn btn-mini btn-danger"}
