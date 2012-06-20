@@ -43,7 +43,9 @@ class KeysController < ApplicationController
   def create
     @key = Key.new do |k|
       k.ssh_key = params[:key][:ssh_key]
-      k.name = params[:key][:name]
+      unless params[:key][:name].nil? || params[:key][:name].size == 0
+        k.name = params[:key][:name]
+      end
       k.user = current_user
     end
 
