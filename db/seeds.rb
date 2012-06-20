@@ -10,9 +10,9 @@ admin = Role.create(:name => 'admin')
 u.roles << admin
 u.save
 
-Command.create :name => 'ls', :commnand => 'ls -l'
-Command.create :name => 'uname', :commnand => 'uname -a'
-Command.create :name => 'ping google', :commnand => 'ping google.com'
+Command.create :name => 'ls', :commmand => 'ls -l'
+Command.create :name => 'uname', :commmand => 'uname -a'
+Command.create :name => 'ping google', :commmand => 'ping google.com'
 
 #TODO command add user
 

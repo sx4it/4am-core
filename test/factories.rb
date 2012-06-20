@@ -42,7 +42,7 @@ FactoryGirl.define do
 
   factory :key do
     name "key"
-    value "key"
+    ssh_key "ssh-rsa key key"
     user { create :user, :login => name + "_user" }
   end
 end

@@ -56,10 +56,10 @@ ActiveRecord::Schema.define(:version => 20120620040000) do
 
   create_table "keys", :force => true do |t|
     t.string   "name"
-    t.binary   "value"
+    t.binary   "value",      :limit => 255
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
     t.string   "keytype"
   end
 
