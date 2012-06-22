@@ -7,8 +7,14 @@ class SessionsController < ApplicationController
   end
 
   def new
-    unless request.env['X-SSL_CLIENT_CERT'].nil?
-      @cert = OpenSSL::X509::Certificate.new request.env['X-SSL_CLIENT_CERT']
+    unless request.env['X-SSL_CLIENT_CERT'].nil? or request.env['X-SSL_CLIENT_CERT'].size == 0
+      cert = OpenSSL::X509::Certificate.new request.env['X-SSL_CLIENT_CERT']
+      @pkey = Key.where('keytype = ? AND value = ?', cert.public_key.ssh_type, [ cert.public_key.to_blob ].pack('m0'))
+      if @pkey.count == 0
+        @pkey = 'no result found'
+      else
+        @pkey = @pley.user.login
+      end
     end
   end
 

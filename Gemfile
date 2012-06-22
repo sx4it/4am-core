@@ -60,6 +60,7 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 # We can only use passenger as web server because unicorn and webrick do not
 # support to receive the raw ssl certificate via an environment variable
 gem 'passenger'
+gem 'net-ssh'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
