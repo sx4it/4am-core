@@ -1,1 +1,5 @@
-$redis = Redis.new(:host => 'dev2.sx4it.com', :port => 42163)
+if not Rails.application.config.am['redis']['path'].nil?
+  Redis.current = Redis.new(:path => Rails.application.config.am['redis']['path'])
+else
+  Redis.current = Redis.new(:host => Rails.application.config.am['redis']['host'], :port => Rails.application.config.am['redis']['port'])
+end

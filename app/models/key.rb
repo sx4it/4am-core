@@ -1,5 +1,5 @@
 class Key < ActiveRecord::Base
-  KEY_TYPES = %w(rsa dsa)
+  KEY_TYPES = %w(ssh-rsa ssh-dss)
   validates :value, :presence => true # FIXME Should probably be checked
   validates :keytype, :presence => true, :inclusion => { :in => KEY_TYPES,
         :message => "%{value} is not a valid key type" }
@@ -16,11 +16,11 @@ class Key < ActiveRecord::Base
       self.errors['ssh_key'] << "Invalid format, the string is supposed to have two or three fields."
       return false
     end
-    unless KEY_TYPES.map {|type| 'ssh-' + type }.include? key[0]
+    unless KEY_TYPES.map {|type| type }.include? key[0]
       self.errors['ssh_key'] << "Invalid key type."
       return false
     end
-    self[:keytype] = key[0][4..-1]
+    self[:keytype] = key[0]
     self[:value] = key[1]
     self[:name] = key[2]
     ssh_key
@@ -28,7 +28,7 @@ class Key < ActiveRecord::Base
 
   def ssh_key
     unless self[:keytype].nil? || self[:value].nil? || self[:name].nil?
-      "ssh-#{self[:keytype]} #{self[:value]} #{self[:name]}"
+      "#{self[:keytype]} #{self[:value]} #{self[:name]}"
     end
   end
 end

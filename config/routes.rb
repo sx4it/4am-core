@@ -1,4 +1,4 @@
-Eip::Application.routes.draw do
+AM::Application.routes.draw do
 
   get "log" => "log#index"
 

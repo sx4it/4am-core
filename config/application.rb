@@ -9,7 +9,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-module Eip
+module AM
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -51,5 +51,6 @@ module Eip
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '0.0.1.2'
+    config.am = YAML.load_file(Rails.root.join('config', '4am.yml'))[Rails.env]
   end
 end

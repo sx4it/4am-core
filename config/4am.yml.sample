@@ -1,0 +1,17 @@
+defaults: &defaults
+  redis:
+    host: dev2.sx4it.com
+    port: 42163
+  ssl:
+    ca_path: config/ssl.crt
+#   timeout:
+#   path:
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

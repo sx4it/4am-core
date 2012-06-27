@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Eip::Application.load_tasks
+AM::Application.load_tasks
