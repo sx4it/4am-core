@@ -39,4 +39,10 @@ class User < ActiveRecord::Base
     t = self.class.to_s
   end
 
+  def self.find_by_x509(cert_str)
+    logger.debug "Searching the user matching to the certificate:\n#{cert_str}"
+    cert = OpenSSL::X509::Certificate.new cert_str
+    User.joins(:keys).where(:keys => {:keytype => cert.public_key.ssh_type, :value => [ cert.public_key.to_blob ].pack('m0')}).first
+  end
+
 end
