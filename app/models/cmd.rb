@@ -104,7 +104,7 @@ class Cmd
                 :email => @current_user.email,
                 :id => @current_user.id,
                 :groups => @current_user.user_group.map {|g| g.name },
-                :keys => @current_user.keys.map {|k| k.value }
+                :keys => @current_user.keys.map {|k| k.ssh_key }
               },
             :users => @users.map { |u|
                 {
@@ -112,7 +112,7 @@ class Cmd
                   :email => u.email,
                   :id => u.id,
                   :groups => u.user_group.map {|g| g.name },
-                  :keys => u.keys.map {|k| k.value }
+                  :keys => u.keys.map {|k| k.ssh_key }
                 }
             },
             :hosts => @hosts.map { |h|

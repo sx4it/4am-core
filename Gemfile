@@ -8,6 +8,7 @@ gem 'rails', '~> 3.2.0'
 group :development do
     gem 'sqlite3'
 end
+gem 'sqlite3'
 gem 'redis'
 gem 'log4r'
 

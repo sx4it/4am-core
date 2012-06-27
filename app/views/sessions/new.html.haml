@@ -7,7 +7,7 @@
         %i.icon-white.icon-plus-sign
         New Account
 
-  - unless request.env['X-SSL_CLIENT_CERT'].nil?
+  - if not request.env['X-SSL_CLIENT_CERT'].nil? and not request.env['X-SSL_CLIENT_CERT'].empty?
     %h2 SSL Certificate detected
     %code= @pkey
   //%h2 Connect to the admin space

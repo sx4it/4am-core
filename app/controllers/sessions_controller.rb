@@ -8,22 +8,21 @@ class SessionsController < ApplicationController
 
   def new
     unless request.env['X-SSL_CLIENT_CERT'].nil? or request.env['X-SSL_CLIENT_CERT'].size == 0
-      cert = OpenSSL::X509::Certificate.new request.env['X-SSL_CLIENT_CERT']
-      @pkey = Key.where('keytype = ? AND value = ?', cert.public_key.ssh_type, [ cert.public_key.to_blob ].pack('m0'))
-      if @pkey.count == 0
-        @pkey = 'no result found'
-      else
-        @pkey = @pley.user.login
-      end
+      @user = User.find_by_x509(request.env['X-SSL_CLIENT_CERT'])
     end
   end
 
   def create
-    @session = UserSession.create params
+    if not request.env['X-SSL_CLIENT_CERT'].nil? and not request.env['X-SSL_CLIENT_CERT'].size == 0
+      @user = User.find_by_x509(request.env['X-SSL_CLIENT_CERT'])
+      @session = UserSession.create @user unless @user.nil?
+    else
+      @session = UserSession.create params
+    end
     if session
       redirect_to root_url, :notice => "Logged in!"
     else
-      flash[:error] = "Invalid email or password"
+      flash[:error] = "Invalid login informations."
       render "new"
     end
   end
