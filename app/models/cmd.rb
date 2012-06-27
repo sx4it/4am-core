@@ -17,13 +17,13 @@ class Cmd
 
 
   def self.find(host_id, id)
-      res = $redis.get "cmd-host:#{host_id}:#{id}"
+      res = Redis.current.get "cmd-host:#{host_id}:#{id}"
       return nil unless res
       Cmd.from_json(res)
   end
 
   def self.find_grp(host_id, id)
-      res = $redis.get "cmd-grp:#{host_id}:#{id}"
+      res = Redis.current.get "cmd-grp:#{host_id}:#{id}"
       return nil unless res
       Cmd.from_json(res)
   end
@@ -32,14 +32,14 @@ class Cmd
       host_id = id.first
       cmds = []
       if not id.empty?
-        $redis.keys("cmd-host:#{host_id}:*").each do |c|
+        Redis.current.keys("cmd-host:#{host_id}:*").each do |c|
           cmds << self.find(host_id, c.split(':').last)
         end
       else
-        $redis.keys("cmd-host:*:*").each do |c|
+        Redis.current.keys("cmd-host:*:*").each do |c|
           cmds << self.find(c.split(':')[1], c.split(':').last)
         end
-        $redis.keys("cmd-grp:*:*").each do |c|
+        Redis.current.keys("cmd-grp:*:*").each do |c|
           cmds << self.find_grp(c.split(':')[1], c.split(':').last)
         end
       end
@@ -47,7 +47,7 @@ class Cmd
   end
 
   def destroy
-        $redis.del "#{@type}:#{@hosts[0].id}:#{@id}"
+        Redis.current.del "#{@type}:#{@hosts[0].id}:#{@id}"
   end
 
   def self.add_user
@@ -57,13 +57,13 @@ class Cmd
   def launch_command
     if @hosts.empty?
       @hosts = @group.host
-      @id = $redis.incr "group-#{@group.id}:max"
-      $redis.set "cmd-grp:#{@group.id}:#{@id}", self.get_json
-      $redis.publish '4am-command', "cmd-grp:#{@group.id}:#{@id}"
+      @id = Redis.current.incr "group-#{@group.id}:max"
+      Redis.current.set "cmd-grp:#{@group.id}:#{@id}", self.get_json
+      Redis.current.publish '4am-command', "cmd-grp:#{@group.id}:#{@id}"
     else
-      @id = $redis.incr "host-#{@hosts[0].id}:max"
-      $redis.set "cmd-host:#{@hosts[0].id}:#{@id}", self.get_json
-      $redis.publish '4am-command', "cmd-host:#{@hosts[0].id}:#{@id}"
+      @id = Redis.current.incr "host-#{@hosts[0].id}:max"
+      Redis.current.set "cmd-host:#{@hosts[0].id}:#{@id}", self.get_json
+      Redis.current.publish '4am-command', "cmd-host:#{@hosts[0].id}:#{@id}"
     end
   end
 
@@ -179,14 +179,14 @@ class Cmd
   end
 
   def stop
-      $redis.publish "4am-command", "#{@type}:#{@hosts[0].id}:#{@id}:stop"
+      Redis.current.publish "4am-command", "#{@type}:#{@hosts[0].id}:#{@id}:stop"
   end
 
   def self.clear(host_id)
-    $redis.keys("cmd-host:#{host_id}:*").each do |c|
-        cmd = JSON.parse($redis.get c)
+    Redis.current.keys("cmd-host:#{host_id}:*").each do |c|
+        cmd = JSON.parse(Redis.current.get c)
         if %w{stopped killed finished}.include? cmd['status']
-          cmd = Cmd.from_json($redis.get c)
+          cmd = Cmd.from_json(Redis.current.get c)
           cmd.destroy
         end
     end
