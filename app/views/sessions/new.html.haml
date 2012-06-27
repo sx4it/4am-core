@@ -1,19 +1,32 @@
 
-%section#forms
-  %h2 Login
-  
+.page-header
+  %h1
+    Login
+    %small
+      %a{ href: new_new_user_path, class: 'btn btn-success' }
+        %i.icon-white.icon-plus-sign
+        New Account
+
   //%h2 Connect to the admin space
   //%p If you wish to connect without your X509 certificate, please use this form
-  = form_tag sessions_path, :class => 'form-horizontal' do
-    %fieldset
-      .control-group
-        = label_tag :login, nil, class: 'control-label' 
-        .controls
-          = text_field_tag :login, params[:login], :size => 30
-      .control-group
-        = label_tag :pass, nil, class: 'control-label' 
-        .controls
-          = password_field_tag :pass, params[:pass], :size => 30
-    .form-actions
-      = submit_tag 'Login', :class => "btn btn-info"
+.span6
+  - if not @user.nil?
+    = form_tag login_path, :method => :post, :class => 'well' do
+      = label_tag 'You have been recognized ' + @user.login + ' !', nil 
+      // FIXME is the html escaped for the login above ?
+      = submit_tag "Login", :class => "btn-large btn-primary"
+  - else
+    = form_tag login_path, :method => :post, :class => 'form-horizontal' do
+      %fieldset
+        .control-group
+          = label_tag 'email or Login', nil, class: 'control-label'
+          .controls
+            = text_field_tag :login, params[:login], :size => 30
+        .control-group
+          = label_tag :password, nil, class: 'control-label'
+          .controls
+            = password_field_tag :password, params[:password], :size => 30
+      .form-actions
+        = submit_tag 'Login', :class => "btn btn-info"
+
 

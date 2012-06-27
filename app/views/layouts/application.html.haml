@@ -7,7 +7,6 @@
     %title 4am
 
     = stylesheet_link_tag    "application"
-    = javascript_include_tag "application"
 
     %link{ rel: "shortcut icon", href: image_path("favicon.png"), type: "image/x-icon" }
 
@@ -20,22 +19,32 @@
       .navbar.navbar-fixed-top{"data-scrollspy" => "scrollspy"}
         .navbar-inner
           .container
-            %a.brand
+            %a.brand{href: "/"}
             %ul.nav
               - if current_user
                 = render file: 'layouts/menu'
               %li.icon.icon_help
-                %a{href: "#about"} Help
+                %a{href: "http://sx4it.com/doc/index.html"} Help
               %li.icon.icon_info
-                %a{href: "#about"} About
+                %a{href: "http://sx4it.com"} About
 
             - if current_user
 
-
-              %a{ href: 'logout', class: 'logout btn btn-danger' } 
-                %i.icon-white.icon-remove
-                Logout
-              //= link_to 'Logout', 'logout', class: 'logout btn btn-danger'
+              %div.logout.btn-group
+                %a.btn.btn-primary{ href: user_path(current_user)}
+                  %i.icon-white.icon-user
+                  = current_user.login.capitalize
+                %a.btn.btn-primary.dropdown-toggle{ href: '#', :data => {:toggle => "dropdown"}}
+                  %span.caret
+                %ul.dropdown-menu
+                  %li
+                    %a{ href: keys_user_path(current_user) }
+                      %i.icon.icon-cog
+                      My Keys
+                  %li
+                    %a{ href: logout_path }
+                      %i.icon-off
+                      Logout
 
       .container.well
 
@@ -43,11 +52,11 @@
           #flash_warning.alert
             %a.close{href: "#", data:{ dismiss:'alert' }} ×
             %strong= flash[:notice]
-  
+
         - if flash[:error]
           #flash_error.alert.alert-error
             %a.close{href: "#", data:{ dismiss:'alert' }} ×
             %strong= flash[:error]
 
         = yield
-
+  = javascript_include_tag "application"

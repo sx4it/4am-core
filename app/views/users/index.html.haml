@@ -4,9 +4,10 @@
     Users
     %small
       list all the users
-    %a{ href: new_user_path, class: 'btn btn-success' } 
-      %i.icon-white.icon-plus-sign
-      New user
+    - if permitted_to? :new, :users
+      %a{ href: new_user_path, class: 'btn btn-success' }
+        %i.icon-white.icon-plus-sign
+        New user
 
 = form_tag users_path, :method => 'get', :id => 'users_search' do
   %p.searchbox

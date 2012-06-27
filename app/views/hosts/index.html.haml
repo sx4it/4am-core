@@ -1,0 +1,31 @@
+.page-header
+  %h1
+    Hosts
+    %small
+      list all the hosts
+    - if permitted_to? :new, :hosts
+      %a{ href: new_host_path, class: 'btn btn-success' }
+        %i.icon-white.icon-plus-sign
+        New host
+
+%table.table.table-striped.table-condensed.table-bordered
+  %tr
+    %th Name
+    %th Ip
+    %th Port
+    %th Host template
+    %th Action
+
+  - @hosts.each do |host|
+    %tr
+      %td= host.name
+      %td= host.ip
+      %td= host.port
+      %td= host.host_tpl_id
+      %td
+        - if permitted_to? :show, host
+          = link_to 'Show', host, class: "btn btn-mini btn-info"
+        - if permitted_to? :edit, host
+          = link_to 'Edit', edit_host_path(host), class: "btn btn-mini btn-warning"
+        - if permitted_to? :destroy, host
+          = link_to 'Delete', host, {:data => {:confirm => 'Are you sure?', :method => :delete}, class: "btn btn-mini btn-danger"}

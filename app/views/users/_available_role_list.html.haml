@@ -1,0 +1,8 @@
+#AvailableRoleList
+  %ul
+  - @roles.each do |r|
+    - unless @user.roles.include? r
+      %li
+        %b.label.label-success
+          = r.name
+          = link_to '+',{:id => @user, :role => r, :action => :add_role}, :remote => true, :method => :post

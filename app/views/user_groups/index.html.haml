@@ -1,0 +1,25 @@
+.page-header
+  %h1
+    User Groups
+    %small
+      list all the user groups
+    - if permitted_to? :new, :user_groups
+      %a{ href: new_user_group_path, class: 'btn btn-success' }
+        %i.icon-white.icon-plus-sign
+        New User Group
+%table.table.table-striped.table-condensed.table-bordered
+  %tr
+    %th Name
+    %th Action
+
+  - @user_groups.each do |user_group|
+    %tr
+      %td= user_group.name
+      - if permitted_to? :show, user_group
+        %td
+          - if permitted_to? :show, user_group
+            = link_to 'Show', user_group, class: "btn btn-mini btn-info"
+          - if permitted_to? :edit, user_group
+            = link_to 'Edit', edit_user_group_path(user_group), class: "btn btn-mini btn-warning"
+          - if permitted_to? :destroy, user_group
+            = link_to 'Destroy', user_group, {:data => {:confirm => 'Are you sure?', :method => :delete}, class: "btn btn-mini btn-danger"}

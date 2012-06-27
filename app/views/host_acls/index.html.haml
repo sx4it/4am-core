@@ -1,0 +1,9 @@
+.page-header
+  %h1
+    Host Acls
+    %small
+      list all the host acls
+
+= render 'acl_list'
+- if permitted_to? :create, :host_acls
+  = render 'form'

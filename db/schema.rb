@@ -11,36 +11,93 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120208063110) do
+ActiveRecord::Schema.define(:version => 20120620040000) do
+
+  create_table "commands", :force => true do |t|
+    t.string   "name"
+    t.string   "command"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "host_acls", :force => true do |t|
+    t.integer "hosts_id"
+    t.string  "hosts_type"
+    t.integer "users_id"
+    t.string  "users_type"
+    t.string  "acl_type"
+  end
+
+  create_table "host_groups", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "host_groups_hosts", :id => false, :force => true do |t|
+    t.integer "host_id"
+    t.integer "host_group_id"
+  end
+
+  create_table "host_tpls", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "hosts", :force => true do |t|
+    t.string   "name"
+    t.string   "ip"
+    t.integer  "host_tpl_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "port"
+  end
 
   create_table "keys", :force => true do |t|
     t.string   "name"
-    t.string   "value"
+    t.binary   "value"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.string   "keytype"
   end
 
-  create_table "machine_tpls", :force => true do |t|
+  create_table "roles", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  create_table "machines", :force => true do |t|
+  create_table "roles_users", :force => true do |t|
+    t.integer "role_id"
+    t.integer "user_id"
+  end
+
+  create_table "user_groups", :force => true do |t|
     t.string   "name"
-    t.string   "ip"
-    t.integer  "machine_tpl_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "user_groups_users", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "user_group_id"
   end
 
   create_table "users", :force => true do |t|
     t.string   "login"
-    t.string   "pass"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-    t.string   "password_digest"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.string   "email"
+    t.string   "crypted_password"
+    t.string   "password_salt"
+    t.string   "persistence_token"
+    t.string   "single_access_token"
+    t.string   "perishable_token"
+    t.integer  "failed_login_count"
+    t.string   "current_login_ip"
+    t.string   "last_login_ip"
   end
 
 end

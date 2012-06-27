@@ -1,0 +1,20 @@
+= form_for @command, html: { class: 'form-horizontal' }  do |f|
+  -if @command.errors.any?
+    .control-group
+      .alert.alert-error
+        %a.close{href: "#", data:{ dismiss:'alert' }} ×
+        %h4.alert-heading= "#{pluralize(@command.errors.count, "error")} "
+        %ul
+        - @command.errors.full_messages.each do |msg|
+          %li= msg
+
+  .control-group
+    = f.label :name, class: 'control-label'
+    .controls
+      = f.text_field :name
+  .control-group
+    = f.label :command, class: 'control-label'
+    .controls
+      = f.text_area :command, class: 'input-xxlarge'
+  .form-actions
+    = f.submit 'Save', class: "btn btn-info"
