@@ -1,0 +1,19 @@
+%h1 Listing host_tpls
+
+%table
+  %tr
+    %th Name
+    %th
+    %th
+    %th
+
+  - @host_tpls.each do |host_tpl|
+    %tr
+      %td= host_tpl.name
+      %td= link_to 'Show', host_tpl
+      %td= link_to 'Edit', edit_host_tpl_path(host_tpl)
+      %td= link_to 'Destroy', host_tpl, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Machine tpl', new_host_tpl_path

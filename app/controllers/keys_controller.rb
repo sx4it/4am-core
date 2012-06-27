@@ -1,4 +1,5 @@
 class KeysController < ApplicationController
+  filter_resource_access
   # GET /keys
   # GET /keys.json
   def index
@@ -40,12 +41,18 @@ class KeysController < ApplicationController
   # POST /keys
   # POST /keys.json
   def create
-    @key = current_user.keys.create(params[:key])
+    @key = Key.new do |k|
+      k.ssh_key = params[:key][:ssh_key]
+      unless params[:key][:name].nil? || params[:key][:name].size == 0
+        k.name = params[:key][:name]
+      end
+      k.user = current_user
+    end
 
     respond_to do |format|
       if @key.save
-        format.html { redirect_to keys_url, notice: 'Key was successfully added.' }
-        format.json { render json: keys_url, status: :created, location: @key }
+        format.html { redirect_to keys_user_path(current_user), notice: 'Key was successfully added.' }
+        format.json { render json: key_path(@key), status: :created, location: @key }
       else
         format.html { render action: "new" }
         format.json { render json: @key.errors, status: :unprocessable_entity }
@@ -60,8 +67,9 @@ class KeysController < ApplicationController
 
     respond_to do |format|
       if @key.update_attributes(params[:key])
-        format.html { redirect_to keys_url, notice: 'Key was successfully updated.' }
-        #format.html { redirect_to @key, notice: 'Key was successfully updated.' }
+        format.html {
+          redirect_to key_path(@key), notice: 'Key was successfully updated.'
+        }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -74,10 +82,18 @@ class KeysController < ApplicationController
   # DELETE /keys/1.json
   def destroy
     @key = Key.find(params[:id])
+    @user = @key.user
     @key.destroy
 
+    # FIXME Should be removed from hosts
+
     respond_to do |format|
-      format.html { redirect_to keys_url }
+      format.html { 
+        if @user == current_user
+          redirect_to keys_user_path(current_user)
+        else
+          redirect_to keys_url
+        end}
       format.json { head :ok }
     end
   end

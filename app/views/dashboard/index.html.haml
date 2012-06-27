@@ -1,0 +1,28 @@
+.page-header
+  %h1
+    Dashboard
+    %small
+      welcome to 4am !
+
+%div.fluid-row
+  %div.span3.well#user_groups
+    %h2= "#{pluralize(current_user.user_group.count, 'User Group')}"
+    - current_user.user_group.each do |u|
+      %li
+        %i.icon-user
+        = link_to u.name, u
+  %div.span3.well#keys
+    %h2= "#{pluralize(current_user.keys.count, 'Key')}"
+    - current_user.keys.each do |k|
+      %li
+        %i.icon-list-alt
+        = link_to k.name, k
+  %div.span3.well#hosts
+    %h2= "#{pluralize(@hosts.count, 'Host & Group')}"
+    - @hosts.each do |k|
+      %li
+        - if k.type == 'HostGroup'
+          %i.icon-tags
+        - else
+          %i.icon-tag
+        = link_to k.name, k

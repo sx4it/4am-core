@@ -6,12 +6,15 @@
 
 
 //= require jquery
-//= require jquery-ui
 //= require jquery_ujs
+//= require jquery-ui
 
 // Loads all Bootstrap javascripts
 //= require bootstrap
+//= require bootstrap-tooltip
+//= require bootstrap-popover
 
+//= require autocomplete-rails
 
 //= require_tree .
 

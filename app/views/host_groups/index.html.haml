@@ -1,0 +1,25 @@
+.page-header
+  %h1
+    Host Groups
+    %small
+      list host groups
+    - if permitted_to? :new, :host_groups
+      %a{ href: new_host_group_path, class: 'btn btn-success' } 
+        %i.icon-white.icon-plus-sign
+        New Host Group
+
+%table.table.table-striped.table-condensed.table-bordered
+  %tr
+    %th Name
+    %th Action
+
+  - @host_groups.each do |host_group|
+    %tr
+      %td= host_group.name
+      %td
+        - if permitted_to? :show, host_group
+          = link_to 'Show', host_group, class: "btn btn-mini btn-info"
+        - if permitted_to? :edit, host_group
+          = link_to 'Edit', edit_host_group_path(host_group), class: "btn btn-mini btn-warning"
+        - if permitted_to? :destroy, host_group
+          = link_to 'Destroy', host_group, :data => {:confirm => 'Are you sure?'}, :method => :delete, class: "btn btn-mini btn-danger"

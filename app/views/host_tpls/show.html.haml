@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @host_tpl.name
+
+= link_to 'Edit', edit_host_tpl_path(@host_tpl)
+\|
+= link_to 'Back', host_tpls_path

@@ -1,0 +1,25 @@
+.page-header
+  %h1
+    User Groups
+    %small
+      more information on
+      %code= @user_group.name
+
+%form.form-horizontal
+  %fieldset
+
+    .control-group
+      %label.control-label Name
+      .controls
+        %span.input-xlarge.uneditable-input= @user_group.name
+
+    .control-group
+      %label.control-label Users
+      .controls
+        - @user_group.user.each do |u|
+          %p
+            %span.label= link_to u.login, u
+
+    - if permitted_to? :edit, @user_group
+      .form-actions
+        = link_to 'Edit', edit_user_group_path(@user_group), :class => "btn btn-warning"

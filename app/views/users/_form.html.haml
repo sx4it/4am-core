@@ -5,27 +5,42 @@
     .control-group
       .alert.alert-error
         %a.close{href: "#", data:{ dismiss:'alert' }} ×
-        %h4.alert-heading= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+        %h4.alert-heading= "#{pluralize(@user.errors.count, "error")} "
         %ul
           - @user.errors.full_messages.each do |msg|
             %li
               %p= msg
-  
   .control-group
-    = f.label :login, class: 'control-label' 
+    = f.label :login, class: 'control-label'
     .controls
-      = f.text_field :login  
+      = f.text_field :login
 
   .control-group
-    = f.label :password, class: 'control-label' 
+    = f.label :email, class: 'control-label'
     .controls
-      = f.password_field :password  
+      = f.text_field :email
 
   .control-group
-    = f.label :password_confirmation, class: 'control-label' 
+    = f.label :password, class: 'control-label'
+    .controls
+      = f.password_field :password
+
+  .control-group
+    = f.label :password_confirmation, class: 'control-label'
     .controls
       = f.password_field :password_confirmation
 
+  - if permitted_to? :edit, :roles
+    -unless @user.id.nil?
+      .control-group
+        = f.label 'User Roles', class: 'control-label'
+        .controls
+          = render 'role_list'
+    -unless @user.id.nil?
+      .control-group
+        = f.label 'Add Roles', class: 'control-label'
+        .controls
+          = render 'available_role_list'
+
   .form-actions
     = f.submit 'Save', class: "btn btn-info"
-
