@@ -42,15 +42,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def keys
-    @keys = User.find(params[:id]).keys
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @keys }
-    end
-  end
-
   # GET /users/new
   # GET /users/new.json
   def new

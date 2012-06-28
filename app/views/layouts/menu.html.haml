@@ -18,9 +18,10 @@
           = link_to 'Group', user_groups_path, class: 'icon icon_group'
       - if permitted_to? :index, :roles
         // only admin can see it
-        %li.divider
-        %li
-          = link_to 'All Keys', keys_path, class: 'icon icon_key'
+        // What was the point ?
+        //%li.divider
+        //%li
+        //  = link_to 'All Keys', keys_path, class: 'icon icon_key'
 
 - if permitted_to? :index, :hosts
   %li.dropdown.icon.icon_host

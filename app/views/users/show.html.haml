@@ -29,6 +29,10 @@
       %label.control-label Roles
       .controls
         = render 'role_list'
+    .control-group
+      %label.control-label Keys
+      .controls
+        = link_to 'My keys', keys_user_path(@user)
     - if permitted_to? :edit, @user
       .control-group
         %label.control-label API Token

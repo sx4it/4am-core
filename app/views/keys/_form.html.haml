@@ -29,6 +29,7 @@
     .controls
       = f.file_field :ssh_key, class: 'input-file'
 
+  //FIXME We should add a field to choose to which user the key is associated depending of the privileges
   .form-actions
     = f.submit 'Save', class: "btn btn-info"
 

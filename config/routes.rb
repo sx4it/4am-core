@@ -43,7 +43,13 @@ AM::Application.routes.draw do
 
   resources :host_tpls
 
-  resources :keys
+  resources :keys do
+    member do
+      get "pkcs12/new" => "keys#pkcs12_new"
+      post "pkcs12" => "keys#pkcs12_create"
+      get "x509"
+    end
+  end
 
   get "login" => "sessions#new", :as => "login"
   post "login" => "sessions#create"
@@ -52,7 +58,7 @@ AM::Application.routes.draw do
 
   resources :users do
     member do
-      get :keys
+      get "keys" => "keys#index"
       post :add_role
       delete :delete_role
       post :reset_api_token

@@ -14,7 +14,8 @@
         %td
           %code= user.login
         %td
-          %span.badge.badge-info= user.keys.count
+          %a{ href: keys_user_path(user) }
+            %span.badge.badge-info= user.keys.count
         - if permitted_to? :show, user
           %td
             - if permitted_to? :show, user
