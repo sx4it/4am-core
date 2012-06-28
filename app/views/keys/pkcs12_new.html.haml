@@ -1,0 +1,37 @@
+
+.page-header
+  %h1
+    PKCS #12
+    %small
+      generate a PKCS #12 usable for browser authentication
+
+= form_tag({:controller => "keys", :action => "pkcs12_create"}, :method => "post", :class => 'form-horizontal', :multipart => true ) do
+  -if @key.errors.any?
+    .control-group
+      .alert.alert-error
+        %a.close{href: "#", data:{ dismiss:'alert' }} ×
+        %h4.alert-heading= "#{pluralize(@key.errors.count, "error")} prohibited this file from being generated:"
+        %ul
+          - @key.errors.full_messages.each do |msg|
+            %li
+              %p= msg
+
+  .control-group
+    = label_tag :ssh_priv_key, "Private key", class: 'control-label' 
+    .controls
+      = file_field_tag :ssh_priv_key, class: 'input-file'
+
+  .control-group
+    = label_tag :password, "Private key password", class: 'control-label' 
+    .controls
+      = password_field_tag :password
+      %p.help-box If the private key is encrypted we need the password to decrypt it.
+
+  .control-group
+    = label_tag :pkcs12_password, "PKCS #12 password", class: 'control-label' 
+    .controls
+      = password_field_tag :pkcs12_password
+      %p.help-box Optional but recommended password to protect the generated file.
+
+  .form-actions
+    = submit_tag 'Generate', class: "btn btn-info"

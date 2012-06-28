@@ -1,0 +1,25 @@
+
+= hidden_field_tag :direction, params[:direction]
+= hidden_field_tag :sort, params[:sort]
+
+%table.table.table-striped.table-condensed.table-bordered
+  %tbody
+    %tr
+      %th Name
+      %th Command
+      - if permitted_to? :execute, @host
+        %th Actions
+
+    - @commands.each do |cmd|
+      %tr
+        %td
+          = cmd.name
+        %td
+          %code= cmd.command
+        - if permitted_to? :show, cmd or permitted_to? :execute, @host
+          %td
+            - if permitted_to? :show, cmd
+              = link_to 'View', cmd, class: "btn btn-mini btn-info"
+            - if permitted_to? :execute, @host
+              = link_to 'Execute', host_cmd_path(@host, {:command_id => cmd}), :method => :post, :remote => true, class: "btn btn-mini btn-warning"
+

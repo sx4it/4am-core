@@ -1,0 +1,11 @@
+var uid = $('#acl_form_user_id').attr('value');
+var utype = $('#acl_form_user_type').attr('value');
+var hid = $('#acl_form_host_id').attr('value');
+var htype = $('#acl_form_host_type').attr('value');
+$('#add_acl_form').replaceWith("#{ escape_javascript(render :partial=>'form') }");
+- if not @errors.nil? or @new_acl.errors.any?
+  $('#acl_form_user_id').attr('value', uid);
+  $('#acl_form_user_type').attr('value', utype);
+  $('#acl_form_host_id').attr('value', hid);
+  $('#acl_form_host_type').attr('value', htype);
+$("input[data-autocomplete]").each(function(i, u) { return $(u).autocomplete().data("autocomplete")._renderItem = function(ul, item) { var type; if (item.type === "User") { type = "user";  } if (item.type === "UserGroup") {type = "group";   } if (item.type === "Host") { type = "host";  } if (item.type === "HostGroup") { type = "group";   }   return $("<li></li>").data("item.autocomplete", item).append($("<a></a>").text(" " + item.label).prepend("<i class='custom-icon icon_" + type + "'>")).appendTo(ul); };});

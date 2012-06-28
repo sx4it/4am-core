@@ -1,0 +1,60 @@
+#OldCommands
+
+  = hidden_field_tag :direction, params[:direction]
+  = hidden_field_tag :sort, params[:sort]
+
+  - if permitted_to? :execute, @host
+    %div.row
+      %div.span
+        = link_to 'Clear finished', {:controller => :cmd, :host_id => @host, :action => :clear}, :method => :delete, :remote => true, class: "btn btn-mini btn-warning"
+      %div.pull-right
+        %a{ :id => :refresh, href: refresh_host_cmd_index_path(@host), :data => {:remote => true}, class: 'btn btn-info btn-mini pull-rigth' }
+          %i.icon-white.icon-refresh
+          Refresh
+
+  %table.table.table-striped.table-condensed.table-bordered
+    %tbody
+      %tr
+        %th Command Name
+        %th Command
+        %th Status
+        %th Status Code
+        %th Executed
+        %th Log
+      - @old_command.each do |cmd|
+        %tr
+          %td
+            - if cmd.command
+              = link_to cmd.command.name, command_path(cmd.command.id)
+            - else
+              = cmd.script
+            - if permitted_to? :execute, @host
+              = link_to 'delete', host_cmd_path(@host, cmd.id), :method => :delete, :remote => true, class: "btn btn-mini btn-danger pull-right"
+            - if permitted_to? :execute, @host
+              = link_to 'stop', host_cmd_path(@host, cmd.id), :method => :put, :remote => true, class: "btn btn-mini btn-warning pull-right"
+          %td
+            %center
+              %code= cmd.script[0..30] + (cmd.script.size > 30 ? "...": "")
+          %td
+            %center
+              %span.label.label-info= cmd.status
+          %td
+            %center
+              - if cmd.status_code.nil?
+                %span.badge.badge= '-'
+              - elsif cmd.status_code == 0
+                %span.badge.badge= cmd.status_code
+              - elsif cmd.status_code > 0
+                %span.badge.badge-warning= cmd.status_code
+          %td
+            %center
+              = cmd.time
+          %td
+            %div.modal.large.hide{:id => "log#{cmd.id}"}
+              %div.modal-header
+                %button.close{:data => {:dismiss => :modal}} x
+                %h3 Logs
+              %div.modal-body
+                %pre= cmd.log
+            %center
+              = link_to "Show Logs", '#log' + cmd.id.to_s, :data => {:toggle => :modal}, :class => "btn btn-info"

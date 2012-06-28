@@ -8,17 +8,22 @@
       %th= sortable 'login'
       %th Keys
       %th Actions
-    
+
     - @users.each do |user|
       %tr
         %td
           %code= user.login
         %td
-          %span.badge.badge-info= user.keys.count
-        %td
-          = link_to 'Show', user, class: "btn btn-mini btn-info"
-          = link_to 'Edit', edit_user_path(user), class: "btn btn-mini btn-warning"
-          = link_to 'Delete', user, method: :delete, class: "btn btn-mini btn-danger"
-  
+          %a{ href: keys_user_path(user) }
+            %span.badge.badge-info= user.keys.count
+        - if permitted_to? :show, user
+          %td
+            - if permitted_to? :show, user
+              = link_to 'Show', user, class: "btn btn-mini btn-info"
+            - if permitted_to? :edit, user
+              = link_to 'Edit', edit_user_path(user), class: "btn btn-mini btn-warning"
+            - if permitted_to? :destroy, user
+              = link_to 'Delete', user, method: :delete, class: "btn btn-mini btn-danger"
+
 = will_paginate @users
 

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class KeysControllerTest < ActionController::TestCase
   setup do
-    @key = keys(:one)
+    @key = create :key
   end
 
   test "should get index" do
@@ -18,10 +18,10 @@ class KeysControllerTest < ActionController::TestCase
 
   test "should create key" do
     assert_difference('Key.count') do
-      post :create, key: @key.attributes
+      post :create, key: {:ssh_key => "ssh-rsa key key"}
     end
 
-    assert_redirected_to key_path(assigns(:key))
+    assert_redirected_to keys_user_path(@admin)
   end
 
   test "should show key" do

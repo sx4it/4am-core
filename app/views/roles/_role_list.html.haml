@@ -1,0 +1,8 @@
+#RoleList
+  %ul
+    - @roles.each do |role|
+      %li.active
+        %b.label
+          = role.name
+          - if permitted_to? :delete, role
+            #{link_to 'x', role, :remote => true, :method=>:delete, :confirm=>'You sure?'}

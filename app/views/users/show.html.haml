@@ -14,12 +14,33 @@
       %label.control-label Login
       .controls
         %span.input-xlarge.uneditable-input= @user.login
-  
+
     .control-group
       %label.control-label Password
       .controls
         %span.input-xlarge.uneditable-input (hidden)
+    .control-group
+      %label.control-label Groups
+      .controls
+        - @user.user_group.each do |u|
+          %li
+            %b.label= link_to u.name, u
+    .control-group
+      %label.control-label Roles
+      .controls
+        = render 'role_list'
+    .control-group
+      %label.control-label Keys
+      .controls
+        = link_to 'My keys', keys_user_path(@user)
+    - if permitted_to? :edit, @user
+      .control-group
+        %label.control-label API Token
+        .controls
+          %code= @user.single_access_token
+          = link_to 'Reset', reset_api_token_user_path(@user), :method => :post, :class => "btn btn-danger"
 
-    .form-actions
-      = link_to 'Edit', edit_user_path(@user), :class => "btn btn-warning"
+    - if permitted_to? :edit, @user
+      .form-actions
+        = link_to 'Edit', edit_user_path(@user), :class => "btn btn-warning"
 
