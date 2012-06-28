@@ -199,7 +199,7 @@ install_rvm
 install_ruby
 
 echo "Cloning the git repo."
-git clone git://github.com/sx4it/4am-ui.git --depth 1 --branch v2 $DEPLOYHOME/www/
+git clone git://github.com/sx4it/4am-ui.git --depth 1 $DEPLOYHOME/www/
 echo "Entering the repo, rvmrc will be launched..."
 rvm rvmrc trust $DEPLOYHOME/www/
 cd $DEPLOYHOME/www/
