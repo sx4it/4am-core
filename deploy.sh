@@ -6,7 +6,7 @@ set -e
 DEPLOYHOME=/opt/4am/
 NGINXHOME=${DEPLOYHOME}/nginx/
 NGINXWORKERS=$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo)
-RUBYVERS="ruby-1.9.3-p194"
+RUBYVERS="ruby-1.9.2-p320"
 DBNAME="4am_experimental"
 DBUSERNAME="root"
 DBPASS=''
