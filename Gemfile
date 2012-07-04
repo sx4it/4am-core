@@ -7,7 +7,12 @@ gem 'rails', '~> 3.2.0'
 
 group :development do
     gem 'sqlite3'
+    # quiet asset for dev mode :)
+    gem 'quiet_assets'
+    # getting it from git to allow dynamic reloading
+    gem "declarative_authorization", :git => 'https://github.com/stffn/declarative_authorization.git'
 end
+
 gem 'sqlite3'
 gem 'redis'
 gem 'log4r'
@@ -44,10 +49,8 @@ gem "will_paginate"
 gem 'authlogic'
 gem "authlogic_haapi"
 
-gem 'rails3-jquery-autocomplete', :git => 'https://github.com/coat/rails3-jquery-autocomplete.git'
+gem 'rails3-jquery-autocomplete'
 
-# getting it from git because the other one does not reload in dev mod
-gem "declarative_authorization", :git => 'https://github.com/stffn/declarative_authorization.git'
 gem "ruby_parser"
 
 # To use ActiveModel has_secure_password
@@ -69,9 +72,11 @@ gem 'net-ssh'
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
+  gem "declarative_authorization"
 end
 
 group :production do
+    gem "declarative_authorization"
     gem 'mysql2'
 end
 
