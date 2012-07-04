@@ -3,7 +3,8 @@ defaults: &defaults
     host: dev2.sx4it.com
     port: 42163
   ssl:
-    ca_path: config/ssl.crt
+    ca_crt: config/4am-ca.crt
+    ca_key: config/4am-ca.key
 #   timeout:
 #   path:
 
