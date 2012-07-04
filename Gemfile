@@ -10,7 +10,7 @@ group :development do
     # quiet asset for dev mode :)
     gem 'quiet_assets'
     # getting it from git to allow dynamic reloading
-    gem "declarative_authorization", :git => 'https://github.com/stffn/declarative_authorization.git'
+    #gem "declarative_authorization", :git => 'https://github.com/stffn/declarative_authorization.git'
 end
 
 gem 'sqlite3'
@@ -68,15 +68,16 @@ gem 'net-ssh'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+#
+#
+gem "declarative_authorization"
 
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
-  gem "declarative_authorization"
 end
 
 group :production do
-    gem "declarative_authorization"
     gem 'mysql2'
 end
 
