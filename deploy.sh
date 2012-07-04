@@ -259,8 +259,8 @@ events {
 }
 
 http {
-    passenger_root /usr/local/rvm/gems/ruby-1.9.3-p194@4am-ui/gems/passenger-3.0.13;
-    passenger_ruby /usr/local/rvm/wrappers/ruby-1.9.3-p194@4am-ui/ruby;
+    passenger_root /usr/local/rvm/gems/${RUBYVERS}@4am-ui/gems/passenger-3.0.13;
+    passenger_ruby /usr/local/rvm/wrappers/${RUBYVERS}@4am-ui/ruby;
 
     include       mime.types;
     default_type  application/octet-stream;
