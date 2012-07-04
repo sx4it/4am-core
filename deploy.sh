@@ -316,8 +316,24 @@ production:
   username: $DBUSERNAME
   password: $DBPASS
   host: $DBHOST
+development:
+  adapter: sqlite3
+  encoding: utf8
+  database: db/dev.sqlite3
+  pool: 10
+  username: $DBUSERNAME
+  password: $DBPASS
+test:
+  adapter: sqlite3
+  encoding: utf8
+  database: db/test.sqlite3
+  pool: 10
+  username: $DBUSERNAME
+  password: $DBPASS
 EOF
 
+rake db:migrate
+rake test
 rake RAILS_ENV=production db:setup
 rake assets:precompile
 chown -R 4am: $DEPLOYHOME/www/
