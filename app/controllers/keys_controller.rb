@@ -82,14 +82,19 @@ class KeysController < ApplicationController
   # DELETE /keys/1
   # DELETE /keys/1.json
   def destroy
-    @key = Key.find(params[:id])
-    @key.destroy
-
-    # FIXME Should be removed from hosts
-
-    respond_to do |format|
-      format.html { redirect_to keys_user_path(@user) }
-      format.json { head :ok }
+    key = Key.find(params[:id])
+    if key
+      key.destroy
+      # FIXME Should be removed from hosts
+      respond_to do |format|
+        format.html { redirect_to keys_user_path(@key.user), notice: 'Key was successfully deleted.' }
+        format.json { head :ok }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to root, notice: 'Key not found.' }
+        format.json { render status: :not_found }
+      end
     end
   end
 

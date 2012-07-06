@@ -6,7 +6,7 @@ class KeysControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
-    get :index
+    get :index, id: @key.user.to_param
     assert_response :success
     assert_not_nil assigns(:keys)
   end
@@ -36,7 +36,7 @@ class KeysControllerTest < ActionController::TestCase
 
   test "should update key" do
     put :update, id: @key.to_param, key: @key.attributes
-    assert_redirected_to key_path(assigns(:key))
+    assert_redirected_to keys_user_path(@key.user)
   end
 
   test "should destroy key" do
@@ -44,6 +44,6 @@ class KeysControllerTest < ActionController::TestCase
       delete :destroy, id: @key.to_param
     end
 
-    assert_redirected_to keys_path
+    assert_redirected_to keys_user_path(@key.user)
   end
 end
