@@ -318,6 +318,30 @@ production:
   host: $DBHOST
 EOF
 
+cat <<EOF > $DEPLOYHOME/www/config/4am.yml
+defaults: &defaults
+  redis:
+      host: dev2.sx4it.com
+      port: 42163
+  ssl:
+      ca_crt: config/4am-ca.crt
+      ca_key: config/4am-ca.key
+      #   timeout:
+      #   path:
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
+EOF
+
+ln -s ${NGINXHOME}/conf/ssl/server.crt ${DEPLOYHOME}/www/config/4a-ca.crt
+ln -s ${NGINXHOME}/conf/ssl/server.key ${DEPLOYHOME}/www/config/4a-ca.key
+
 rake RAILS_ENV=production db:setup
 rake assets:precompile
 chown -R 4am: $DEPLOYHOME/www/
