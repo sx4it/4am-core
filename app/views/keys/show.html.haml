@@ -1,12 +1,22 @@
-%p#notice= notice
-
-%p
-  %b Name:
-  = @key.name
-%p
-  %b Value:
-  = @key.value
-
-= link_to 'Edit', edit_key_path(@key)
-\|
-= link_to 'Back', keys_path
+.page-header
+  %h1
+    Key
+    %small
+      viewing key :
+      %code= @key.name
+%table.table.table-striped.table-condensed.table-bordered
+  %tbody
+    %tr
+      %th Action
+      %th Value
+    %tr
+      %td.key_name
+        %code= @key.name
+        %p
+          = link_to 'Edit', edit_key_path(@key), :class => "btn btn-mini btn-warning"
+          = link_to 'Delete', @key, :method => :delete, :class => "btn btn-mini btn-danger"
+        %p
+          = link_to 'x509', x509_key_path(@key), :class => "btn btn-mini btn-success"
+          = link_to 'pkcs12', pkcs12_new_key_path(@key), :class => "btn btn-mini btn-success"
+      %td.key_value
+        %pre{ style: 'word-wrap: break-word; '}= @key.value

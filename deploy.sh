@@ -316,6 +316,20 @@ production:
   username: $DBUSERNAME
   password: $DBPASS
   host: $DBHOST
+development:
+  adapter: sqlite3
+  encoding: utf8
+  database: db/dev.sqlite3
+  pool: 10
+  username: $DBUSERNAME
+  password: $DBPASS
+test:
+  adapter: sqlite3
+  encoding: utf8
+  database: db/test.sqlite3
+  pool: 10
+  username: $DBUSERNAME
+  password: $DBPASS
 EOF
 
 cat <<EOF > $DEPLOYHOME/www/config/4am.yml
@@ -342,6 +356,8 @@ EOF
 ln -s ${NGINXHOME}/conf/ssl/server.crt ${DEPLOYHOME}/www/config/4a-ca.crt
 ln -s ${NGINXHOME}/conf/ssl/server.key ${DEPLOYHOME}/www/config/4a-ca.key
 
+rake db:migrate
+rake test
 rake RAILS_ENV=production db:setup
 rake assets:precompile
 chown -R 4am: $DEPLOYHOME/www/
