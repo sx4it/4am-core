@@ -353,8 +353,8 @@ production:
   <<: *defaults
 EOF
 
-ln -s ${NGINXHOME}/conf/ssl/server.crt ${DEPLOYHOME}/www/config/4a-ca.crt
-ln -s ${NGINXHOME}/conf/ssl/server.key ${DEPLOYHOME}/www/config/4a-ca.key
+ln -s ${NGINXHOME}/conf/ssl/server.crt ${DEPLOYHOME}/www/config/4am-ca.crt
+ln -s ${NGINXHOME}/conf/ssl/server.key ${DEPLOYHOME}/www/config/4am-ca.key
 
 rake db:migrate
 rake test
