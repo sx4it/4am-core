@@ -1,9 +1,12 @@
 
-.page-header
-  %h1
-    Users
-    %small
-      add a new user
 
-= render 'form'
+= render 'header', type: :users_new
+
+.widget.widget-table
+  .widget-header
+    %i.icon-th-list
+    %h3
+      Create user
+  .widget-content
+    = render 'form'
 

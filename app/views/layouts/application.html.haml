@@ -21,16 +21,10 @@
         .navbar-inner
           .container
             %a.brand{href: "/"}
-            %ul.nav
-              - if current_user
-                = render file: 'layouts/menu'
-              %li.icon.icon_help
-                %a{href: "http://sx4it.com/doc/index.html"} Help
-              %li.icon.icon_info
-                %a{href: "http://sx4it.com"} About
+
+            = render file: 'layouts/menu'
 
             - if current_user
-
               %div.logout.btn-group
                 %a.btn.btn-inverse{ href: user_path(current_user)}
                   %i.icon-white.icon-user

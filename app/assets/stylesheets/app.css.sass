@@ -2,6 +2,10 @@
 @import "bootstrap"
 @import "font-awesome"
 
+
+@import "compass/css3/border-radius"
+@import "compass/css3/images"
+
 @import "paginate"
 
 @import "jquery.ui.all"
@@ -52,7 +56,7 @@ body
 
   .content
     position: relative
-    padding-top: 60px
+    padding-top: 80px
 
     h2
       padding-bottom: 16px
@@ -111,25 +115,16 @@ a.btn, input.btn
     height: 100%
     background-color: $color-topbar
 
-    -webkit-box-shadow: 1px 0 0 #fff inset, 0 1px 0 #fff inset
-    -moz-box-shadow: 1px 0 0 #fff inset, 0 1px 0 #fff inset
-    -webkit-border-radius: 0
-    -webkit-box-shadow: 0 0 46px rgba(0,0,0,0.5)
-    box-shadow: 0 0 46px rgba(0,0,0,0.5)
-
-    background-image: -webkit-linear-gradient(top, white, #D4D4D4)
-    background-image: -o-linear-gradient(top, white, #D4D4D4)
-    background-image: linear-gradient(top, white, #D4D4D4)
-
     .container
       height: 100%
   
       .brand
-        background: url(image_path("logo.4am.black.80.png")) no-repeat 0px 5px
+        background: url(image_path("logo.4am.white.80.png")) no-repeat 0px 5px
         height: inherit
         width: 100px
         margin: 0px
         padding: 0px
+        float: right
 
       > div.logout
         position: absolute
@@ -144,6 +139,7 @@ a.btn, input.btn
             .caret
               border-top-color: #BD362F
 
+        /*
           .icon
             background-repeat: no-repeat
 

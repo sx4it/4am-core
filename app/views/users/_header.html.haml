@@ -1,0 +1,13 @@
+
+%h1.page-title
+  %i.icon-user
+  Users
+  .btn-group{ :data => { :toggle => 'buttons-radio' } }
+    %a{ href: users_path, class: 'btn' + ((type == :users_list) ? ' btn-active active' : '')  }
+      %i.icon-list
+      List
+    - if permitted_to? :new, :users
+      %a{ href: new_user_path, class: 'btn' + ((type == :users_new) ? ' btn-active active' : '')  }
+        %i.icon-plus
+        New
+

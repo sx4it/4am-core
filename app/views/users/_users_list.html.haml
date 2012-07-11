@@ -17,7 +17,6 @@
           %a.btn{ :href => "javascript:users_search.submit()" }
             %i.icon-search
     
-      / /widget-header
       .widget-content
         %table.table.table-striped.table-bordered
           %thead
@@ -25,8 +24,8 @@
               %th #
               %th= sortable 'login'
               %th Keys
+              %th Groups
               %th Actions
-            -#
               %th
                 %input.check_all{:type => "checkbox"} 
           %tbody
@@ -35,6 +34,7 @@
                 %td= user.id
                 %td= user.login
                 %td= user.keys.count
+                %td TODO: list groups
                 %td.action-td
                   - if permitted_to? :show, user
                     %a.btn.btn-small.btn-info{ :href => url_for(user) }
@@ -45,7 +45,6 @@
                   - if permitted_to? :destroy, user
                     %a.btn.btn-small.btn-danger{:href => "javascript:;"}
                       %i.icon-remove
-              -#
                 %td
                   - if permitted_to? :destroy, user
                     %input{:type => "checkbox"} 
