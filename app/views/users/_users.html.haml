@@ -1,29 +1,54 @@
 
-= hidden_field_tag :direction, params[:direction]
-= hidden_field_tag :sort, params[:sort]
+= form_tag users_path, :method => 'get', :id => 'users_search' do
 
-%table.table.table-striped.table-condensed.table-bordered
-  %tbody
-    %tr
-      %th= sortable 'login'
-      %th Keys
-      %th Actions
+  = hidden_field_tag :direction, params[:direction]
+  = hidden_field_tag :sort, params[:sort]
 
-    - @users.each do |user|
-      %tr
-        %td
-          %code= user.login
-        %td
-          %a{ href: keys_user_path(user) }
-            %span.badge.badge-info= user.keys.count
-        - if permitted_to? :show, user
-          %td
-            - if permitted_to? :show, user
-              = link_to 'Show', user, class: "btn btn-mini btn-info"
-            - if permitted_to? :edit, user
-              = link_to 'Edit', edit_user_path(user), class: "btn btn-mini btn-warning"
-            - if permitted_to? :destroy, user
-              = link_to 'Delete', user, method: :delete, class: "btn btn-mini btn-danger"
+  #users
 
-= will_paginate @users
+    .widget.widget-table
+      .widget-header
+        %i.icon-th-list
+        %h3
+          User list
+        .search.input-append
+          //%input.span2{:size => "16", :type => "text"}
+          = text_field_tag :search, params[:search], class: 'span2'
+          %a.btn{ :href => "javascript:users_search.submit()" }
+            %i.icon-search
+    
+      / /widget-header
+      .widget-content
+        %table.table.table-striped.table-bordered
+          %thead
+            %tr
+              %th #
+              %th= sortable 'login'
+              %th Keys
+              %th Actions
+            -#
+              %th
+                %input.check_all{:type => "checkbox"} 
+          %tbody
+            - @users.each do |user|
+              %tr
+                %td= user.id
+                %td= user.login
+                %td= user.keys.count
+                %td.action-td
+                  - if permitted_to? :show, user
+                    %a.btn.btn-small.btn-info{ :href => url_for(user) }
+                      %i.icon-eye-open
+                  - if permitted_to? :edit, user
+                    %a.btn.btn-small.btn-warning{ :href => url_for(edit_user_path(user)) }
+                      %i.icon-edit
+                  - if permitted_to? :destroy, user
+                    %a.btn.btn-small.btn-danger{:href => "javascript:;"}
+                      %i.icon-remove
+              -#
+                %td
+                  - if permitted_to? :destroy, user
+                    %input{:type => "checkbox"} 
+    
+    = will_paginate @users
 

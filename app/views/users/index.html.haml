@@ -1,19 +1,20 @@
 
-.page-header
-  %h1
-    Users
-    %small
-      list all the users
-    - if permitted_to? :new, :users
-      %a{ href: new_user_path, class: 'btn btn-success' }
-        %i.icon-white.icon-plus-sign
-        New user
+-#
+  - content_for :stylesheet_custom do
+    = stylesheet_link_tag 'dashboard/common'
 
-= form_tag users_path, :method => 'get', :id => 'users_search' do
-  %p.searchbox
-    = text_field_tag :search, params[:search]
-    = submit_tag 'Search', :name => nil, class: 'btn btn-primary'
-  #users
-    = render 'users'
+%h1.page-title
+  %i.icon-user
+  Users
+  .btn-group{ :data => { :toggle => 'buttons-radio' } }
+    %a{ href:'#', class: 'btn btn-active active' }
+      %i.icon-list
+      List
+    - if permitted_to? :new, :users
+      %a{ href: new_user_path, class: 'btn' }
+        %i.icon-plus
+        New
+
+= render 'users'
 
 //= link_to 'Add a new user', new_user_path, class: 'btn btn-success'

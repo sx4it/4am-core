@@ -6,7 +6,8 @@
     %meta{"http-equiv"=>"Content-type", :content=>"text/html;charset=utf-8"}
     %title 4am
 
-    = stylesheet_link_tag    "application"
+    = stylesheet_link_tag    "app"
+    = yield :stylesheet_custom
 
     %link{ rel: "shortcut icon", href: image_path("favicon.png"), type: "image/x-icon" }
 
@@ -46,17 +47,21 @@
                       %i.icon-off
                       Logout
 
-      .container.well
+      .container.content
+        .row
+          .span12
 
-        - if flash[:notice]
-          #flash_warning.alert
-            %a.close{href: "#", data:{ dismiss:'alert' }} ×
-            %strong= flash[:notice]
+            - if flash[:notice]
+              #flash_warning.alert
+                %a.close{href: "#", data:{ dismiss:'alert' }} ×
+                %strong= flash[:notice]
 
-        - if flash[:error]
-          #flash_error.alert.alert-error
-            %a.close{href: "#", data:{ dismiss:'alert' }} ×
-            %strong= flash[:error]
+            - if flash[:error]
+              #flash_error.alert.alert-error
+                %a.close{href: "#", data:{ dismiss:'alert' }} ×
+                %strong= flash[:error]
 
-        = yield
+            = yield
+
   = javascript_include_tag "application"
+

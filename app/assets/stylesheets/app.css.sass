@@ -1,7 +1,3 @@
-// This is a manifest file that'll automatically include all the stylesheets available in this directory
-// and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
-// the top of the compiled file, but it's generally better to create a new file per style scope.
-
 
 @import "bootstrap"
 @import "font-awesome"
@@ -10,22 +6,22 @@
 
 @import "jquery.ui.all"
 
-@import "users"
-@import "keys"
-// require  "jquery.ui.all"
-//= require jquery-ui/cupertino/jquery-ui-1.8.16.custom.css
-
-// = require_self
-
+@import "adminia"
+@import "theme"
 
 @import "icons"
+@import "fonts"
+
+
+
 
 $color-topbar: #fff
 $topbar-height: 44px
 //$color-topbar: #222
 
 
-table.table-striped
+/*
+  table.table-striped
   tbody
     tr
       td
@@ -50,28 +46,22 @@ input, textarea, select, .uneditable-input
 
 
 body
-  //background-color: #F5F6F6
-  //font-family: "Arial"
-  //font-family: "Lucida Sans", "Lucida Grande"
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
-  background: url(image_path("bg.wood1.png"))
-
 
   a
     color: #222
 
-  .container
+  .content
     position: relative
-    &.well
-      background: #fff
-      padding-top: 60px
+    padding-top: 60px
+
     h2
       padding-bottom: 16px
 
 
 
 // Hack for aligning delete button
-.table
+/*
+  .table
   form
     margin: 0px
     position: relative
