@@ -31,6 +31,8 @@ group :assets do
 
   gem "jquery-rails", "~> 1.0.12"
   gem "jquery-ui-rails"
+
+  gem 'font-awesome-sass-rails'
   #gem 'compass'
 end
 

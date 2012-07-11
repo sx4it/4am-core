@@ -31,15 +31,15 @@
             - if current_user
 
               %div.logout.btn-group
-                %a.btn.btn-primary{ href: user_path(current_user)}
+                %a.btn.btn-inverse{ href: user_path(current_user)}
                   %i.icon-white.icon-user
                   = current_user.login.capitalize
-                %a.btn.btn-primary.dropdown-toggle{ href: '#', :data => {:toggle => "dropdown"}}
+                %a.btn.btn-inverse.dropdown-toggle{ href: '#', :data => {:toggle => "dropdown"}}
                   %span.caret
                 %ul.dropdown-menu
                   %li
                     %a{ href: keys_user_path(current_user) }
-                      %i.icon.icon-cog
+                      %i.icon.icon-key
                       My Keys
                   %li
                     %a{ href: logout_path }
