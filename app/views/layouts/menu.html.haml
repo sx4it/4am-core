@@ -9,7 +9,7 @@
   
     - if permitted_to? :index, :user_groups
       %a.btn{ href: url_for(users_path) }
-        %i.icon.icon_user
+        %i.icon.icon_users
         Users
     
     - if permitted_to? :index, :hosts
@@ -29,9 +29,15 @@
       %a.btn
         %i.icon.icon_status2
         Status
+
+    - if permitted_to? :index, :log
+      %a.btn
+        %i.icon.icon_user-yellow
+        Me
   
   -#
     %a.btn{href: "http://sx4it.com/doc/index.html"}
       %i.icon_help
       Help
+
 
