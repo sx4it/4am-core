@@ -1,95 +1,86 @@
-# https://github.com/giancarlo/ph-jquery/blob/master/js/dualselect.js
+
+###
+ Dual Select JQuery Widget
+ @author Giancarlo Bellido
+
+ Options:
+ 	sorted       Boolean. Determines whether the list is sorted or not.
+
+ https://github.com/giancarlo/ph-jquery/blob/master/js/dualselect.js
+###
 
 jQuery.widget "ui.dualselect",
+
   container: null
-  sbl: null
-  sbr: null
-  lc: null
-  ll: null
-  lt: null
-  rc: null
-  rl: null
-  rt: null
+  s0: null #Searchbox
+  c0: null #Container
+  l0: null #List
+  t0: null #Toolbar
+  s1: null
+  c1: null
+  l1: null
+  t1: null
+
   _init_components: ->
-    @lc = document.createElement("DIV")
-    @rc = document.createElement("DIV")
-    @ll = document.createElement("UL")
-    @rl = document.createElement("UL")
-    @lt = document.createElement("DIV")
-    @rt = document.createElement("DIV")
-    @sbl = document.createElement("DIV")
-    @sbr = document.createElement("DIV")
-    @_init_search @sbl, @ll
-    @_init_search @sbr, @rl
+    @c0 = document.createElement("DIV")
+    @c1 = document.createElement("DIV")
+    @l0 = document.createElement("UL")
+    @l1 = document.createElement("UL")
+    @t0 = document.createElement("DIV")
+    @t1 = document.createElement("DIV")
+    @s0 = document.createElement("DIV")
+    @s1 = document.createElement("DIV")
+    @_init_search @s0, @l0
+    @_init_search @s1, @l1
 
   _init_search: (sb, list) ->
     self = this
-    $(sb).addClass("toolbar").html("""
-      <span style="float:right" class="ui-icon ui-icon-close"></span>
-      <input type='text' />
-    """).hide().children().eq(1).keyup(->
+    $(sb).html("""<input type='text' />""").children().keyup(->
       self.search this, list
-    ).prev().click ->
-      self.closeSearch sb, list
+    )
 
-  _init_size: ->
-    _calculateHeight = (obj) ->
-      size = obj.attr("size")
-      (if (size) then size * 25 else 125)
-
-    @rl.style.height = _calculateHeight(@element) + "px"
-    @ll.style.height = @rl.style.height
-
-  _init_elements: ->
-    self = this
-    @element.children().each (i) ->
-      li = "<li value="#{ @value }" class="#{ @className }" index="#{ i } " onclick="$(this).toggleClass('selected')">#{ @innerHTML }</li>"
-      $((if @selected then self.rl else self.ll)).append li
 
   _init: ->
-    @container = $("<div id='#{ @element.attr("id") }' class='dual-select'></div>")
+    @container = $("""<div id="#{ @element.attr("id") }" class='dual-select'></div>""")
     @container.data "dualselect", @element.data("dualselect")
     self = this
     @_init_components()
-    @_init_elements()
-    @container.append(@lc).append @rc
-    @lc.appendChild @ll
-    @lc.appendChild @sbl
-    @lc.appendChild @lt
-    @rc.appendChild @rl
-    @rc.appendChild @sbr
-    @rc.appendChild @rt
-    $(@lt).html("""
-      <button type="button" class="ui-corner-all search">Search</button>
+
+    # Populate the two lists
+    @element.children().each (i) =>
+      li = """<li value="#{ @value }" class="#{ @className }" index="#{ i } " onclick="$(this).toggleClass('selected')">#{ @innerHTML }</li>"""
+      $((if @selected then @l1 else @l0)).append li
+
+
+    @container.append(@c0).append @c1
+    @c0.appendChild @l0
+    @c0.appendChild @s0
+    @c0.appendChild @t0
+    @c1.appendChild @l1
+    @c1.appendChild @s1
+    @c1.appendChild @t1
+    $(@t0).html("""
       <button type="button" class="ui-corner-all add">Add</button>
       """).addClass("toolbar").children(".add").click ->
       self.add()
 
-    $(@lt).children(".search").click ->
-      self.showSearch self.sbl, self.ll
-
-    $(@rt).html("""
-      <button type="button" class="ui-corner-all search">Search</button>
+    $(@t1).html("""
       <button type="button" class="ui-corner-all remove">Remove</button>
     """).addClass("toolbar").children(".remove").click ->
       self.remove()
 
-    $(@rt).children(".search").click ->
-      self.showSearch self.sbr, self.rl
-
-    @_init_size()
     @element.before(@container).remove()
     @element = @container
 
   add: (indices) ->
-    @move @notSelected(".selected:visible").removeClass("selected"), @rl
+    @move @notSelected(".selected:visible").removeClass("selected"), @l1
 
   _sort: (elements) ->
 
   move: (elements, list) ->
     if @options.sorted
       l2 = $(list).children()
-      return $(list).append(elements)  if l2.length is 0
+      return $(list).append(elements) if l2.length is 0
       elements.each ->
         i = 0
         a = @getAttribute("index") * 1
@@ -102,50 +93,39 @@ jQuery.widget "ui.dualselect",
       $(list).append elements
 
   remove: ->
-    @move @selected(".selected:visible").removeClass("selected"), @ll
+    @move @selected(".selected:visible").removeClass("selected"), @l0
 
   selected: (selector) ->
-    $(@rl).children selector
+    $(@l1).children selector
 
   notSelected: (selector) ->
-    $(@ll).children selector
+    $(@l0).children selector
 
   search: (input, list) ->
     regex = new RegExp(input.value, "i")
     $(list).children().show().each ->
-      $(this).hide()  unless regex.test($(this).text())
-
-  resetSearch: (list) ->
-    $(list).children().show()
-
-  showSearch: (sb, list) ->
-    if $(sb).is(":visible")
-      @closeSearch sb, list
-    else
-      $(sb).show()
-      $(list).height $(list).height() - $(sb).outerHeight()
-
-  closeSearch: (sb, list) ->
-    $(list).height $(list).height() + $(sb).outerHeight()
-    $(sb).hide()
-    @resetSearch list
+      $(this).hide() unless regex.test($(this).text())
 
   values: ->
     v = []
     @selected().each ->
       v.push @getAttribute("value")
+    console.log("VALUES", v)
+    alert("WAZA")
     v
 
   selectedText: ->
     v = []
     @selected().each ->
       v.push $(this).text()
+    console.log("SELECTED TEXT", v)
     v
 
   selectedHtml: ->
     v = []
     @selected().each ->
       v.push $(this).html()
+    console.log("SELECTED HTML", v)
     v
 
 jQuery.ui.dualselect.getter = [ "selected", "notSelected", "values", "selectedText", "selectedHtml" ]

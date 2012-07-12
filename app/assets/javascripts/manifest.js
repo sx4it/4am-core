@@ -18,5 +18,4 @@
 
 //= require jquery.dualselect
 
-//= require_tree .
 
