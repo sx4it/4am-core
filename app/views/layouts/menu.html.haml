@@ -31,7 +31,7 @@
         Status
 
     - if permitted_to? :index, :log
-      %a.btn
+      %a.btn{ href: keys_user_path(current_user) }
         %i.icon.icon_user-yellow
         Me
   

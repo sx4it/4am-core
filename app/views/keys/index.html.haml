@@ -1,29 +1,5 @@
 
-.page-header
-  %h1
-    SSH Key
-    %small
-      list all the registered keys
-    %a{ href: new_key_path, class: 'btn btn-success' } 
-      %i.icon-white.icon-plus-sign
-      New key
+= render 'header', type: :users_list
 
-%table.table.table-striped.table-condensed.table-bordered
-  %tbody
-    %tr
-      %th Name
-      %th Value
-
-    - @keys.each do |key|
-      %tr
-        %td.key_name
-          %code= key.name
-          %p
-            = link_to 'Edit', edit_key_path(key), :class => "btn btn-mini btn-warning"
-            = link_to 'Delete', key, :method => :delete, :class => "btn btn-mini btn-danger"
-          %p
-            = link_to 'x509', x509_key_path(key), :class => "btn btn-mini btn-success"
-            = link_to 'pkcs12', pkcs12_new_key_path(key), :class => "btn btn-mini btn-success"
-        %td.key_value
-          %pre{ style: 'word-wrap: break-word; '}= key.value
+= render 'keys_list'
 

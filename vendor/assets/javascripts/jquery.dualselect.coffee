@@ -75,7 +75,6 @@ jQuery.widget "ui.dualselect",
   add: (indices) ->
     @move @notSelected(".selected:visible").removeClass("selected"), @l1
 
-  _sort: (elements) ->
 
   move: (elements, list) ->
     if @options.sorted

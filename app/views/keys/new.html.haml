@@ -1,9 +1,11 @@
 
-.page-header
-  %h1
-    SSH Key
-    %small
-      add a new SSH public key
+= render 'header', type: :keys_new
 
-= render 'form'
+.widget
+  .widget-header
+    %i.icon-th-list
+    %h3
+      Add key
+  .widget-content
+    = render 'key_form'
 
