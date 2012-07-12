@@ -1,4 +1,6 @@
 
+- content_for :javascript_custom do
+  = javascript_include_tag 'users/new'
 
 = render 'header', type: :users_new
 
@@ -9,4 +11,10 @@
       Create user
   .widget-content
     = render 'form'
+
+  %select{ id: 'SELTEST' }
+    %option{:value => "volvo"} Volvo
+    %option{:value => "saab"} Saab
+    %option{:value => "mercedes"} Mercedes
+    %option{:value => "audi"} Audi
 

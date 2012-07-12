@@ -3,11 +3,15 @@
 %html{html_attrs}
 
   %head
-    %meta{"http-equiv"=>"Content-type", :content=>"text/html;charset=utf-8"}
     %title 4am
+
+    %meta{"http-equiv"=>"Content-type", :content=>"text/html;charset=utf-8"}
 
     = stylesheet_link_tag    "app"
     = yield :stylesheet_custom
+
+    = javascript_include_tag "manifest"
+    = yield :javascript_custom
 
     %link{ rel: "shortcut icon", href: image_path("favicon.png"), type: "image/x-icon" }
 
@@ -40,6 +44,4 @@
                 %strong= flash[:error]
 
             = yield
-
-  = javascript_include_tag "application"
 

@@ -16,5 +16,7 @@
 
 //= require autocomplete-rails
 
+//= require jquery.dualselect
+
 //= require_tree .
 
