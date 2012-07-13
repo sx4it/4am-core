@@ -1,0 +1,31 @@
+
+%h1.page-title
+  %i.icon-cloud
+  Hosts
+  .btn-group{ :data => { :toggle => 'buttons-radio' } }
+
+    - if permitted_to? :index, :hosts
+      %a{ href: hosts_path, class: 'btn' + ((type == :hosts_list) ? ' btn-active active' : '')  }
+        %i.icon-list
+        Host List
+
+    - if permitted_to? :new, :hosts
+      %a{ href: new_host_path, class: 'btn' + ((type == :hosts_new) ? ' btn-active active' : '')  }
+        %i.icon-plus
+        New Host
+
+    - if permitted_to? :index, :host_groups
+      %a{ href: host_groups_path, class: 'btn' + ((type == :hosts_groups) ? ' btn-active active' : '')  }
+        %i.icon-group
+        Group List
+
+    - if permitted_to? :new, :host_groups
+      %a{ href: new_host_group_path, class: 'btn' + ((type == :hosts_groups) ? ' btn-active active' : '')  }
+        %i.icon-plus
+        New Group
+
+    - if permitted_to? :index, :hosts_acl
+      %a{ href: host_acls_path, class: 'btn' + ((type == :hosts_groups) ? ' btn-active active' : '')  }
+        %i.icon-cogs
+        ACL
+

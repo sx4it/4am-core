@@ -31,19 +31,22 @@
               %td
                 %pre{ style: 'word-wrap: break-word; '}
                   = key.value
+
               %td.action-td
+
+                // Edit
                 %a.btn.btn-small.btn-warning{ :href => url_for(edit_key_path(key)) }
                   %i.icon-edit
-                // TODO: fix delete link
-                %a.btn.btn-small.btn-danger{ :href => key }
+
+                // Delete
+                = link_to key, method: :delete, class: "btn btn-small btn-danger"} do
                   %i.icon-remove
 
+                // X509
                 %a.btn.btn-small{ href: x509_key_path(key) }
                   x509
 
+                // Pkcs12
                 %a.btn.btn-small{ href: pkcs12_new_key_path(key) }
                   pkcs12
-
-  
-  //= will_paginate @keys
 

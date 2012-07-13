@@ -3,11 +3,29 @@
   %i.icon-user
   Users
   .btn-group{ :data => { :toggle => 'buttons-radio' } }
-    %a{ href: users_path, class: 'btn' + ((type == :users_list) ? ' btn-active active' : '')  }
-      %i.icon-list
-      List
+
+    - if permitted_to? :index, :users
+      %a{ href: users_path, class: 'btn' + ((type == :users_list) ? ' btn-active active' : '')  }
+        %i.icon-list
+        User List
+
     - if permitted_to? :new, :users
       %a{ href: new_user_path, class: 'btn' + ((type == :users_new) ? ' btn-active active' : '')  }
         %i.icon-plus
-        New
+        New User
+
+    - if permitted_to? :index, :user_groups
+      %a{ href: user_groups_path, class: 'btn' + ((type == :users_groups) ? ' btn-active active' : '')  }
+        %i.icon-group
+        Group List
+
+    - if permitted_to? :index, :user_groups
+      %a{ href: new_user_group_path, class: 'btn' + ((type == :users_groups) ? ' btn-active active' : '')  }
+        %i.icon-plus
+        New Group
+
+    - if permitted_to? :index, :user_groups
+      %a{ href: roles_path, class: 'btn' + ((type == :users_groups) ? ' btn-active active' : '')  }
+        %i.icon-cogs
+        Roles
 

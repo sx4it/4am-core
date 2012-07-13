@@ -21,12 +21,12 @@
       Templates ?
     
     - if permitted_to? :index, :commands
-      %a.btn
+      %a.btn{ href: commands_path }
         %i.icon.icon_terminal
         Commands
     
     - if permitted_to? :index, :log
-      %a.btn
+      %a.btn{ href: log_path }
         %i.icon.icon_status2
         Status
 

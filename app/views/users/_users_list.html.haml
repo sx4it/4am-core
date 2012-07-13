@@ -37,13 +37,13 @@
                 %td TODO: list groups
                 %td.action-td
                   - if permitted_to? :show, user
-                    %a.btn.btn-small.btn-info{ :href => url_for(user) }
+                    %a.btn.btn-small.btn-info{ href: url_for(user) }
                       %i.icon-eye-open
                   - if permitted_to? :edit, user
-                    %a.btn.btn-small.btn-warning{ :href => url_for(edit_user_path(user)) }
+                    %a.btn.btn-small.btn-warning{ href: url_for(edit_user_path(user)) }
                       %i.icon-edit
                   - if permitted_to? :destroy, user
-                    %a.btn.btn-small.btn-danger{:href => "javascript:;"}
+                    = link_to user, { data: { confirm: 'Are you sure?', method: :delete }, class: "btn btn-small btn-danger"} do
                       %i.icon-remove
                 %td
                   - if permitted_to? :destroy, user

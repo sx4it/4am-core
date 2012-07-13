@@ -1,0 +1,16 @@
+
+%h1.page-title
+  %i.icon-user
+  Commands
+  .btn-group{ :data => { :toggle => 'buttons-radio' } }
+
+    - if permitted_to? :index, :commands
+      %a{ href: commands_path, class: 'btn' + ((type == :commands_list) ? ' btn-active active' : '')  }
+        %i.icon-list
+        Command List
+
+    - if permitted_to? :new, :commands
+      %a{ href: new_command_path, class: 'btn' + ((type == :commands_new) ? ' btn-active active' : '')  }
+        %i.icon-plus
+        New Command
+
