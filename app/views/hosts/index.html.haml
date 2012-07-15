@@ -7,12 +7,7 @@
     .widget-header
       %i.icon-th-list
       %h3
-        User list
-      .search.input-append
-        //%input.span2{:size => "16", :type => "text"}
-        = text_field_tag :search, params[:search], class: 'span2'
-        %a.btn{ :href => "javascript:users_search.submit()" }
-          %i.icon-search
+        Host list
   
     .widget-content
       %table.table.table-striped.table-bordered
@@ -33,6 +28,5 @@
               %td= host.port
               %td= host.host_tpl_id
               %td.action-td
-                = host.class.model_name
-                //= render 'layouts/form/list_actions', elem:host, name:'host'
+                = render 'layouts/form/list_actions', elem: host
 

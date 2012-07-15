@@ -1,7 +1,11 @@
-.page-header
-  %h1
-    Host Groups
-    %small
-      new host group
 
-= render 'form'
+= render 'hosts/header', type: :new_group
+
+.widget
+  .widget-header
+    %i.icon-plus
+    %h3
+      Create a new host group
+  .widget-content
+    = render 'form'
+

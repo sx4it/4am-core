@@ -1,8 +1,12 @@
-.page-header
-  %h1
-    Hosts
-    %small
-      edit host
-      %code= @host.name
 
-= render 'form'
+= render 'header', type: :list
+
+.widget
+  .widget-header
+    %i.icon-plus
+    %h3
+      Edit host
+      %code= @host.name
+  .widget-content
+    = render 'form'
+
