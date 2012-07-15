@@ -26,15 +26,5 @@
               %td
                 %code= cmd.command
               %td.action-td
-                - if permitted_to? :show, cmd
-                  %a.btn.btn-small.btn-info{ href: cmd }
-                    %i.icon-eye-open
-
-                - if permitted_to? :edit, cmd
-                  %a.btn.btn-small.btn-warning{ href: edit_command_path(cmd) }
-                    %i.icon-edit
-
-                - if permitted_to? :destroy, cmd
-                  = link_to cmd, { data: { confirm: 'Are you sure?', method: :delete }, class: "btn btn-small btn-danger"} do
-                    %i.icon-remove
+                = render 'layouts/form/list_actions', elem: cmd
 

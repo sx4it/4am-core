@@ -19,7 +19,7 @@
         %i.icon-group
         Group List
 
-    - if permitted_to? :index, :user_groups
+    - if permitted_to? :new, :user_groups
       %a{ href: new_user_group_path, class: 'btn' + ((type == :new_group) ? ' btn-active active' : '')  }
         %i.icon-plus
         New Group

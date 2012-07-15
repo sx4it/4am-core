@@ -1,9 +1,12 @@
 
-.page-header
-  %h1
-    SSH Key
-    %small
-      edit key
+= render 'header', type: :keys_new
 
-= render 'form'
+.widget
+  .widget-header
+    %i.icon-plus
+    %h3
+      Edit key
+      %code= @key.name
+  .widget-content
+    = render 'form'
 

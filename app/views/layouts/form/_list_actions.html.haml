@@ -1,0 +1,11 @@
+
+- if permitted_to? :show, elem
+  %a.btn.btn-small.btn-info{ href: url_for(elem) }
+    %i.icon-eye-open
+- if permitted_to? :edit, elem
+  %a.btn.btn-small.btn-warning{ href: url_for(self.send("edit_#{elem.class.model_name.downcase}_path".to_sym, elem)) }
+    %i.icon-edit
+- if permitted_to? :destroy, elem
+  = link_to elem, { data: { confirm: 'Are you sure?', method: :delete }, class: "btn btn-small btn-danger"} do
+    %i.icon-remove
+

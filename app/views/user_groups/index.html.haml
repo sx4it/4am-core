@@ -1,6 +1,5 @@
 
 = render 'users/header', type: :list_group 
-//= render {  partial: 'users/header', params: { type: :list_group } }
 
 #user_groups
 
@@ -25,13 +24,5 @@
               %td= user_group.name
               %td TODO: list total
               %td.action-td
-                - if permitted_to? :show, user_group
-                  %a.btn.btn-small.btn-info{ href: url_for(user_group) }
-                    %i.icon-eye-open
-                - if permitted_to? :edit, user_group
-                  %a.btn.btn-small.btn-warning{ href: url_for(edit_user_group_path(user_group)) }
-                    %i.icon-edit
-                - if permitted_to? :destroy, user_group
-                  = link_to user_group, { data: { confirm: 'Are you sure?', method: :delete }, class: "btn btn-small btn-danger"} do
-                    %i.icon-remove
-
+                = render 'layouts/form/list_actions', elem: user_group
+     

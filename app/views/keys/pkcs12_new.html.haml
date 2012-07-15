@@ -6,15 +6,8 @@
       generate a PKCS #12 usable for browser authentication
 
 = form_tag({:controller => "keys", :action => "pkcs12_create"}, :method => "post", :class => 'form-horizontal', :multipart => true ) do
-  -if @key.errors.any?
-    .control-group
-      .alert.alert-error
-        %a.close{href: "#", data:{ dismiss:'alert' }} ×
-        %h4.alert-heading= "#{pluralize(@key.errors.count, "error")} prohibited this file from being generated:"
-        %ul
-          - @key.errors.full_messages.each do |msg|
-            %li
-              %p= msg
+
+  = render 'layouts/form/errors', elem: @key
 
   .control-group
     = label_tag :ssh_priv_key, "Private key", class: 'control-label' 
@@ -33,5 +26,6 @@
       = password_field_tag :pkcs12_password
       %p.help-box Optional but recommended password to protect the generated file.
 
-  .form-actions
+  .form-actions.transparent
     = submit_tag 'Generate', class: "btn btn-info"
+

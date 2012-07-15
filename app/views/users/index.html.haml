@@ -5,5 +5,48 @@
 
 = render 'header', type: :list
 
-= render 'users_list'
+
+= form_tag users_path, :method => 'get', :id => 'users_search' do
+
+  = hidden_field_tag :direction, params[:direction]
+  = hidden_field_tag :sort, params[:sort]
+
+  #users
+
+    .widget.widget-table
+      .widget-header
+        %i.icon-th-list
+        %h3
+          User list
+        .search.input-append
+          //%input.span2{:size => "16", :type => "text"}
+          = text_field_tag :search, params[:search], class: 'span2'
+          %a.btn{ :href => "javascript:users_search.submit()" }
+            %i.icon-search
+    
+      .widget-content
+        %table.table.table-striped.table-bordered
+          %thead
+            %tr
+              %th #
+              %th= sortable 'login'
+              %th Keys
+              %th Groups
+              %th Actions
+              %th
+                %input.check_all{:type => "checkbox"} 
+          %tbody
+            - @users.each do |user|
+              %tr
+                %td= user.id
+                %td= user.login
+                %td= user.keys.count
+                %td TODO: list groups
+                %td.action-td
+                  = render 'layouts/form/list_actions', elem:user
+                %td
+                  - if permitted_to? :destroy, user
+                    %input{:type => "checkbox"} 
+    
+    = will_paginate @users
 

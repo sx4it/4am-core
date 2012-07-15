@@ -1,5 +1,40 @@
 
 = render 'header', type: :users_list
 
-= render 'keys_list'
+#keys
+
+  .widget.widget-table
+    .widget-header
+      %i.icon-th-list
+      %h3
+        Keys list
+  
+    .widget-content
+      %table.table.table-striped.table-bordered
+        %thead
+          %tr
+            %th #
+            %th Name
+            %th Value
+            %th Actions
+
+        %tbody
+          - @keys.each do |key|
+            %tr
+              %td= key.id
+              %td= key.name
+              %td
+                %pre{ style: 'word-wrap: break-word; '}
+                  = key.value
+
+              %td.action-td
+                = render 'layouts/form/list_actions', elem: key
+
+                // X509
+                %a.btn.btn-small{ href: x509_key_path(key) }
+                  x509
+
+                // Pkcs12
+                %a.btn.btn-small{ href: pkcs12_new_key_path(key) }
+                  pkcs12
 

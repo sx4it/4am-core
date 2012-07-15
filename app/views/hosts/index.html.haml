@@ -1,31 +1,38 @@
-.page-header
-  %h1
-    Hosts
-    %small
-      list all the hosts
-    - if permitted_to? :new, :hosts
-      %a{ href: new_host_path, class: 'btn btn-success' }
-        %i.icon-white.icon-plus-sign
-        New host
 
-%table.table.table-striped.table-condensed.table-bordered
-  %tr
-    %th Name
-    %th Ip
-    %th Port
-    %th Host template
-    %th Action
+= render 'header', type: :list
 
-  - @hosts.each do |host|
-    %tr
-      %td= host.name
-      %td= host.ip
-      %td= host.port
-      %td= host.host_tpl_id
-      %td
-        - if permitted_to? :show, host
-          = link_to 'Show', host, class: "btn btn-mini btn-info"
-        - if permitted_to? :edit, host
-          = link_to 'Edit', edit_host_path(host), class: "btn btn-mini btn-warning"
-        - if permitted_to? :destroy, host
-          = link_to 'Delete', host, {:data => {:confirm => 'Are you sure?', :method => :delete}, class: "btn btn-mini btn-danger"}
+#hosts
+
+  .widget.widget-table
+    .widget-header
+      %i.icon-th-list
+      %h3
+        User list
+      .search.input-append
+        //%input.span2{:size => "16", :type => "text"}
+        = text_field_tag :search, params[:search], class: 'span2'
+        %a.btn{ :href => "javascript:users_search.submit()" }
+          %i.icon-search
+  
+    .widget-content
+      %table.table.table-striped.table-bordered
+        %thead
+          %tr
+            %th #
+            %th Name
+            %th Ip
+            %th Port
+            %th Template
+            %th Actions
+        %tbody
+          - @hosts.each do |host|
+            %tr
+              %td= host.id
+              %td= host.name
+              %td= host.ip
+              %td= host.port
+              %td= host.host_tpl_id
+              %td.action-td
+                = host.class.model_name
+                //= render 'layouts/form/list_actions', elem:host, name:'host'
+
