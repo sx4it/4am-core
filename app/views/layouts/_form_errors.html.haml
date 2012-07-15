@@ -1,0 +1,10 @@
+
+-if elem.errors.any?
+  .control-group
+    .alert.alert-error
+      %a.close{href: "#", data:{ dismiss:'alert' }} ×
+      %h4.alert-heading= "#{pluralize(elem.errors.count, "error")} "
+      %ul
+      - elem.errors.full_messages.each do |msg|
+        %li= msg
+

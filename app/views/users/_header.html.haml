@@ -5,27 +5,27 @@
   .btn-group{ :data => { :toggle => 'buttons-radio' } }
 
     - if permitted_to? :index, :users
-      %a{ href: users_path, class: 'btn' + ((type == :users_list) ? ' btn-active active' : '')  }
+      %a{ href: users_path, class: 'btn' + ((type == :list) ? ' btn-active active' : '')  }
         %i.icon-list
         User List
 
     - if permitted_to? :new, :users
-      %a{ href: new_user_path, class: 'btn' + ((type == :users_new) ? ' btn-active active' : '')  }
+      %a{ href: new_user_path, class: 'btn' + ((type == :new) ? ' btn-active active' : '')  }
         %i.icon-plus
         New User
 
     - if permitted_to? :index, :user_groups
-      %a{ href: user_groups_path, class: 'btn' + ((type == :users_groups) ? ' btn-active active' : '')  }
+      %a{ href: user_groups_path, class: 'btn' + ((type == :list_group) ? ' btn-active active' : '')  }
         %i.icon-group
         Group List
 
     - if permitted_to? :index, :user_groups
-      %a{ href: new_user_group_path, class: 'btn' + ((type == :users_groups) ? ' btn-active active' : '')  }
+      %a{ href: new_user_group_path, class: 'btn' + ((type == :new_group) ? ' btn-active active' : '')  }
         %i.icon-plus
         New Group
 
     - if permitted_to? :index, :user_groups
-      %a{ href: roles_path, class: 'btn' + ((type == :users_groups) ? ' btn-active active' : '')  }
+      %a{ href: roles_path, class: 'btn' + ((type == :role) ? ' btn-active active' : '')  }
         %i.icon-cogs
         Roles
 

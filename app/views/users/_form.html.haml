@@ -2,16 +2,9 @@
 = form_for @user, html: { class: 'form-horizontal' } do |f|
 
   %fieldset
-
-    -if @user.errors.any?
-      .control-group
-        .alert.alert-error
-          %a.close{href: "#", data:{ dismiss:'alert' }} ×
-          %h4.alert-heading= "#{pluralize(@user.errors.count, "error")} "
-          %ul
-            - @user.errors.full_messages.each do |msg|
-              %li
-                %p= msg
+    
+    = render 'layouts/form_errors', elem: @user
+   
     .control-group
       = f.label :login, class: 'control-label'
       .controls
@@ -46,3 +39,4 @@
 
     .form-actions
       = f.submit 'Create', class: "btn btn-info"
+

@@ -2,7 +2,7 @@
 - content_for :javascript_custom do
   = javascript_include_tag 'users/new'
 
-= render 'header', type: :users_new
+= render 'header', type: :new
 
 .widget
   .widget-header
@@ -18,6 +18,8 @@
         %a{"data-toggle" => "tab", :href => "#keys"} Keys
       %li
         %a{"data-toggle" => "tab", :href => "#groups"} Groups
+      %li
+        %a{"data-toggle" => "tab", :href => "#roles"} Roles
 
     %br
 
