@@ -145,7 +145,7 @@ input
 .widget-header
   position: relative
   height: 40px
-  line-height: 40px
+  line-height: 36px
   background: #E9E9E9
   background: -moz-linear-gradient(top, #fafafa 0%, #e9e9e9 100%)
   /* FF3.6+
@@ -188,6 +188,7 @@ input
       &[class^="icon-"], &[class*=" icon-"]
         display: inline-block
         margin-right: -2px
+        padding-top: 2px
         font-size: 16px
         color: #555
         vertical-align: middle
@@ -313,6 +314,18 @@ input
     margin-top: 5px
 
 
-.table .action-td
-  width: 80px
+.table th.actions, .table td.actions
+  width: 120px
   text-align: center
+
+.table th.id, .table td.id
+  width: 20px
+  text-align: center
+
+.table th.checkbox, .table td.checkbox
+  width: 28px
+  text-align: center
+  > input
+    float: none
+    margin: 0
+

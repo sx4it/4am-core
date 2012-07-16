@@ -13,21 +13,21 @@
       %table.table.table-striped.table-bordered
         %thead
           %tr
-            %th #
+            %th.id #
             %th Name
             %th Value
-            %th Actions
+            %th.actions Actions
 
         %tbody
           - @keys.each do |key|
             %tr
-              %td= key.id
+              %td.id= key.id
               %td= key.name
               %td
                 %pre{ style: 'word-wrap: break-word; '}
                   = key.value
 
-              %td.action-td
+              %td.actions
                 = render 'layouts/form/list_actions', elem: key
 
                 // X509

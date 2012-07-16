@@ -13,16 +13,16 @@
       %table.table.table-striped.table-bordered
         %thead
           %tr
-            %th #
+            %th.id #
             %th Name
             %th Count
-            %th Actions
+            %th.actions Actions
         %tbody
           - @user_groups.each do |user_group|
             %tr
-              %td= user_group.id
+              %td.id= user_group.id
               %td= user_group.name
               %td TODO: list total
-              %td.action-td
+              %td.actions
                 = render 'layouts/form/list_actions', elem: user_group
      

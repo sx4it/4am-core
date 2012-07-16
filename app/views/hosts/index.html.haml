@@ -13,20 +13,20 @@
       %table.table.table-striped.table-bordered
         %thead
           %tr
-            %th #
+            %th.id #
             %th Name
             %th Ip
             %th Port
             %th Template
-            %th Actions
+            %th.actions Actions
         %tbody
           - @hosts.each do |host|
             %tr
-              %td= host.id
+              %td.id= host.id
               %td= host.name
               %td= host.ip
               %td= host.port
               %td= host.host_tpl_id
-              %td.action-td
+              %td.actions
                 = render 'layouts/form/list_actions', elem: host
 

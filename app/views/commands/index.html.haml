@@ -16,18 +16,18 @@
       %table.table.table-striped.table-bordered
         %thead
           %tr
-            %th #
+            %th.id #
             %th Name
             %th Command
-            %th Actions
+            %th.actions Actions
 
         %tbody
           - @commands.each do |cmd|
             %tr
-              %td= cmd.id
+              %td.id= cmd.id
               %td= cmd.name
               %td
                 %code= cmd.command
-              %td.action-td
+              %td.actions
                 = render 'layouts/form/list_actions', elem: cmd
 

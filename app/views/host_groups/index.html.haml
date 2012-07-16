@@ -13,15 +13,15 @@
       %table.table.table-striped.table-bordered
         %thead
           %tr
-            %th #
+            %th.id #
             %th Name
-            %th Actions
+            %th.actions Actions
 
         %tbody
           - @host_groups.each do |host_group|
             %tr
-              %td= host_group.id
+              %td.id= host_group.id
               %td= host_group.name
-              %td.action-td
+              %td.actions
                 = render 'layouts/form/list_actions', elem: host_group
 

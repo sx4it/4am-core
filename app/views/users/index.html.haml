@@ -1,7 +1,6 @@
 
--#
-  - content_for :stylesheet_custom do
-    = stylesheet_link_tag 'dashboard/common'
+- content_for :javascript_custom do
+  = javascript_include_tag 'users/index'
 
 = render 'header', type: :list
 
@@ -28,23 +27,23 @@
         %table.table.table-striped.table-bordered
           %thead
             %tr
-              %th #
+              %th.id #
               %th= sortable 'login'
               %th Keys
               %th Groups
-              %th Actions
-              %th
+              %th.actions Actions
+              %th.checkbox
                 %input.check_all{:type => "checkbox"} 
           %tbody
             - @users.each do |user|
               %tr
-                %td= user.id
+                %td.id= user.id
                 %td= user.login
                 %td= user.keys.count
                 %td TODO: list groups
-                %td.action-td
+                %td.actions
                   = render 'layouts/form/list_actions', elem:user
-                %td
+                %td.checkbox
                   - if permitted_to? :destroy, user
                     %input{:type => "checkbox"} 
     
