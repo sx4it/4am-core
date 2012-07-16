@@ -1,6 +1,8 @@
 
 - content_for :javascript_custom do
   = javascript_include_tag 'users/new'
+- content_for :stylesheet_custom do
+  = stylesheet_link_tag 'users/new'
 
 = render 'header', type: :new
 

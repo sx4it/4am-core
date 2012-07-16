@@ -1,35 +1,28 @@
 
 
-@mixin mix_h3
-  display: inline-block
-  top: 2px
-  left: 10px
-  font-size: 14px
-  font-weight: 800
-  color: #555
-  line-height: 18px
-  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5)
-
-
 body
   font: 13px/1.7em 'Open Sans', arial, sans-serif
   background: url(image_path("bg.3.png"))
 
+
 .page-title
   padding: 5px 10px
   margin-bottom: 1.25em
-  font-size: 16px
-  font-weight: 600
-  color: white
 
+  color: white
   background: #3C4049
   @include background-image(linear-gradient(top, #414141, #323232))
 
-  @include border-radius(4px)
+  font-size: 16px
+  font-weight: 600
 
+  @include border-radius(4px)
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5)
 
 
+
+// -----------------------------------------------------------------------------
+// Navigation bar 
 
 .navbar
 
@@ -58,6 +51,7 @@ body
 
 
 
+// -----------------------------------------------------------------------------
 // Delete background on submit actions
 
 .form-actions.transparent
@@ -65,173 +59,3 @@ body
   border: none
 
 
-
-.ds
-
-  .ds-control
-    display: inline-block
-    vertical-align: top
-    padding: 60px 4px 0 6px 
-
-    a
-      margin-top: 10px
-
-  .ds-list
-    display: inline-block
-    vertical-align: top
-
-    @include border-radius(4px)
-    border: 1px solid #DDD
-    background: #FcFcFc
-
-    width: 300px
-
-    .ds-list-header
-
-      height: 40px
-      line-height: 40px
-      background: #F2F2F2
-      border-bottom: 1px solid #D5D5D5
-      padding: 0px 4px 0 13px
-
-      h3
-        @include mix_h3
-        width: 90px
-
-      .search
-        display: inline-block
-        position: relative
-
-        input
-          padding-right: 20px
-          width: 110px
-
-        i
-          position: absolute
-          right: 8px
-          top: -2px
-
-      .select
-        display: inline-block
-
-        a
-          cursor: pointer
-          font-size: 16px
-          margin-right: 6px
-
-
-  ol
-    width: 100%
-    height: 200px
-    list-style-type: none
-    margin: 0px
-    overflow: scroll
-
-    li
-      padding: 5px 10px
-      line-height: 16px
-      border-bottom: 1px dotted #CCC
-
-      /*
-        &.selected
-          background: #eee
-
-      i
-        width: 20px
-        display: inline-block
-
-        &.selected
-          @extend .icon-ok
-
-
-
-
-
-@import "compass/css3/opacity"
-
-.new_key
-
-  .nk
-    &::after
-      content: ""
-      display: block 
-      visibility: hidden 
-      clear: both
-
-    padding-bottom: 26px
-    border-bottom: 1px dotted #CCC
-
-  .nk_block
-
-
-    &:first-child
-      width: 60%
-
-    &:last-child
-      width: 40%
-
-    .alert
-      padding: 4px 8px
-      font-size: 11px
-      code
-        font-size: 11px
-
-    position: relative
-    float: left
-
-    text-align: center
-
-    .nk_content1
-      padding-right: 30px
-      border-right: 1px dotted #CCC
-
-      textarea
-        // TODO: fix this!
-        width: 500px 
-        height: 200px
-
-
-    .nk_content2
-      padding-left: 30px
-
-      label
-        margin-top: 90px
-        position: relative
-        font-size: 12em
-
-        input
-          position: absolute
-          z-index: 999
-          line-height: 0
-          top: -20px
-          left: 100px
-          height: 130px
-          width: 130px
-          @include opacity(0)
-          cursor: pointer
-          margin: 0
-          padding: 0
-          //background: #756
-
-
-    h3
-      @include mix_h3
-
-
-  .form-actions
-    float: clear
-
-
-
-
-
-.commands
-  textarea
-    width: 620px
-    height: 200px
-    font-family: Menlo, Monaco, Consolas, "Courier New", monospace
-    background: #222
-    color: white
-  input[type=text]
-    width: 620px
-    

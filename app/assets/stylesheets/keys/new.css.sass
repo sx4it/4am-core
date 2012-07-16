@@ -1,0 +1,77 @@
+
+@import "compass/css3/opacity"
+@import "mixins/mixins"
+
+.new_key
+
+  .nk
+    &::after
+      content: ""
+      display: block 
+      visibility: hidden 
+      clear: both
+
+    padding-bottom: 26px
+    border-bottom: 1px dotted #CCC
+
+  .nk_block
+
+
+    &:first-child
+      width: 60%
+
+    &:last-child
+      width: 40%
+
+    .alert
+      padding: 4px 8px
+      font-size: 11px
+      code
+        font-size: 11px
+
+    position: relative
+    float: left
+
+    text-align: center
+
+    .nk_content1
+      padding-right: 30px
+      border-right: 1px dotted #CCC
+
+      textarea
+        // TODO: fix this!
+        width: 500px 
+        height: 200px
+
+
+    .nk_content2
+      padding-left: 30px
+
+      label
+        margin-top: 90px
+        position: relative
+        font-size: 12em
+
+        input
+          position: absolute
+          z-index: 999
+          line-height: 0
+          top: -20px
+          left: 100px
+          height: 130px
+          width: 130px
+          @include opacity(0)
+          cursor: pointer
+          margin: 0
+          padding: 0
+          //background: #756
+
+
+    h3
+      @include mix_h3
+
+
+  .form-actions
+    float: clear
+
+
