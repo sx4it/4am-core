@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+!!! 5
 
 %html{html_attrs}
 
   %head
     %title 4am
 
-    %meta{"http-equiv"=>"Content-type", :content=>"text/html;charset=utf-8"}
+    %meta{ "http-equiv" => "Content-type", :content => "text/html;charset=utf-8" }
 
-    = stylesheet_link_tag    "app"
+    = stylesheet_link_tag    "manifest"
     = yield :stylesheet_custom
 
     = javascript_include_tag "manifest"
@@ -21,7 +21,7 @@
 
     #main
 
-      .navbar.navbar-fixed-top{"data-scrollspy" => "scrollspy"}
+      .navbar.navbar-fixed-top{ "data-scrollspy" => "scrollspy" }
         .navbar-inner
           .container
             %a.brand{href: "/"}
@@ -33,15 +33,7 @@
         .row
           .span12
 
-            - if flash[:notice]
-              #flash_warning.alert
-                %a.close{href: "#", data:{ dismiss:'alert' }} ×
-                %strong= flash[:notice]
-
-            - if flash[:error]
-              #flash_error.alert.alert-error
-                %a.close{href: "#", data:{ dismiss:'alert' }} ×
-                %strong= flash[:error]
+            = render partial: 'layouts/alert'
 
             = yield
 

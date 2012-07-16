@@ -1,9 +1,69 @@
 
+// -----------------------------------------------------------------------------
+// Global
 
 body
   font: 13px/1.7em 'Open Sans', arial, sans-serif
   background: url(image_path("bg.3.png"))
 
+  a, a:hover
+    text-decoration: none
+    color: #4A515B
+
+  .content
+    position: relative
+    padding-top: 80px
+
+
+
+// -----------------------------------------------------------------------------
+// Navigation bar 
+
+.navbar
+  height: 44px
+
+  .btn
+    line-height: 16px
+    padding: 6px 16px 6px 14px
+    margin: 7px 10px 0px 0px
+    font-weight: bold
+
+    i
+      position: relative
+      top: 1px
+
+  .navbar-inner
+    height: 100%
+
+    background-color: #2C2C2C
+    @include background-image(linear-gradient(top, #333, #222))
+
+    padding: 7px
+
+    .container
+      height: 100%
+
+      .brand
+        background: url(image_path("logo.4am.white.80.png")) no-repeat 0px 2px
+        height: inherit
+        width: 80px
+        margin: 0px
+        padding: 0px
+        float: right
+
+      i
+        height: 16px
+        width: 16px
+        display: inline-block
+        margin-bottom: -1px
+        margin:
+          bottom: -3px
+          right: 1px
+
+
+
+// -----------------------------------------------------------------------------
+// Section header
 
 .page-title
   padding: 5px 10px
@@ -18,44 +78,4 @@ body
 
   @include border-radius(4px)
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5)
-
-
-
-// -----------------------------------------------------------------------------
-// Navigation bar 
-
-.navbar
-
-  .btn
-    line-height: 16px
-    padding: 6px 16px 6px 14px
-    margin: 7px 10px 0px 0px
-
-  .navbar-inner
-
-    background-color: #2C2C2C
-    @include background-image(linear-gradient(top, #333, #222))
-
-    padding: 7px
-
-    .container
-
-      i
-        height: 16px
-        width: 16px
-        display: inline-block
-        margin-bottom: -1px
-        margin:
-          bottom: -3px
-          right: 1px
-
-
-
-// -----------------------------------------------------------------------------
-// Delete background on submit actions
-
-.form-actions.transparent
-  background-color: transparent
-  border: none
-
 

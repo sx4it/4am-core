@@ -1,0 +1,11 @@
+
+- if flash[:notice]
+  #flash_warning.alert
+    %a.close{href: "#", data:{ dismiss:'alert' }} ×
+    %strong= flash[:notice]
+
+- if flash[:error]
+  #flash_error.alert.alert-error
+    %a.close{href: "#", data:{ dismiss:'alert' }} ×
+    %strong= flash[:error]
+
