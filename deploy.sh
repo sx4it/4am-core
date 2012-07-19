@@ -356,8 +356,6 @@ EOF
 ln -s ${NGINXHOME}/conf/ssl/server.crt ${DEPLOYHOME}/www/config/4am-ca.crt
 ln -s ${NGINXHOME}/conf/ssl/server.key ${DEPLOYHOME}/www/config/4am-ca.key
 
-rake db:migrate
-rake test
 rake RAILS_ENV=production db:setup
 rake assets:precompile
 chown -R 4am: $DEPLOYHOME/www/
