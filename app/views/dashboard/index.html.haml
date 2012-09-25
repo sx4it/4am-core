@@ -1,10 +1,47 @@
-.page-header
+
+- content_for :stylesheet_custom do
+  = stylesheet_link_tag 'dashboard/common'
+
+%h1.page-title
+  %i.icon-home
+  Dashboard
+
+.stat-container
+  .stat-holder.fourth
+    .stat
+      %span 564
+      Completed Sales
+    / /stat
+  / /stat-holder
+  .stat-holder.fourth
+    .stat
+      %span 423
+      Pending Sales
+    / /stat
+  / /stat-holder
+  .stat-holder.fourth
+    .stat
+      %span 96
+      Returned Sales
+    / /stat
+  / /stat-holder
+  .stat-holder.fourth
+    .stat
+      %span 2
+      Chargebacks
+    / /stat
+  / /stat-holder
+/ /stat-container
+
+
+
+-#
+  .page-header
   %h1
     Dashboard
     %small
       welcome to 4am !
-
-%div.fluid-row
+  %div.fluid-row
   %div.span3.well#user_groups
     %h2= "#{pluralize(current_user.user_group.count, 'User Group')}"
     - current_user.user_group.each do |u|

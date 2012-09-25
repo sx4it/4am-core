@@ -1,8 +1,12 @@
-.page-header
-  %h1
-    Host Groups
-    %small
-      edit information of
-      %code= @host_group.name
 
-= render 'form'
+= render 'hosts/header', type: :list_group
+
+.widget
+  .widget-header
+    %i.icon-plus
+    %h3
+      Edit group
+      %code= @host_group.name
+  .widget-content
+    = render 'form'
+

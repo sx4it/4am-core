@@ -1,7 +1,15 @@
-.page-header
-  %h1
-    Commands
-    %small
-      create a new command
 
-= render 'form'
+= render 'header', type: :commands_new
+
+.commands
+
+  .widget.widget-table
+    .widget-header
+      %i.icon-plus
+      %h3
+        New command
+  
+    .widget-content
+      %br
+
+      = render 'form'

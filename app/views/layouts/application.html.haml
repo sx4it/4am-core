@@ -1,12 +1,17 @@
-<!DOCTYPE html>
+!!! 5
 
 %html{html_attrs}
 
   %head
-    %meta{"http-equiv"=>"Content-type", :content=>"text/html;charset=utf-8"}
     %title 4am
 
-    = stylesheet_link_tag    "application"
+    %meta{ "http-equiv" => "Content-type", :content => "text/html;charset=utf-8" }
+
+    = stylesheet_link_tag    "manifest"
+    = yield :stylesheet_custom
+
+    = javascript_include_tag "manifest"
+    = yield :javascript_custom
 
     %link{ rel: "shortcut icon", href: image_path("favicon.png"), type: "image/x-icon" }
 
@@ -16,47 +21,19 @@
 
     #main
 
-      .navbar.navbar-fixed-top{"data-scrollspy" => "scrollspy"}
+      .navbar.navbar-fixed-top{ "data-scrollspy" => "scrollspy" }
         .navbar-inner
           .container
             %a.brand{href: "/"}
-            %ul.nav
-              - if current_user
-                = render file: 'layouts/menu'
-              %li.icon.icon_help
-                %a{href: "http://sx4it.com/doc/index.html"} Help
-              %li.icon.icon_info
-                %a{href: "http://sx4it.com"} About
 
-            - if current_user
+            = render partial: 'layouts/menu'
 
-              %div.logout.btn-group
-                %a.btn.btn-primary{ href: user_path(current_user)}
-                  %i.icon-white.icon-user
-                  = current_user.login.capitalize
-                %a.btn.btn-primary.dropdown-toggle{ href: '#', :data => {:toggle => "dropdown"}}
-                  %span.caret
-                %ul.dropdown-menu
-                  %li
-                    %a{ href: keys_user_path(current_user) }
-                      %i.icon.icon-cog
-                      My Keys
-                  %li
-                    %a{ href: logout_path }
-                      %i.icon-off
-                      Logout
 
-      .container.well
+      .container.content
+        .row
+          .span12
 
-        - if flash[:notice]
-          #flash_warning.alert
-            %a.close{href: "#", data:{ dismiss:'alert' }} ×
-            %strong= flash[:notice]
+            = render partial: 'layouts/alert'
 
-        - if flash[:error]
-          #flash_error.alert.alert-error
-            %a.close{href: "#", data:{ dismiss:'alert' }} ×
-            %strong= flash[:error]
+            = yield
 
-        = yield
-  = javascript_include_tag "application"

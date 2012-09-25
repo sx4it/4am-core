@@ -1,0 +1,80 @@
+
+.ds
+
+  .ds-list
+    .ds-list-header
+      %h3
+        All
+      .select
+        %a{ rel:'tooltip', title:'Select all' }
+          %i.icon-check
+        %a{ rel:'tooltip', title:'Deselect all' }
+          %i.icon-check-empty
+      .search
+        %input{ type: "text" }
+        %i.icon-search
+    .ds-list-content
+      %ol
+        %li
+          %i
+          Sys Admins
+        %li
+          %i
+          Net Operators
+        %li
+          %i
+          Devteam web
+        %li
+          %i.icon-ok
+          All users
+        %li
+          %i
+          Sys Admins
+        %li
+          %i
+          Sys Admins
+        %li
+          %i
+          Net Operators
+        %li
+          %i.icon-ok
+          Devteam web
+        %li
+          %i
+          All users
+
+  
+  .ds-control
+    %a.btn{ rel:'tooltip', title:'Add' }
+      %i.icon-caret-right
+    %br
+    %a.btn{ rel:'tooltip', title:'Remove' }
+      %i.icon-caret-left
+  
+  .ds-list
+    .ds-list-header
+      %h3
+        Selected
+      .select
+        %a{ rel:'tooltip', title:'Select all' }
+          %i.icon-check
+        %a{ rel:'tooltip', title:'Deselect all' }
+          %i.icon-check-empty
+      .search
+        %input{ type: "text" }
+        %i.icon-search
+    .ds-list-content
+      %ol
+        %li Sys Admins
+        %li Net Operators
+        %li Devteam web
+        %li All users
+
+
+
+
+%select{ id: 'SELTEST' }
+  %option{:value => "volvo"} Volvo
+  %option{:value => "saab"} Saab
+  %option{:value => "mercedes"} Mercedes
+  %option{:value => "audi"} Audi

@@ -1,14 +1,15 @@
-#AclList
-  - rights = %w{Read Edit Exec Sudo}
-  %table.table.table-striped.table-condensed.table-bordered
+
+- rights = %w{Read Edit Exec Sudo}
+
+%table.table.table-striped.table-bordered
+  %thead
     %tr
       %th Host/Group
       %th User/Group
-      - rights.each do |w|
-        %th= w
-      - if permitted_to? :destroy, :host_acls
-        %th Action
-
+      - rights.each do |r|
+        %th= r
+      %th Actions
+  %tbody
     - @acls.each do |acl|
       %tr
         %td
@@ -20,9 +21,9 @@
         - rights.each do |w|
           %td
             - if w == acl.acl_type
-              %i.custom-icon.icon-ok-sign
+              %i.icon-ok
             - else
-              ='-'
-        - if permitted_to? :destroy, :host_acls
-          %td
-            = button_to "Delete", {:controller => :host_acls, :action => :destroy, :id => acl.id },:remote => true,  :method => :delete, :class => "btn btn-mini btn-danger"
+              %i.icon-remove
+        %td.action-td
+          = render 'layouts/form/list_actions', elem: :hosts_acls
+

@@ -1,27 +1,33 @@
-.page-header
-  %h1
-    Commands
-    %small
-      list all the commands
-    - if permitted_to? :new, :commands
-      %a{ href: new_command_path, class: 'btn btn-success' }
-        %i.icon-white.icon-plus-sign
-        New Command
-%table.table.table-striped.table-condensed.table-bordered
-  %tr
-    %th Name
-    %th Command
-    %th Action
 
-  - @commands.each do |command|
-    %tr
-      %td= command.name
-      %td
-        %code= command.command
-      %td
-        - if permitted_to? :show, command
-          = link_to 'Show', command, class: "btn btn-mini btn-info"
-        - if permitted_to? :edit, command
-          = link_to 'Edit', edit_command_path(command), class: "btn btn-mini btn-warning"
-        - if permitted_to? :destroy, command
-          = link_to 'Destroy', command, {:data => {:confirm => 'Are you sure?', :method => :delete}, class: "btn btn-mini btn-danger"}
+- content_for :stylesheet_custom do
+  = stylesheet_link_tag 'commands/index'
+
+= render 'header', type: :commands_list
+
+#commands
+
+  .widget.widget-table
+    .widget-header
+      %i.icon-th-list
+      %h3
+        Commands list
+  
+    .widget-content
+      %table.table.table-striped.table-bordered
+        %thead
+          %tr
+            %th.id #
+            %th Name
+            %th Command
+            %th.actions Actions
+
+        %tbody
+          - @commands.each do |cmd|
+            %tr
+              %td.id= cmd.id
+              %td= cmd.name
+              %td
+                %code= cmd.command
+              %td.actions
+                = render 'layouts/form/list_actions', elem: cmd
+

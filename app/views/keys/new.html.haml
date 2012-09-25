@@ -1,9 +1,14 @@
 
-.page-header
-  %h1
-    SSH Key
-    %small
-      add a new SSH public key
+- content_for :stylesheet_custom do
+  = stylesheet_link_tag 'keys/new'
 
-= render 'form'
+= render 'header', type: :keys_new
+
+.widget
+  .widget-header
+    %i.icon-plus
+    %h3
+      Add a new key
+  .widget-content
+    = render 'form'
 

@@ -1,10 +1,12 @@
 
-.page-header
-  %h1
-    Users
-    %small
-      edit information of
-      %code= @user.login
+= render 'header', type: :list
 
-= render 'form'
+.widget
+  .widget-header
+    %i.icon-plus
+    %h3
+      Edit user
+      %code= @user.login
+  .widget-content
+    = render 'form'
 

@@ -1,14 +1,7 @@
 = form_for [@user], :url => new_user_index_path, html: { class: 'form-horizontal' } do |f|
 
-  -if @user.errors.any?
-    .control-group
-      .alert.alert-error
-        %a.close{href: "#", data:{ dismiss:'alert' }} ×
-        %h4.alert-heading= "#{pluralize(@user.errors.count, "error")} "
-        %ul
-          - @user.errors.full_messages.each do |msg|
-            %li
-              %p= msg
+  = render 'layouts/form/errors', elem: @user
+
   .control-group
     = f.label :login, class: 'control-label'
     .controls
@@ -40,5 +33,5 @@
       .controls
         = render 'available_role_list'
 
-  .form-actions
+  .form-actions.transparent
     = f.submit 'Save', class: "btn btn-info"

@@ -1,0 +1,43 @@
+
+.menu{ data: { toggle: 'button-checkbox' } }
+
+  - if current_user
+  
+    %a.btn.btn-active.active{ href: root_url }
+      %i.icon.icon_dashboard
+      Dashboard
+  
+    - if permitted_to? :index, :user_groups
+      %a.btn{ href: url_for(users_path) }
+        %i.icon.icon_users
+        Users
+    
+    - if permitted_to? :index, :hosts
+      %a.btn{ href: url_for(hosts_path) }
+        %i.icon.icon_host
+        Hosts
+    
+    -#
+      Templates ?
+    
+    - if permitted_to? :index, :commands
+      %a.btn{ href: commands_path }
+        %i.icon.icon_terminal
+        Commands
+    
+    - if permitted_to? :index, :log
+      %a.btn{ href: log_path }
+        %i.icon.icon_status2
+        Status
+
+    - if permitted_to? :index, :log
+      %a.btn{ href: keys_user_path(current_user) }
+        %i.icon.icon_user-yellow
+        Me
+  
+  -#
+    %a.btn{href: "http://sx4it.com/doc/index.html"}
+      %i.icon_help
+      Help
+
+

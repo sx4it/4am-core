@@ -1,9 +1,35 @@
 
-.page-header
-  %h1
-    Users
-    %small
-      add a new user
+- content_for :javascript_custom do
+  = javascript_include_tag 'users/new'
+- content_for :stylesheet_custom do
+  = stylesheet_link_tag 'users/new'
 
-= render 'form'
+= render 'header', type: :new
+
+.widget
+  .widget-header
+    %i.icon-plus
+    %h3
+      Add a new user
+  .widget-content
+
+    %ul.nav.nav-tabs
+      %li
+        %a{"data-toggle" => "tab", :href => "#general"} General
+      %li
+        %a{"data-toggle" => "tab", :href => "#keys"} Keys
+      %li
+        %a{"data-toggle" => "tab", :href => "#groups"} Groups
+      %li
+        %a{"data-toggle" => "tab", :href => "#roles"} Roles
+
+    %br
+
+    .tab-content
+      #general.tab-pane.active
+        = render 'form'
+      #keys.tab-pane
+        //= render 'key_form'
+      #groups.tab-pane
+        = render 'dualselect'
 

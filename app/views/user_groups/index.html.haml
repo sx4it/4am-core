@@ -1,25 +1,28 @@
-.page-header
-  %h1
-    User Groups
-    %small
-      list all the user groups
-    - if permitted_to? :new, :user_groups
-      %a{ href: new_user_group_path, class: 'btn btn-success' }
-        %i.icon-white.icon-plus-sign
-        New User Group
-%table.table.table-striped.table-condensed.table-bordered
-  %tr
-    %th Name
-    %th Action
 
-  - @user_groups.each do |user_group|
-    %tr
-      %td= user_group.name
-      - if permitted_to? :show, user_group
-        %td
-          - if permitted_to? :show, user_group
-            = link_to 'Show', user_group, class: "btn btn-mini btn-info"
-          - if permitted_to? :edit, user_group
-            = link_to 'Edit', edit_user_group_path(user_group), class: "btn btn-mini btn-warning"
-          - if permitted_to? :destroy, user_group
-            = link_to 'Destroy', user_group, {:data => {:confirm => 'Are you sure?', :method => :delete}, class: "btn btn-mini btn-danger"}
+= render 'users/header', type: :list_group 
+
+#user_groups
+
+  .widget.widget-table
+    .widget-header
+      %i.icon-th-list
+      %h3
+        Group list
+  
+    .widget-content
+      %table.table.table-striped.table-bordered
+        %thead
+          %tr
+            %th.id #
+            %th Name
+            %th Count
+            %th.actions Actions
+        %tbody
+          - @user_groups.each do |user_group|
+            %tr
+              %td.id= user_group.id
+              %td= user_group.name
+              %td TODO: list total
+              %td.actions
+                = render 'layouts/form/list_actions', elem: user_group
+     

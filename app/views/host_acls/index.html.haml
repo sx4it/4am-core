@@ -1,9 +1,26 @@
-.page-header
-  %h1
-    Host Acls
-    %small
-      list all the host acls
 
-= render 'acl_list'
-- if permitted_to? :create, :host_acls
-  = render 'form'
+= render 'hosts/header', type: :acl
+
+#acl
+
+  - if permitted_to? :create, :host_acls
+    .widget.widget-table
+      .widget-header
+        %i.icon-th-list
+        %h3
+          Add ACL
+    
+      .widget-content
+        = render 'form'
+
+
+  .widget.widget-table
+    .widget-header
+      %i.icon-th-list
+      %h3
+        ACL list
+  
+    .widget-content
+      #AclList
+        = render 'acl_list'
+
