@@ -46,12 +46,22 @@ class Cmd
       cmds
   end
 
-  def destroy
-        Redis.current.del "#{@type}:#{@hosts[0].id}:#{@id}"
+  def self.exec(host_id, command, current_user)
+    cmd = Cmd.new(:command => Command.find(command), :hosts => [Host.find(host_id.to_i)],
+                  :current_user => current_user, :log => "--contacting remote executor--\n")
+    cmd.launch_command
+    cmd
   end
 
-  def self.add_user
+  def self.exec_group(group_id, command, current_user)
+    cmd = Cmd.new(:command => Command.find(command), :group => HostGroup.find(group_id.to_i),
+                  :current_user => current_user, :log => "--contacting remote executor--\n")
+    cmd.launch_command
+    cmd
+  end
 
+  def destroy
+        Redis.current.del "#{@type}:#{@hosts[0].id}:#{@id}"
   end
 
   def launch_command
@@ -67,16 +77,41 @@ class Cmd
     end
   end
 
-  def self.exec(host_id, command, current_user)
-    cmd = Cmd.new(:command => Command.find(command), :hosts => [Host.find(host_id.to_i)], :current_user => current_user, :log => "--contacting remote executor--\n")
-    cmd.launch_command
+  def get_json
+    dup = self.dup
+    dup.expand_template
+    dup.command = dup.command.id
+    dup.hosts_id = dup.hosts.map do |h| h.id end
+    dup.hosts = dup.hosts.map do |h| {:ip => h.ip, :port => h.port} end
+    dup.users = dup.users.map do |u| u.id end
+    dup.current_user = dup.current_user.id
+    dup.to_json
+  end
+
+  def self.from_json json
+    cmd = Cmd.new JSON.parse(json)
+    cmd.command = Command.find(cmd.command) if Command.exists?(cmd.command)
+    cmd.hosts_ip = cmd.hosts.map { |h| "#{h['ip']}:#{h['port']}" }
+    cmd.users = cmd.users.map { |u| User.where(:id => u).first_or_create() }
+    cmd.hosts = []
+    cmd.hosts_id.each { |h| cmd.hosts << Host.find(h) if Host.exists?(h) }
+    cmd.current_user = User.where(:id => cmd.current_user).first_or_create()
+    cmd.expand_template
     cmd
   end
 
-  def self.exec_group(group_id, command, current_user)
-    cmd = Cmd.new(:command => Command.find(command), :group => HostGroup.find(group_id.to_i), :current_user => current_user, :log => "--contacting remote executor--\n")
-    cmd.launch_command
-    cmd
+  def stop
+      Redis.current.publish "4am-command", "#{@type}:#{@hosts[0].id}:#{@id}:stop"
+  end
+
+  def self.clear(host_id)
+    Redis.current.keys("cmd-host:#{host_id}:*").each do |c|
+        cmd = JSON.parse(Redis.current.get c)
+        if %w{stopped killed finished}.include? cmd['status']
+          cmd = Cmd.from_json(Redis.current.get c)
+          cmd.destroy
+        end
+    end
   end
 
   class Safe
@@ -95,102 +130,46 @@ class Cmd
   end
 
   def expand_template
-      if @command
-        erb = ERB.new @command.command
-          context = {
-            :current_user =>
-              {
-                :login => @current_user.login,
-                :email => @current_user.email,
-                :id => @current_user.id,
-                :groups => @current_user.user_group.map {|g| g.name },
-                :keys => @current_user.keys.map {|k| k.ssh_key }
-              },
-            :users => @users.map { |u|
-                {
-                  :login => u.login,
-                  :email => u.email,
-                  :id => u.id,
-                  :groups => u.user_group.map {|g| g.name },
-                  :keys => u.keys.map {|k| k.ssh_key }
-                }
-            },
-            :hosts => @hosts.map { |h|
-              {
-                :ip => h.ip,
-                :name => h.name
-              }
-            },
-            :group_name => @group_name
-
-
+    if @command
+      erb = ERB.new @command.command
+      context = {
+        :current_user => {
+            :login => @current_user.login,
+            :email => @current_user.email,
+            :id => @current_user.id,
+            :groups => @current_user.user_group.map {|g| g.name },
+            :keys => @current_user.keys.map {|k| k.ssh_key }
+        },
+        :users => @users.map { |u|
+            {
+              :login => u.login,
+              :email => u.email,
+              :id => u.id,
+              :groups => u.user_group.map {|g| g.name },
+              :keys => u.keys.map {|k| k.ssh_key }
+            }
+        },
+        :hosts => @hosts.map { |h|
+          {
+            :ip => h.ip,
+            :name => h.name
           }
-
-        begin
-          t = Thread.new {
-              $SAFE = 4
-              s = Safe.new context
-              Thread.current[:script] = erb.result s.binding
-          }
-          t.join
-          @script = t[:script]
-        rescue Exception => error
-          @script = "#- #{error} -"
+        },
+        :group_name => @group_name
+      }
+      begin
+        t = Thread.new do
+            $SAFE = 4
+            s = Safe.new context
+            Thread.current[:script] = erb.result s.binding
         end
+        t.join
+        @script = t[:script]
+      rescue Exception => error
+        @script = "#- #{error} -"
       end
-  end
-
-  def get_json
-      dup = self.dup
-      dup.expand_template
-      dup.command = dup.command.id
-      dup.hosts_id = dup.hosts.map do |h| h.id end
-      dup.hosts = dup.hosts.map do |h| {:ip => h.ip, :port => h.port} end
-      dup.users = dup.users.map do |u| u.id end
-      dup.current_user = dup.current_user.id
-      dup.to_json
-  end
-
-  def self.from_json json
-    cmd = Cmd.new JSON.parse(json)
-    cmd.command = if Command.exists?(cmd.command)
-                    Command.find(cmd.command)
-                  else
-                    nil
-                  end
-    cmd.hosts_ip = cmd.hosts.map do |h| "#{h['ip']}:#{h['port']}" end
-    cmd.users = cmd.users.map do |u| if User.exists?(u)
-                                        User.find(u)
-                                      else
-                                        User.new
-                                      end
     end
-    cmd.hosts = []
-    cmd.hosts_id.each do |h|
-      cmd.hosts << Host.find(h) if Host.exists?(h)
-    end
-    cmd.current_user = if User.exists?(cmd.current_user)
-                        User.find(cmd.current_user)
-                       else
-                        User.new
-                       end
-    cmd.expand_template
-    cmd
-  end
-
-  def stop
-      Redis.current.publish "4am-command", "#{@type}:#{@hosts[0].id}:#{@id}:stop"
-  end
-
-  def self.clear(host_id)
-    Redis.current.keys("cmd-host:#{host_id}:*").each do |c|
-        cmd = JSON.parse(Redis.current.get c)
-        if %w{stopped killed finished}.include? cmd['status']
-          cmd = Cmd.from_json(Redis.current.get c)
-          cmd.destroy
-        end
-    end
-  end
+  end #end expand_template
 
   class Action
 
@@ -264,6 +243,6 @@ class Cmd
       end
     end
 
-  end
+  end #End class action
 
 end
