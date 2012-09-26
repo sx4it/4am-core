@@ -1,8 +1,7 @@
 class Host < ActiveRecord::Base
-  validates :name, :presence => true
+  validates :name, :presence => true, :uniqueness => true
   validates :ip, :presence => true
-  validates :port, :presence => true, :numericality => true
-  validates_uniqueness_of :name
+  validates :port, :presence => true, :numericality => { :only_integer => true, :greater_than => 0, :less_than => 65535 }
    has_and_belongs_to_many :host_group
    has_many :host_acl, :as => :hosts, :dependent => :delete_all
 
