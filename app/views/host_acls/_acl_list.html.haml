@@ -25,5 +25,7 @@
             - else
               %i.icon-remove
         %td.action-td
-          = render 'layouts/form/list_actions', elem: :hosts_acls
+          - if permitted_to? :destroy, :hosts_acls
+            = link_to acl, { data: { confirm: 'Are you sure?', method: :delete }, remote: true, class: "btn btn-small btn-danger"} do
+              %i.icon-remove
 
