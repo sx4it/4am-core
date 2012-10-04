@@ -10,29 +10,25 @@
 .stat-container
   .stat-holder.fourth
     .stat
-      %span 564
-      Completed Sales
+      %span
+        = current_user.keys.count
+      = "Key".pluralize(current_user.keys.count)
     / /stat
   / /stat-holder
   .stat-holder.fourth
     .stat
-      %span 423
-      Pending Sales
+      %span
+        = current_user.user_group.count
+      = "User Group".pluralize(current_user.user_group.count)
     / /stat
   / /stat-holder
   .stat-holder.fourth
     .stat
-      %span 96
-      Returned Sales
+      %span
+        = @hosts.count
+      = "Host".pluralize(@hosts.count)
     / /stat
   / /stat-holder
-  .stat-holder.fourth
-    .stat
-      %span 2
-      Chargebacks
-    / /stat
-  / /stat-holder
-/ /stat-container
 
 
 
