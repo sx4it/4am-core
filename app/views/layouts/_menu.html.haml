@@ -1,19 +1,18 @@
 
 .menu{ data: { toggle: 'button-checkbox' } }
-
   - if current_user
   
-    %a.btn.btn-active.active{ href: root_url }
+    %a.btn{ href: root_url, class: ((yield(:main_menu) == 'dashboard') ? ' btn-active active' : '')}
       %i.icon.icon_dashboard
       Dashboard
   
     - if permitted_to? :index, :user_groups
-      %a.btn{ href: url_for(users_path) }
+      %a.btn{ href: url_for(users_path), class: ((yield(:main_menu) == 'user') ? ' btn-active active' : '') }
         %i.icon.icon_users
         Users
     
     - if permitted_to? :index, :hosts
-      %a.btn{ href: url_for(hosts_path) }
+      %a.btn{ href: url_for(hosts_path), class: ((yield(:main_menu) == 'host') ? ' btn-active active' : '') }
         %i.icon.icon_host
         Hosts
     
@@ -21,17 +20,17 @@
       Templates ?
     
     - if permitted_to? :index, :commands
-      %a.btn{ href: commands_path }
+      %a.btn{ href: commands_path, class: ((yield(:main_menu) == 'command') ? ' btn-active active' : '') }
         %i.icon.icon_terminal
         Commands
     
     - if permitted_to? :index, :log
-      %a.btn{ href: log_path }
+      %a.btn{ href: log_path, class: ((yield(:main_menu) == 'status') ? ' btn-active active' : '') }
         %i.icon.icon_status2
         Status
 
     - if permitted_to? :index, :log
-      %a.btn{ href: keys_user_path(current_user) }
+      %a.btn{ href: keys_user_path(current_user), class: ((yield(:main_menu) == 'me') ? ' btn-active active' : '') }
         %i.icon.icon_user-yellow
         Me
   

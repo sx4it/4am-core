@@ -26,6 +26,5 @@
                 = u.login
                 #{link_to '+', url_for({:controller => :user_groups, :id => @user_group, :user_id => u, :action => :add_user}), :method => :post}
   .form-actions.transparent
-    = f.submit 'Save & show group list', class: "btn btn-info"
-    .a.btn.btn-info TODO: Save & add host to group
-
+    = f.submit 'Save & show group list', class: "btn btn-info", name: "save"
+    = f.submit 'Save & add user to group', class: "btn btn-info", name: "save_and_add"

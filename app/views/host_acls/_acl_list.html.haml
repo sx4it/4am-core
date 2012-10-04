@@ -1,29 +1,32 @@
 
-- rights = %w{Read Edit Exec Sudo}
+#AclList
+  - rights = %w{Read Edit Exec Sudo}
 
-%table.table.table-striped.table-bordered
-  %thead
-    %tr
-      %th Host/Group
-      %th User/Group
-      - rights.each do |r|
-        %th= r
-      %th Actions
-  %tbody
-    - @acls.each do |acl|
+  %table.table.table-striped.table-bordered
+    %thead
       %tr
-        %td
-          - render_icon acl.hosts_type
-          = host_render acl.hosts
-        %td
-          - render_icon acl.users_type
-          = link_to acl.users.name, acl.users
-        - rights.each do |w|
+        %th Host/Group
+        %th User/Group
+        - rights.each do |r|
+          %th= r
+        %th Actions
+    %tbody
+      - @acls.each do |acl|
+        %tr
           %td
-            - if w == acl.acl_type
-              %i.icon-ok
-            - else
-              %i.icon-remove
-        %td.action-td
-          = render 'layouts/form/list_actions', elem: :hosts_acls
+            - render_icon acl.hosts_type
+            = host_render acl.hosts
+          %td
+            - render_icon acl.users_type
+            = link_to acl.users.name, acl.users
+          - rights.each do |w|
+            %td
+              - if w == acl.acl_type
+                %i.icon-ok
+              - else
+                %i.icon-remove
+          %td.action-td
+            - if permitted_to? :destroy, :hosts_acls
+              = link_to acl, { data: { confirm: 'Are you sure?', method: :delete }, remote: true, class: "btn btn-small btn-danger"} do
+                %i.icon-remove
 

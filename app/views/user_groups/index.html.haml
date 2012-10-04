@@ -1,5 +1,5 @@
 
-= render 'users/header', type: :list_group 
+= render 'users/header', type: :list_group
 
 #user_groups
 
@@ -8,7 +8,7 @@
       %i.icon-th-list
       %h3
         Group list
-  
+
     .widget-content
       %table.table.table-striped.table-bordered
         %thead
@@ -22,7 +22,9 @@
             %tr
               %td.id= user_group.id
               %td= user_group.name
-              %td TODO: list total
+              %td
+                %span.label
+                  = user_group.user.count
               %td.actions
                 = render 'layouts/form/list_actions', elem: user_group
-     
+

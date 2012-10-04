@@ -28,8 +28,8 @@
       = f.hidden_field :host_type, :value => ""
       = f.hidden_field :host_id, :value => ""
 
-      = f.autocomplete_field :hosts, autocomplete_host_name_path, :update_elements => {:id => '#acl_form_host_id', :type => '#acl_form_host_type'}, :data => {'min-length' => 0}, :placeholder => 'Add Host'
-      = f.autocomplete_field :users, autocomplete_user_login_path, :update_elements => {:id => '#acl_form_user_id', :type => '#acl_form_user_type'}, :data => {'min-length' => 0}, :placeholder => 'Add User'
+      = f.autocomplete_field :hosts, autocomplete_host_name_path, :update_elements => {:id => '#acl_form_host_id', :type => '#acl_form_host_type'}, :data => {'min-length' => 0}, :placeholder => 'Add Host / HostGroup'
+      = f.autocomplete_field :users, autocomplete_user_login_path, :update_elements => {:id => '#acl_form_user_id', :type => '#acl_form_user_type'}, :data => {'min-length' => 0}, :placeholder => 'Add User / UserGroup'
 
       - rights.each do |r|
         = f.label r

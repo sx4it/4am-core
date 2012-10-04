@@ -60,10 +60,14 @@ class UserGroupsController < ApplicationController
   # POST /user_groups.json
   def create
     @user_group = UserGroup.new(params[:user_group])
-
     respond_to do |format|
       if @user_group.save
-        format.html { redirect_to @user_group, notice: 'User group was successfully created.' }
+        redir = user_group_path(@user_group)
+        if params[:save_and_add]
+          redir = edit_user_group_path(@user_group)
+        end
+
+        format.html { redirect_to redir, notice: 'User group was successfully created.' }
         format.json { render json: @user_group, status: :created, location: @user_group }
       else
         @users = User.all
