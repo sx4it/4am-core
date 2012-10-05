@@ -3,7 +3,7 @@ class HostGroup < ActiveRecord::Base
   has_and_belongs_to_many :host
   validates :name, :presence => true
   validates_uniqueness_of :name
-  has_many :host_acl, :as => :hosts, :dependent => :delete_all
+  has_many :host_acl, :as => :hosts, :dependent => :destroy
 
   def self.with_permissions_to(permission, *args)
     options = args.extract_options!.dup

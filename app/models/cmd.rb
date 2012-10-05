@@ -28,6 +28,16 @@ class Cmd
       Cmd.from_json(res)
   end
 
+  def self.count(*id)
+      host_id = id.first
+      cmds = []
+      if not id.empty?
+        Redis.current.keys("cmd-host:#{host_id}:*").count
+      else
+        Redis.current.keys("cmd-host:*:*").count + Redis.current.keys("cmd-grp:*:*").count
+      end
+  end
+
   def self.all(*id)
       host_id = id.first
       cmds = []

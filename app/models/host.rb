@@ -3,7 +3,7 @@ class Host < ActiveRecord::Base
   validates :ip, :presence => true
   validates :port, :presence => true, :numericality => { :only_integer => true, :greater_than => 0, :less_than => 65535 }
    has_and_belongs_to_many :host_group
-   has_many :host_acl, :as => :hosts, :dependent => :delete_all
+   has_many :host_acl, :as => :hosts, :dependent => :destroy
 
   def self.with_permissions_to(permission, *args)
     options = args.extract_options!.dup
