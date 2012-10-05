@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
 
+  cattr_accessor :current_user
+
   acts_as_authentic do |c|
     # only for tests
     c.validate_email_field = false
@@ -8,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :keys, :dependent => :delete_all
 
   has_and_belongs_to_many :user_group
-  has_many :host_acl, :as => :users, :dependent => :delete_all
+  has_many :host_acl, :as => :users, :dependent => :destroy
   has_and_belongs_to_many :roles, :uniq => true
 
   def self.search(search, page)
