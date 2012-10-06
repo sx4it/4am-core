@@ -27,8 +27,8 @@ FactoryGirl.define do
 
   factory :host_acl do
     acl_type "Exec"
-    hosts { create :host , :name => acl_type + "_host"}
-    users { create :user , :login => acl_type + "_user"}
+    association :hosts, factory: :host, strategy: :create, :name => "acl_host"
+    association :users, factory: :user, strategy: :create, :login => "acl_user"
   end
 
   factory :user_group do
@@ -43,6 +43,6 @@ FactoryGirl.define do
   factory :key do
     name "key"
     ssh_key "ssh-rsa key key"
-    user { create :user, :login => name + "_user" }
+    association :user, factory: :user, :login => "key_user", strategy: :create
   end
 end

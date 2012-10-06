@@ -2,8 +2,18 @@ class Host < ActiveRecord::Base
   validates :name, :presence => true, :uniqueness => true
   validates :ip, :presence => true
   validates :port, :presence => true, :numericality => { :only_integer => true, :greater_than => 0, :less_than => 65535 }
-   has_and_belongs_to_many :host_group
-   has_many :host_acl, :as => :hosts, :dependent => :destroy
+  has_and_belongs_to_many :host_group
+  has_many :host_acl, :as => :hosts, :dependent => :destroy
+
+  before_destroy do |record|
+    record.host_group.each do |group|
+      group.host_acl.each do |acl|
+        dup_acl = acl.dup
+        dup_acl.hosts = record
+        Cmd::Action.delete_host_acl dup_acl, User.current_user
+      end
+    end
+  end
 
   def self.with_permissions_to(permission, *args)
     options = args.extract_options!.dup

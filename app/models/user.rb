@@ -13,6 +13,16 @@ class User < ActiveRecord::Base
   has_many :host_acl, :as => :users, :dependent => :destroy
   has_and_belongs_to_many :roles, :uniq => true
 
+  before_destroy do |record|
+    record.user_group.each do |group|
+      group.host_acl.each do |acl|
+        dup_acl = acl.dup
+        dup_acl.users = record
+        Cmd::Action.delete_host_acl dup_acl, User.current_user
+      end
+    end
+  end
+
   def self.search(search, page)
     if search
       paginate :per_page => 3, :page => page, :conditions => ['login like ?', "%#{search}%"], :order => 'login'
