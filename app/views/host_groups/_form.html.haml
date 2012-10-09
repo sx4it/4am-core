@@ -2,7 +2,7 @@
 = form_for @host_group , html: { class: 'form-horizontal' } do |f|
 
   %fieldset
-    
+
     = render 'layouts/form/errors', elem: @host_group
 
     .control-group
@@ -10,25 +10,11 @@
       .controls
         = f.text_field :name
 
-    - unless @host_group.id.nil?
-      .control-group
-        %label.control-label Hosts in group
-        .controls
-          - @host_group.host.each do |u|
-            %li.active
-              %b.label
-                = u.name
-                #{link_to 'x', url_for({:controller => :host_groups, :id => @host_group, :host_id => u, :action => :del_host}), :method => :delete}
-
-      .control-group
-        %label.control-label Hosts available
-        .controls
-          - @hosts.each do |u|
-            - unless @host_group.host.include? u
-              %li.active
-                %b.label.label-success
-                  = u.name
-                  #{link_to '+', url_for({:controller => :host_groups, :id => @host_group, :host_id => u, :action => :add_host}), :method => :post}
+  #host.control-group
+    #host_from_list
+      = f.simple_fields_for :host do |host|
+        = render 'host_fields', :f => host
+      = link_to_add_association 'Add host', f, :host, :class => "btn btn-mini btn-success controls"
 
     .form-actions.transparent
       = f.submit 'Save', class: "btn btn-info"
