@@ -76,6 +76,7 @@ gem 'net-ssh'
 gem "declarative_authorization"
 gem "simple_form"
 gem "cocoon"
+gem 'public_activity'
 
 group :test do
   # Pretty printed test output
