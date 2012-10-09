@@ -1,0 +1,7 @@
+User-group
+%strong
+  = link_to a.trackable.name, a.trackable
+= action
+%strong
+  = distance_of_time_in_words(a.created_at, Time.now)
+%br

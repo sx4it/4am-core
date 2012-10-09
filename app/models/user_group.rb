@@ -6,6 +6,10 @@ class UserGroup < ActiveRecord::Base
   validates_uniqueness_of :name
   accepts_nested_attributes_for :user, :allow_destroy => true
 
+  # public activity tracking
+  include PublicActivity::Model
+  tracked
+
   def user_attributes=(attrs)
     users = []
     attrs.each do |key, attr|
