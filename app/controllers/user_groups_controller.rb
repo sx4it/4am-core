@@ -81,7 +81,6 @@ class UserGroupsController < ApplicationController
   # PUT /user_groups/1.json
   def update
     @user_group = UserGroup.find(params[:id])
-
     respond_to do |format|
       if @user_group.update_attributes(params[:user_group])
         format.html { redirect_to @user_group, notice: 'User group was successfully updated.' }
