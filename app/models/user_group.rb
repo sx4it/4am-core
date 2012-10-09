@@ -1,6 +1,6 @@
 class UserGroup < ActiveRecord::Base
   attr_accessible :name
-  has_and_belongs_to_many :user, :after_add => :after_add_callback
+  has_and_belongs_to_many :user, :after_add => :after_add_callback, :after_remove => :after_remove_callback
   has_many :host_acl, :as => :users, :dependent => :destroy
   validates :name, :presence => true
   validates_uniqueness_of :name
@@ -10,6 +10,14 @@ class UserGroup < ActiveRecord::Base
       dup_acl = acl.dup
       dup_acl.users = record
       Cmd::Action.add_host_acl dup_acl, User.current_user
+    end
+  end
+
+  def after_remove_callback(record)
+    self.host_acl.all.each do |acl|
+      dup_acl = acl.dup
+      dup_acl.users = record
+      Cmd::Action.delete_host_acl dup_acl, User.current_user
     end
   end
 

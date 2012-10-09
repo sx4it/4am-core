@@ -140,6 +140,34 @@ class HostAclsTest < ActiveSupport::TestCase
     assert_equal 1, (count_after - count_before)
   end
 
+  test "deleting acl (removing user from user_group)" do
+    user_group = create :user_group
+    user = create :user
+    user_group.user << user
+    host_acl = create :host_acl, :users => user_group
+    count_before = Cmd::count host_acl.hosts.id
+
+    assert_equal 1, HostAcl.all.count
+    user_group.user.delete user
+    assert_equal 1, HostAcl.all.count
+    count_after = Cmd::count host_acl.hosts.id
+    assert_equal 1, (count_after - count_before)
+  end
+
+  test "deleting acl (removing user from hostgroup)" do
+    host_group = create :host_group
+    host = create :host
+    host_group.host << host
+    host_acl = create :host_acl, :hosts => host_group
+    count_before = Cmd::count host.id
+    assert_equal 1, HostAcl.all.count
+    host_group.host.delete host
+    assert_equal 1, HostAcl.all.count
+    count_after = Cmd::count host.id
+    assert_equal 1, (count_after - count_before)
+  end
+
+
 #
 #  # TODO implement a cleaner way to add key
 #
