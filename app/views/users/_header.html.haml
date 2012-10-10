@@ -25,7 +25,7 @@
         %i.icon-plus
         New Group
 
-    - if permitted_to? :index, :user_groups
+    - if permitted_to? :index, :roles
       %a{ href: roles_path, class: 'btn' + ((type == :role) ? ' btn-active active' : '')  }
         %i.icon-cogs
         Roles

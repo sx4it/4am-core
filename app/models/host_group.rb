@@ -6,6 +6,12 @@ class HostGroup < ActiveRecord::Base
   has_many :host_acl, :as => :hosts, :dependent => :destroy
   accepts_nested_attributes_for :host, :allow_destroy => true
 
+  #public activity tracking
+  include PublicActivity::Model
+  tracked :owner => proc { User.current_user }, :params => {
+      :trackable_name => proc { |c, model| model.name },
+      :owner_name => proc { User.current_user.login }}
+
   def host_attributes=(attrs)
     hosts = []
     attrs.each do |key, attr|

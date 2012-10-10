@@ -41,9 +41,10 @@
 
 - if @activities.count > 0
   %h4 Activity:
-  - @activities.each do |activity|
-    = render_activity(activity)
-    %br
+  %ul.unstyled
+    - @activities.each do |activity|
+      %li
+        = render_activity(activity)
 
 -#
   .page-header

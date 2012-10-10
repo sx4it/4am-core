@@ -1,0 +1,26 @@
+= action.capitalize
+%strong
+  - if a.trackable.nil?
+    = p[:acl_type]
+  - else
+    = link_to a.trackable.acl_type, a.trackable
+rights
+for
+%strong
+  - if a.trackable.nil?
+    = p[:users]
+  - else
+    = link_to a.trackable.users.name, a.trackable.users
+on
+%strong
+  - if a.trackable.nil?
+    = p[:hosts]
+  - else
+    = link_to a.trackable.hosts.name, a.trackable.hosts
+by
+- if a.owner.nil?
+  = p[:owner_name]
+- else
+  = link_to a.owner.login, a.owner
+%strong
+  = distance_of_time_in_words(a.created_at, Time.now)
