@@ -7,6 +7,14 @@ class HostAcl < ActiveRecord::Base
   validates :hosts, :presence => true
   validates :users, :presence => true
 
+  #public activity tracking
+  include PublicActivity::Model
+  tracked :owner => proc { User.current_user }, :params => {
+      :hosts => proc { |c, model| model.hosts.name },
+      :users => proc { |c, model| model.users.name },
+      :acl_type => proc { |c, model| model.acl_type },
+      :owner_name => proc { User.current_user.login }}
+
   before_destroy do |record|
     Cmd::Action.delete_host_acl record, User.current_user
   end

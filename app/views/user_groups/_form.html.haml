@@ -1,4 +1,4 @@
-= form_for @user_group, html: { class: 'form-horizontal' }  do |f|
+= simple_form_for @user_group, html: { class: 'form-horizontal' }  do |f|
 
   = render 'layouts/form/errors', elem: @user_group
 
@@ -6,25 +6,11 @@
     = f.label :name, class: 'control-label'
     .controls
       = f.text_field :name
+  #user.control-group
+    #user_from_list
+      = f.simple_fields_for :user do |user|
+        = render 'user_fields', :f => user
+      = link_to_add_association 'Add user', f, :user, :class => "btn btn-mini btn-success controls"
 
-  - unless @user_group.id.nil?
-    .control-group
-      %label.control-label Users in group
-      .controls
-        - @user_group.user.each do |u|
-          %li.active
-            %b.label.label
-              = u.login
-              #{link_to 'x', url_for({:controller => :user_groups, :id => @user_group, :user_id => u, :action => :del_user}), :method => :delete}
-    .control-group
-      %label.control-label Users available
-      .controls
-        - @users.each do |u|
-          - unless @user_group.user.include? u
-            %li.active
-              %b.label.label-success
-                = u.login
-                #{link_to '+', url_for({:controller => :user_groups, :id => @user_group, :user_id => u, :action => :add_user}), :method => :post}
   .form-actions.transparent
-    = f.submit 'Save & show group list', class: "btn btn-info", name: "save"
-    = f.submit 'Save & add user to group', class: "btn btn-info", name: "save_and_add"
+    = f.submit 'Save', class: "btn btn-info", name: "save"

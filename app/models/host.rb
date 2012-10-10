@@ -5,6 +5,12 @@ class Host < ActiveRecord::Base
   has_and_belongs_to_many :host_group
   has_many :host_acl, :as => :hosts, :dependent => :destroy
 
+  #public activity tracking
+  include PublicActivity::Model
+  tracked :owner => proc { User.current_user }, :params => {
+      :trackable_name => proc { |c, model| model.name },
+      :owner_name => proc { User.current_user.login }}
+
   before_destroy do |record|
     record.host_group.each do |group|
       group.host_acl.each do |acl|

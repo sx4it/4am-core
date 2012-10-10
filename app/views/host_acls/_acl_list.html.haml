@@ -9,7 +9,8 @@
         %th User/Group
         - rights.each do |r|
           %th= r
-        %th Actions
+        - if permitted_to? :destroy, :host_acls
+          %th Actions
     %tbody
       - @acls.each do |acl|
         %tr
@@ -25,8 +26,8 @@
                 %i.icon-ok
               - else
                 %i.icon-remove
-          %td.action-td
-            - if permitted_to? :destroy, :hosts_acls
+          - if permitted_to? :destroy, :host_acls
+            %td.action-td
               = link_to acl, { data: { confirm: 'Are you sure?', method: :delete }, remote: true, class: "btn btn-small btn-danger"} do
                 %i.icon-remove
 

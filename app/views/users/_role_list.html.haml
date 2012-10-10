@@ -4,5 +4,3 @@
       %li.active
         %b.label
           = role.name
-          - if permitted_to? :delete, role
-            #{link_to 'x', {:id => @user, :role => role, :action => :delete_role}, :remote => true, :method=>:delete}
