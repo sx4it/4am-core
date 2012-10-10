@@ -8,7 +8,9 @@ class UserGroup < ActiveRecord::Base
 
   # public activity tracking
   include PublicActivity::Model
-  tracked
+  tracked :owner => proc { User.current_user }, :params => {
+      :trackable_name => proc { |c, model| model.name },
+      :owner_name => proc { User.current_user.login }}
 
   def user_attributes=(attrs)
     users = []

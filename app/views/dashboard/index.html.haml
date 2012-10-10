@@ -39,8 +39,11 @@
     / /stat
   / /stat-holder
 
-- @activities.each do |activity|
-  = render_activity(activity)
+- if @activities.count > 0
+  %h4 Activity:
+  - @activities.each do |activity|
+    = render_activity(activity)
+    %br
 
 -#
   .page-header
