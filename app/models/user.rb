@@ -18,9 +18,9 @@ class User < ActiveRecord::Base
 
   #public activity tracking
   include PublicActivity::Model
-  tracked :owner => proc { User.current_user }, :params => {
-      :trackable_name => proc { |c, model| model.login },
-      :owner_name => proc { User.current_user.login }}
+  tracked :owner => proc { User.current_user }, :except => [:update], :params => {
+    :trackable_name => proc { |c, model| model.login },
+    :owner_name => proc { User.current_user.login if User.current_user }}
 
   before_destroy do |record|
     record.user_group.each do |group|
