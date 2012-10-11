@@ -1,12 +1,18 @@
 
 = render 'hosts/header', type: :acl
 
+- content_for :javascript_custom do
+  = javascript_include_tag 'host_acls'
+
+- content_for :stylesheet_custom do
+  = stylesheet_link_tag 'hosts_acls/common'
+
 #acl
 
   - if permitted_to? :create, :host_acls
     .widget.widget-table
       .widget-header
-        %i.icon-th-list
+        %i.icon-plus
         %h3
           Add ACL
     
@@ -21,6 +27,5 @@
         ACL list
   
     .widget-content
-      #AclList
-        = render 'acl_list'
+      = render 'acl_list'
 

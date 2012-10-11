@@ -1,0 +1,14 @@
+Command
+%strong
+  - if a.trackable.nil?
+    = p[:trackable_name]
+  - else
+    = link_to a.trackable.name, a.trackable
+= action
+by
+- if a.owner.nil?
+  = p[:owner_name]
+- else
+  = link_to a.owner.login, a.owner
+%strong
+  = distance_of_time_in_words(a.created_at, Time.now)

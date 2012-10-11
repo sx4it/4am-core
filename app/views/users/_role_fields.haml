@@ -1,0 +1,6 @@
+.nested-fields
+  = f.label :roles, class: 'control-label'
+  .controls
+    = f.input :id, :collection => Role.all, :label => false, :disabled => !f.object.new_record?
+    = link_to_remove_association "Remove role", f, :class => "btn btn-mini btn-danger"
+  %br

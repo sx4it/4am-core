@@ -17,5 +17,6 @@
 //= require autocomplete-rails
 
 //= require jquery.dualselect
+//= require cocoon
 
 

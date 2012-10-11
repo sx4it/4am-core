@@ -1,3 +1,4 @@
+- content_for :main_menu, 'dashboard'
 
 - content_for :stylesheet_custom do
   = stylesheet_link_tag 'dashboard/common'
@@ -9,31 +10,41 @@
 .stat-container
   .stat-holder.fourth
     .stat
-      %span 564
-      Completed Sales
+      %span
+        = current_user.keys.count
+      = link_to "Key".pluralize(current_user.keys.count), keys_user_path(User.current_user)
     / /stat
   / /stat-holder
   .stat-holder.fourth
     .stat
-      %span 423
-      Pending Sales
+      %span
+        = @hosts.count
+      = link_to "Host".pluralize(@hosts.count), hosts_path
     / /stat
   / /stat-holder
   .stat-holder.fourth
     .stat
-      %span 96
-      Returned Sales
+      %span
+        = @host_group.count
+      = link_to "Host group".pluralize(@host_group.count), host_groups_path
     / /stat
   / /stat-holder
   .stat-holder.fourth
     .stat
-      %span 2
-      Chargebacks
+      %span
+        // we dont want two redis count requests...
+        - count = Cmd.count
+        = count
+      = link_to "Executed " + "Command".pluralize(count), log_path
     / /stat
   / /stat-holder
-/ /stat-container
 
-
+- if @activities.count > 0
+  %h4 Activity:
+  %ul.unstyled
+    - @activities.each do |activity|
+      %li
+        = render_activity(activity)
 
 -#
   .page-header

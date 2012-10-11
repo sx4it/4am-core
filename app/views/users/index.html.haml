@@ -22,7 +22,7 @@
           = text_field_tag :search, params[:search], class: 'span2'
           %a.btn{ :href => "javascript:users_search.submit()" }
             %i.icon-search
-    
+
       .widget-content
         %table.table.table-striped.table-bordered
           %thead
@@ -40,12 +40,15 @@
                 %td.id= user.id
                 %td= user.login
                 %td= user.keys.count
-                %td TODO: list groups
+                %td
+                  - user.user_group.each do |group|
+                    %span.label
+                      = group.name
                 %td.actions
                   = render 'layouts/form/list_actions', elem:user
                 %td.checkbox
                   - if permitted_to? :destroy, user
                     %input{:type => "checkbox"} 
-    
+
     = will_paginate @users
 

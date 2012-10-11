@@ -1,3 +1,4 @@
+- content_for :main_menu, 'host'
 
 %h1.page-title
   %i.icon-hdd
@@ -14,17 +15,17 @@
         %i.icon-plus
         New Host
 
-    - if permitted_to? :index, :hosts_groups
+    - if permitted_to? :index, :host_groups
       %a{ href: host_groups_path, class: 'btn' + ((type == :list_group) ? ' btn-active active' : '')  }
         %i.icon-group
         Group List
 
-    - if permitted_to? :new, :hosts_groups
+    - if permitted_to? :new, :host_groups
       %a{ href: new_host_group_path, class: 'btn' + ((type == :new_group) ? ' btn-active active' : '')  }
         %i.icon-plus
         New Group
 
-    - if permitted_to? :index, :hosts_acl
+    - if permitted_to? :index, :host_acls
       %a{ href: host_acls_path, class: 'btn' + ((type == :acl) ? ' btn-active active' : '')  }
         %i.icon-cogs
         ACL
