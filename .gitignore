@@ -22,7 +22,6 @@ config/*.yml
 rerun.txt
 pickle-email-*.html
 
-Gemfile.lock
 
 **.DS_Store
 **~
