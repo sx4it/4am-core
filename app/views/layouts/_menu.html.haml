@@ -1,45 +1,70 @@
 
-.menu{ data: { toggle: 'button-checkbox' } }
+%ul.nav.menu{ data: { toggle: 'button-checkbox' } }
   - if current_user
-
-    %a.btn{ href: root_url, class: ((yield(:main_menu) == 'dashboard') ? ' btn-active active' : '')}
-      %i.icon.icon_dashboard
-      Dashboard
+    %li
+      // sorry for that....
+      %div
+        %a.btn{ href: root_url, class: ((yield(:main_menu) == 'dashboard') ? ' btn-active active' : '')}
+          %i.icon.icon_dashboard
+          Dashboard
 
     - if permitted_to? :index, :users
-      %a.btn{ href: url_for(users_path), class: ((yield(:main_menu) == 'user') ? ' btn-active active' : '') }
-        %i.icon.icon_users
-        Users
+      %li
+        %div
+          %a.btn{ href: url_for(users_path), class: ((yield(:main_menu) == 'user') ? ' btn-active active' : '') }
+            %i.icon.icon_users
+            Users
     - elsif permitted_to? :index, :user_groups
-      %a.btn{ href: url_for(user_groups_path), class: ((yield(:main_menu) == 'user') ? ' btn-active active' : '') }
-        %i.icon.icon_users
-        Users
+      %li
+        %div
+          %a.btn{ href: url_for(user_groups_path), class: ((yield(:main_menu) == 'user') ? ' btn-active active' : '') }
+            %i.icon.icon_users
+            Users
 
     - if permitted_to? :index, :hosts
-      %a.btn{ href: url_for(hosts_path), class: ((yield(:main_menu) == 'host') ? ' btn-active active' : '') }
-        %i.icon.icon_host
-        Hosts
+      %li
+        %div
+          %a.btn{ href: url_for(hosts_path), class: ((yield(:main_menu) == 'host') ? ' btn-active active' : '') }
+            %i.icon.icon_host
+            Hosts
     - elsif permitted_to? :index, :host_groups
-      %a.btn{ href: url_for(host_groups_path), class: ((yield(:main_menu) == 'host') ? ' btn-active active' : '') }
-        %i.icon.icon_host
-        Hosts
+      %li
+        %div
+          %a.btn{ href: url_for(host_groups_path), class: ((yield(:main_menu) == 'host') ? ' btn-active active' : '') }
+            %i.icon.icon_host
+            Hosts
 
     -#
       Templates ?
 
     - if permitted_to? :index, :commands
-      %a.btn{ href: commands_path, class: ((yield(:main_menu) == 'command') ? ' btn-active active' : '') }
-        %i.icon.icon_terminal
-        Commands
+      %li
+        %div
+          %a.btn{ href: commands_path, class: ((yield(:main_menu) == 'command') ? ' btn-active active' : '') }
+            %i.icon.icon_terminal
+            Commands
 
     - if permitted_to? :index, :log
-      %a.btn{ href: log_path, class: ((yield(:main_menu) == 'status') ? ' btn-active active' : '') }
-        %i.icon.icon_status2
-        Status
-
-    %a.btn{ href: keys_user_path(current_user), class: ((yield(:main_menu) == 'me') ? ' btn-active active' : '') }
-      %i.icon.icon_user-yellow
-      Me
+      %li
+        %div
+          %a.btn{ href: log_path, class: ((yield(:main_menu) == 'status') ? ' btn-active active' : '') }
+            %i.icon.icon_status2
+            Status
+    %li.dropdown
+      %div
+        %a.btn.dropdown-toggle{ 'data-toggle' => 'dropdown', class: ((yield(:main_menu) == 'me') ? ' btn-active active' : '') }
+          %i.icon.icon_user-yellow
+          Me
+          %b.caret
+        %ul.dropdown-menu
+          %li
+            %a{href: keys_user_path(current_user)}
+              %i.icon-key
+              My keys
+          %li
+            %a{href: logout_path}
+              %i.icon-off
+              Logout
 
   -#
     %a.btn{href: "http://sx4it.com/doc/index.html"}
