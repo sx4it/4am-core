@@ -12,6 +12,8 @@ group :development do
     gem 'quiet_assets'
     # getting it from git to allow dynamic reloading
     #gem "declarative_authorization", :git => 'https://github.com/stffn/declarative_authorization.git'
+    gem 'capistrano'
+    gem 'rvm-capistrano'
 end
 
 gem 'sqlite3'
