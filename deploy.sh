@@ -7,7 +7,7 @@ DEPLOYHOME=/opt/4am/
 NGINXHOME=${DEPLOYHOME}/nginx/
 NGINXWORKERS=$(awk '/^processor/ { N++} END { print N }' /proc/cpuinfo)
 RUBYVERS="ruby-1.9.2-p320"
-DBNAME="4am_experimental"
+DBNAME="4amcore"
 DBUSERNAME="root"
 DBPASS=''
 DBHOST='127.0.0.1'
@@ -198,12 +198,6 @@ function  install_ruby
 install_rvm
 install_ruby
 
-echo "Cloning the git repo."
-git clone git://github.com/sx4it/4am-ui.git --depth 1 $DEPLOYHOME/www/
-echo "Entering the repo, rvmrc will be launched..."
-rvm rvmrc trust $DEPLOYHOME/www/
-cd $DEPLOYHOME/www/
-
 ### NGINX & PASSENGER
 passenger-install-nginx-module --auto --auto-download --prefix=${NGINXHOME}
 
@@ -289,7 +283,7 @@ http {
         ssl_ciphers  HIGH:!aNULL:!MD5;
         ssl_prefer_server_ciphers   on;
 
-        root ${DEPLOYHOME}/www/public/;
+        root ${DEPLOYHOME}/www/current/public/;
         passenger_enabled on;
         passenger_set_cgi_param X-SSL_CLIENT_CERT \$ssl_client_raw_cert;
         passenger_set_cgi_param HTTP_X_FORWARDED_PROTO https;
@@ -307,63 +301,15 @@ http {
 }
 EOF
 
-cat <<EOF > $DEPLOYHOME/www/config/database.yml
-production:
-  adapter: mysql2
-  encoding: utf8
-  database: $DBNAME
-  pool: 10
-  username: $DBUSERNAME
-  password: $DBPASS
-  host: $DBHOST
-development:
-  adapter: sqlite3
-  encoding: utf8
-  database: db/dev.sqlite3
-  pool: 10
-  username: $DBUSERNAME
-  password: $DBPASS
-test:
-  adapter: sqlite3
-  encoding: utf8
-  database: db/test.sqlite3
-  pool: 10
-  username: $DBUSERNAME
-  password: $DBPASS
-EOF
-
-cat <<EOF > $DEPLOYHOME/www/config/4am.yml
-defaults: &defaults
-  redis:
-      host: dev2.sx4it.com
-      port: 42163
-  ssl:
-      ca_crt: config/4am-ca.crt
-      ca_key: config/4am-ca.key
-      #   timeout:
-      #   path:
-
-development:
-  <<: *defaults
-
-test:
-  <<: *defaults
-
-production:
-  <<: *defaults
-EOF
-
-ln -s ${NGINXHOME}/conf/ssl/server.crt ${DEPLOYHOME}/www/config/4am-ca.crt
-ln -s ${NGINXHOME}/conf/ssl/server.key ${DEPLOYHOME}/www/config/4am-ca.key
-
-rake RAILS_ENV=production db:setup
-rake assets:precompile
-chown -R 4am: $DEPLOYHOME/www/
-
 cat <<EOF
 ------ SUCCESS ------
 Your installation is finished.
-You basicly only need to start nginx $NGINXHOME/sbin/nginx .
+You Can now run
+cap deploy:setup
+-Configure your database, and then
+
+cap deploy
+cap deploy:migrate
 EOF
 
 exit 0
