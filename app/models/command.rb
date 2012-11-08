@@ -6,5 +6,12 @@ class Command < ActiveRecord::Base
   include PublicActivity::Model
   tracked :owner => proc { User.current_user }, :params => {
       :trackable_name => proc { |c, model| model.name },
-      :owner_name => proc { User.current_user.login }}
+      :owner_name => proc {
+        if User.current_user
+          User.current_user.login 
+        else
+          # seed.rb case
+          "Setup"
+        end
+      }}
 end
