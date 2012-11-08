@@ -124,8 +124,11 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
-  desc "reload the database with seed data"
-  task :seed do
-    run "cd #{current_path}; bundle exec rake RAILS_ENV=#{rails_env} db:seed"
+end
+
+namespace :db do
+  desc "migrate and reload the database with seed data"
+  task :reset do
+    run "cd #{current_path}; bundle exec rake RAILS_ENV=#{rails_env} db:reset"
   end
 end
