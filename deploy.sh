@@ -199,6 +199,7 @@ install_rvm
 install_ruby
 
 ### NGINX & PASSENGER
+gem install passenger
 passenger-install-nginx-module --auto --auto-download --prefix=${NGINXHOME}
 
 ## Self signed certificate for nginx and the client authentication
