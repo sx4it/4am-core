@@ -3,7 +3,7 @@
   = form_for @new_role, html: { class: 'form-inline' }, :remote => true do |f|
 
     = render 'layouts/form/errors', elem: @new_role
-   
+
     = f.text_field :name, :placeholder => 'New Role Name'
 
     = f.submit 'New Role', class: "btn btn-info"
