@@ -1,37 +1,24 @@
 
-= simple_form_for @user, html: { class: 'form-horizontal' } do |f|
+= simple_form_for @user, html: { class: 'form-horizontal' }, :validate => true do |f|
 
   %fieldset
 
-    = render 'layouts/form/errors', elem: @user
+    //= render 'layouts/form/errors', elem: @user
 
-    .control-group
-      = f.label :login, class: 'control-label'
-      .controls
-        = f.text_field :login
+    = f.input :login, :validate => {:length => {:minimum => 3}}
 
-    .control-group
-      = f.label :email, class: 'control-label'
-      .controls
-        = f.text_field :email
+    = f.input :email
 
-    .control-group
-      = f.label :password, class: 'control-label'
-      .controls
-        = f.password_field :password
+    = f.input :password, :validate => {:length => {:minimum => 4}}
 
-    .control-group
-      = f.label :password_confirmation, class: 'control-label'
-      .controls
-        = f.password_field :password_confirmation
+    = f.input :password_confirmation
 
     - if permitted_to? :edit, :roles
-      #roles.control-group
+      #roles
         #roles_from_list
           = f.simple_fields_for :roles do |roles|
             = render 'role_fields', :f => roles
           = link_to_add_association 'Add role', f, :roles, :class => "btn btn-mini btn-success controls"
 
-    .form-actions.transparent
-      = f.submit 'Save user', class: "btn btn-info"
+    = f.submit 'Save user', class: "btn btn-info"
 

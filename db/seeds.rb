@@ -4,6 +4,7 @@
 #ading default user
 u = User.new
 u.login = 'admin'
+u.email= 'admin@gmail.com'
 u.password = 'admin'
 u.password_confirmation = 'admin'
 admin = Role.create(:name => 'admin')

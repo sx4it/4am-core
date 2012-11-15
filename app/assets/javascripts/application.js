@@ -18,5 +18,8 @@
 
 //= require jquery.dualselect
 //= require cocoon
+//
+//= require rails.validations
+//= require rails.validations.simple_form
 
 //= require_tree .

@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   acts_as_authentic do |c|
     # only for tests
-    c.validate_email_field = false
+    #c.validate_email_field = false
   end
 
   has_many :keys, :dependent => :delete_all
@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
     super(options)
   end
   def type
-    t = self.class.to_s
+    self.class.to_s
   end
 
   def self.find_by_x509(cert_str)

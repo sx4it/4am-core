@@ -80,6 +80,8 @@ gem "declarative_authorization"
 gem "simple_form"
 gem "cocoon"
 gem 'public_activity'
+gem 'client_side_validations'
+gem 'client_side_validations-simple_form'
 
 group :test do
   # Pretty printed test output
@@ -89,5 +91,6 @@ end
 group :production do
     gem 'mysql2'
 end
+
 
 
