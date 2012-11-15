@@ -12,29 +12,28 @@ class Cmd
     @time ||= Time.now
     @status ||= "started"
     @log ||= "-"
-    @type ||= "cmd-host"
+    @type ||= "#{Rails.env}_cmd-host"
   end
 
 
   def self.find(host_id, id)
-      res = Redis.current.get "cmd-host:#{host_id}:#{id}"
+      res = Redis.current.get "#{Rails.env}_cmd-host:#{host_id}:#{id}"
       return nil unless res
       Cmd.from_json(res)
   end
 
   def self.find_grp(host_id, id)
-      res = Redis.current.get "cmd-grp:#{host_id}:#{id}"
+      res = Redis.current.get "#{Rails.env}_cmd-grp:#{host_id}:#{id}"
       return nil unless res
       Cmd.from_json(res)
   end
 
   def self.count(*id)
       host_id = id.first
-      cmds = []
       if not id.empty?
-        Redis.current.keys("cmd-host:#{host_id}:*").count
+        Redis.current.keys("#{Rails.env}_cmd-host:#{host_id}:*").count
       else
-        Redis.current.keys("cmd-host:*:*").count + Redis.current.keys("cmd-grp:*:*").count
+        Redis.current.keys("#{Rails.env}_cmd-host:*:*").count + Redis.current.keys("#{Rails.env}_cmd-grp:*:*").count
       end
   end
 
@@ -42,14 +41,14 @@ class Cmd
       host_id = id.first
       cmds = []
       if not id.empty?
-        Redis.current.keys("cmd-host:#{host_id}:*").each do |c|
+        Redis.current.keys("#{Rails.env}_cmd-host:#{host_id}:*").each do |c|
           cmds << self.find(host_id, c.split(':').last)
         end
       else
-        Redis.current.keys("cmd-host:*:*").each do |c|
+        Redis.current.keys("#{Rails.env}_cmd-host:*:*").each do |c|
           cmds << self.find(c.split(':')[1], c.split(':').last)
         end
-        Redis.current.keys("cmd-grp:*:*").each do |c|
+        Redis.current.keys("#{Rails.env}_cmd-grp:*:*").each do |c|
           cmds << self.find_grp(c.split(':')[1], c.split(':').last)
         end
       end
@@ -77,13 +76,13 @@ class Cmd
   def launch_command
     if @hosts.empty?
       @hosts = @group.host
-      @id = Redis.current.incr "group-#{@group.id}:max"
-      Redis.current.set "cmd-grp:#{@group.id}:#{@id}", self.get_json
-      Redis.current.publish '4am-command', "cmd-grp:#{@group.id}:#{@id}"
+      @id = Redis.current.incr "#{Rails.env}_group-#{@group.id}:max"
+      Redis.current.set "#{Rails.env}_cmd-grp:#{@group.id}:#{@id}", self.get_json
+      Redis.current.publish "#{Rails.env}:4am-command", "#{Rails.env}_cmd-grp:#{@group.id}:#{@id}"
     else
-      @id = Redis.current.incr "host-#{@hosts[0].id}:max"
-      Redis.current.set "cmd-host:#{@hosts[0].id}:#{@id}", self.get_json
-      Redis.current.publish '4am-command', "cmd-host:#{@hosts[0].id}:#{@id}"
+      @id = Redis.current.incr "#{Rails.env}_host-#{@hosts[0].id}:max"
+      Redis.current.set "#{Rails.env}_cmd-host:#{@hosts[0].id}:#{@id}", self.get_json
+      Redis.current.publish "#{Rails.env}:4am-command", "#{Rails.env}_cmd-host:#{@hosts[0].id}:#{@id}"
     end
   end
 
@@ -111,11 +110,11 @@ class Cmd
   end
 
   def stop
-      Redis.current.publish "4am-command", "#{@type}:#{@hosts[0].id}:#{@id}:stop"
+      Redis.current.publish "#{Rails.env}:4am-command", "#{@type}:#{@hosts[0].id}:#{@id}:stop"
   end
 
   def self.clear(host_id)
-    Redis.current.keys("cmd-host:#{host_id}:*").each do |c|
+    Redis.current.keys("#{Rails.env}_cmd-host:#{host_id}:*").each do |c|
         cmd = JSON.parse(Redis.current.get c)
         if %w{stopped killed finished}.include? cmd['status']
           cmd = Cmd.from_json(Redis.current.get c)

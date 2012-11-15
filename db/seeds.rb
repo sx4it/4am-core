@@ -20,8 +20,8 @@ Command.create :name => 'add_user', :command => <<EOF
   echo "<%=k%>">> ~<%=user[:login]%>/.ssh/authorized_keys ;
   <% end %>
   chown -R <%=user[:login]%> ~<%=user[:login]%>/ ;'
-  Command.create :name => 'del_user', :command => 'userdel -r -f <%= user[:login] %>;
 EOF
+Command.create :name => 'del_user', :command => 'userdel -r -f <%= user[:login] %>;'
 
 #TODO command add user
 

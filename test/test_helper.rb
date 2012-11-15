@@ -24,7 +24,5 @@ class ActionController::TestCase
   attr_reader :admin
   setup do
     activate_authlogic
-    @admin = create(:admin)
-    UserSession.create(@admin)
   end
 end
