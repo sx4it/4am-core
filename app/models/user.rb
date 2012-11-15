@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
 
   has_many :keys, :dependent => :delete_all
 
-  has_and_belongs_to_many :user_group
+  has_and_belongs_to_many :user_group, :uniq => true
   has_many :host_acl, :as => :users, :dependent => :destroy
   has_and_belongs_to_many :roles, :uniq => true
   accepts_nested_attributes_for :roles, :allow_destroy => true

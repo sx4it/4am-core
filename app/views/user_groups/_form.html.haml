@@ -1,12 +1,7 @@
-= simple_form_for @user_group, html: { class: 'form-horizontal' }  do |f|
+= simple_form_for @user_group, html: { class: 'form-horizontal' }, :validate => true  do |f|
 
-  = render 'layouts/form/errors', elem: @user_group
-
-  .control-group
-    = f.label :name, class: 'control-label'
-    .controls
-      = f.text_field :name
-  #user.control-group
+  = f.input :name
+  #user
     #user_from_list
       = f.simple_fields_for :user do |user|
         = render 'user_fields', :f => user

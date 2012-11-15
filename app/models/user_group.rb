@@ -51,6 +51,6 @@ class UserGroup < ActiveRecord::Base
     end
   end
   def type
-    t = self.class.to_s
+    self.class.to_s
   end
 end
