@@ -113,12 +113,36 @@ class KeysController < ApplicationController
   # POST /keys/1/pkcs12
   def pkcs12_create
     pubkey = Key.find(params[:id])
-    privkey = Net::SSH::KeyFactory.load_data_private_key(params[:ssh_priv_key].read)
-    send_data OpenSSL::PKCS12.create("", "", privkey, pubkey.x509).to_der,
-              :filename => "4am-#{@key.user.login}.p12",
-              :type => "application/x-pkcs12"
-    #FIXME we should explicitly remove the temporary file
-    #FIXME we should handle the errors
+    if params[:ssh_priv_key].nil?
+      flash[:notice] = "Please select a private key."
+      redirect_to pkcs12_new_key_path
+    else
+      password = params[:password] unless params[:password].empty?
+      privkey = Net::SSH::KeyFactory.load_data_private_key(params[:ssh_priv_key].read,
+                                                           password,
+                                                           false,
+                                                           params[:ssh_priv_key].original_filename)
+      logger.debug privkey.inspect
+      send_data OpenSSL::PKCS12.create(params[:pkcs12_password], "4am-#{@key.user.login}.p12", privkey, pubkey.x509).to_der,
+                :filename => "4am-#{@key.user.login}.p12",
+                :type => "application/x-pkcs12"
+      #FIXME we should explicitly remove the temporary file
+      #FIXME we should handle the errors
+    end
+  rescue OpenSSL::PKey::PKeyError => e
+    flash[:error] = if e.to_s =~ /Neither PUB key nor PRIV key:: nested asn1 error/
+                      "Error the password is invalid."
+                    else
+                      e.to_s
+                    end
+    redirect_to pkcs12_new_key_path
+  rescue OpenSSL::PKCS12::PKCS12Error => e
+    flash[:error] = if e.to_s =~ /key values mismatch/
+                      "The private key does not match your public key"
+                    else
+                      e.to_s
+                    end
+    redirect_to pkcs12_new_key_path
   end
 
 end
