@@ -1,27 +1,13 @@
 
-= form_for @host, html: { class: 'form-horizontal'} do |f|
+= simple_form_for @host, html: { class: 'form-horizontal'}, :validate => true do |f|
 
-  %fieldset
-    
-    = render 'layouts/form/errors', elem: @host
+  = render 'layouts/form/errors', elem: @host
 
-    .control-group
-      = f.label :name, class: 'control-label'
-      .controls
-        = f.text_field :name
-    .control-group
-      = f.label :ip, class: 'control-label'
-      .controls
-        = f.text_field :ip
-    .control-group
-      = f.label :port, class: 'control-label'
-      .controls
-        = f.text_field :port
-    .control-group
-      = f.label :host_tpl_id, class: 'control-label'
-      .controls
-        = f.text_field :host_tpl_id
+  = f.input :name
+  = f.input :ip
+  = f.input :port
+  = f.input :host_tpl_id, :collection => 1..10
 
-    .form-actions.transparent
-      = f.submit 'Save', class: "btn btn-info"
+  .form-actions.transparent
+    = f.submit 'Save', class: "btn btn-info"
 
