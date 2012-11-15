@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
 
   attr_accessible :roles_attributes, :password, :password_confirmation, :login, :email
 
+  validates :login, :exclusion => {:in => %w{root}, :message => "Reserved login."}
+
   acts_as_authentic do |c|
     # only for tests
     c.validate_email_field = false
