@@ -1,21 +1,14 @@
 
-= form_for @host_group , html: { class: 'form-horizontal' } do |f|
+= simple_form_for @host_group , html: { class: 'form-horizontal' }, :validate => :true do |f|
 
-  %fieldset
+  = f.input :name
 
-    = render 'layouts/form/errors', elem: @host_group
-
-    .control-group
-      = f.label :name, class: "control-label"
-      .controls
-        = f.text_field :name
-
-  #host.control-group
+  #host
     #host_from_list
       = f.simple_fields_for :host do |host|
         = render 'host_fields', :f => host
       = link_to_add_association 'Add host', f, :host, :class => "btn btn-mini btn-success controls"
 
-    .form-actions.transparent
-      = f.submit 'Save', class: "btn btn-info"
+  .form-actions.transparent
+    = f.submit 'Save', class: "btn btn-info"
 

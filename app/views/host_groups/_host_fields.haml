@@ -1,6 +1,5 @@
 .nested-fields
-  = f.label :host, class: 'control-label'
+  = f.input :id, :collection => Host.all, :label => false, :disabled => !f.object.new_record?
   .controls
-    = f.input :id, :collection => Host.all, :label => false, :disabled => !f.object.new_record?
     = link_to_remove_association "Remove host", f, :class => "btn btn-mini btn-danger"
   %br

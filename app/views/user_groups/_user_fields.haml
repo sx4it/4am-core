@@ -1,5 +1,5 @@
 .nested-fields
   = f.input :id, :collection => User.all, :label => false, :disabled => !f.object.new_record?
   .controls
-    = link_to_remove_association "remove user", f, :class => "btn btn-mini btn-danger"
+    = link_to_remove_association "Remove user", f, :class => "btn btn-mini btn-danger"
   %br
