@@ -8,10 +8,10 @@ module ApplicationHelper
   end
 
   def include_related_js
-    asset = "related/#{params[:controller]}/#{params[:action]}"
+    # adding _ because index is reserved
+    asset = "related/#{params[:controller]}/_#{params[:action]}"
     if !AM::Application.assets.find_asset(asset).nil?
         content_for :javascript_custom do
-          logger.error "wtf #{asset}"
           javascript_include_tag asset
         end
     end

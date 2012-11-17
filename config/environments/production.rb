@@ -45,10 +45,9 @@ AM::Application.configure do
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
 
-  files = Dir[Rails.root.join('app', 'assets', '{javascripts,stylesheets}', 'related', '**' ,'[^_]*.{js,css}*')]
+  files = Dir[Rails.root.join('app', 'assets', '{javascripts,stylesheets}', 'related', '**' ,'_*.{js,css}*')]
   files.map! {|file| file.sub(%r(#{Rails.root}/app/assets/(javascripts|stylesheets)/), '') }
   files.map! {|file| file.sub(%r(\.(coffee|scss)), '') }
-  puts files.inspect
   config.assets.precompile += files
 
   # Disable delivery errors, bad email addresses will be ignored
