@@ -5,50 +5,22 @@
 = render 'header', type: :list
 
 
-= form_tag users_path, :method => 'get', :id => 'users_search' do
+= form_tag users_path, :method => 'get', :id => 'users_search', :remote => true do
 
   = hidden_field_tag :direction, params[:direction]
   = hidden_field_tag :sort, params[:sort]
 
-  #users
+  .widget.widget-table
+    .widget-header
+      %i.icon-th-list
+      %h3
+        User list
+      .search.input-append
+        = text_field_tag :search, params[:search], class: 'span2'
+        %button.btn{:type => :submit}
+          %i.icon-search
 
-    .widget.widget-table
-      .widget-header
-        %i.icon-th-list
-        %h3
-          User list
-        .search.input-append
-          //%input.span2{:size => "16", :type => "text"}
-          = text_field_tag :search, params[:search], class: 'span2'
-          %a.btn{ :href => "javascript:users_search.submit()" }
-            %i.icon-search
 
-      .widget-content
-        %table.table.table-striped.table-bordered
-          %thead
-            %tr
-              %th.id #
-              %th= sortable 'login'
-              %th Keys
-              %th Groups
-              %th.actions Actions
-              %th.checkbox
-                %input.check_all{:type => "checkbox"} 
-          %tbody
-            - @users.each do |user|
-              %tr
-                %td.id= user.id
-                %td= user.login
-                %td= user.keys.count
-                %td
-                  - user.user_group.each do |group|
-                    %span.label
-                      = group.name
-                %td.actions
-                  = render 'layouts/form/list_actions', elem:user
-                %td.checkbox
-                  - if permitted_to? :destroy, user
-                    %input{:type => "checkbox"} 
-
-    = will_paginate @users
-
+    .widget-content
+      #users
+        = render "users"

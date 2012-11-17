@@ -1,0 +1,27 @@
+%table.table.table-striped.table-bordered
+  %thead
+    %tr
+      %th.id= sortable 'id', '#'
+      %th= sortable 'login'
+      %th Keys
+      %th Groups
+      %th.actions Actions
+      %th.checkbox
+        %input.check_all{:type => "checkbox"} 
+  %tbody
+    - @users.each do |user|
+      %tr
+        %td.id= user.id
+        %td= user.login
+        %td= user.keys.count
+        %td
+          - user.user_group.each do |group|
+            %span.label
+              = group.name
+        %td.actions
+          = render 'layouts/form/list_actions', elem:user
+        %td.checkbox
+          - if permitted_to? :destroy, user
+            %input{:type => "checkbox"} 
+
+= will_paginate @users
