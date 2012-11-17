@@ -1,6 +1,7 @@
 
 # Create dualselect control for group selection
 $(document).ready ->
+  console.log "only new"
 
   # Change groups select tag
   $('#SELTEST').dualselect sorted: true
