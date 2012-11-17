@@ -53,4 +53,7 @@ class UserGroup < ActiveRecord::Base
   def type
     self.class.to_s
   end
+  def acl_id
+    "#{id}:#{type}"
+  end
 end

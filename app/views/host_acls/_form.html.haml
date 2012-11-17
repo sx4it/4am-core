@@ -3,37 +3,21 @@
 
   - rights = %w{Read Edit Exec Sudo}
   %div
-    = form_for @new_acl, :url => {:controller => :host_acls, :action => :create}, :remote => true, html: { class: 'form-inline'} do |f|
-
-      -if @new_acl.errors.any?
-        .alert.alert-error
-          %a.close{href: "#", data:{ dismiss:'alert' }} ×
-          %h4.alert-heading= "#{pluralize(@new_acl.errors.count, "error")} "
-          %ul
-            - @new_acl.errors.full_messages.each do |msg|
-              %li
-                %p= msg
-
-      - if not @new_acl.errors.any? and not @errors.nil?
-        .alert.alert-error
-          %a.close{href: "#", data:{ dismiss:'alert' }} ×
-          %h4.alert-heading= "#{pluralize(@errors.count, "error")} "
-          %ul
-            - @errors.full_messages.each do |msg|
-              %li
-                %p= msg
+    = simple_form_for @new_acl, :url => {:controller => :host_acls, :action => :create}, :remote => true, html: { class: 'form-horizontal'} do |f|
+      #errors
+        = render "acl_errors"
 
       = f.hidden_field :user_id, :value => ""
       = f.hidden_field :user_type, :value => ""
       = f.hidden_field :host_type, :value => ""
       = f.hidden_field :host_id, :value => ""
 
-      = f.autocomplete_field :hosts, autocomplete_host_name_path, :update_elements => {:id => '#acl_form_host_id', :type => '#acl_form_host_type'}, :data => {'min-length' => 0}, :placeholder => 'Add Host / HostGroup'
-      = f.autocomplete_field :users, autocomplete_user_login_path, :update_elements => {:id => '#acl_form_user_id', :type => '#acl_form_user_type'}, :data => {'min-length' => 0}, :placeholder => 'Add User / UserGroup'
+      = f.input :hosts, :collection => @hosts, :input_html => {:class => :span4}, :group_label_method => 'first.type', :as => :grouped_select, :group_method => :to_a, :value_method => :acl_id
 
-      - rights.each do |r|
-        = f.label r
-        = f.radio_button 'type', r, :checked => true
+      = f.input :users, :collection => @users, :input_html => {:class => :span4}, :group_label_method => 'first.type', :as => :grouped_select, :group_method => :to_a, :value_method => :acl_id
 
-      = f.submit 'Create Acl', class: "btn btn-info"
+      = f.input :type, :collection => rights, :as => :radio
+
+      .form-actions.transparent
+        = f.submit 'Create Acl', class: "btn btn-info"
 

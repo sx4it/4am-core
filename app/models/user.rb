@@ -90,5 +90,8 @@ class User < ActiveRecord::Base
     cert = OpenSSL::X509::Certificate.new cert_str
     User.joins(:keys).where(:keys => {:keytype => cert.public_key.ssh_type, :value => [ cert.public_key.to_blob ].pack('m0')}).first
   end
+  def acl_id
+    "#{id}:#{type}"
+  end
 
 end

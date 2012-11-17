@@ -52,9 +52,12 @@ class HostGroup < ActiveRecord::Base
     end
   end
   def type
-    t = self.class.to_s
+    self.class.to_s
   end
   def host_group
     []
+  end
+  def acl_id
+    "#{id}:#{type}"
   end
 end

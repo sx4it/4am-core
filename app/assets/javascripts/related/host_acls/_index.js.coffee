@@ -13,11 +13,35 @@
 #      .appendTo(container);
 #  }
 $ ->
-  $("input[data-autocomplete]").each (i, u) ->
-    $(u).autocomplete().data("autocomplete").options.minLength = 0
-    $(u).autocomplete().data("autocomplete")._renderItem = (ul, item) ->
-      type = "user" if (item.type == "User")
-      type = "group" if (item.type == "UserGroup")
-      type = "host" if (item.type == "Host")
-      type = "group" if (item.type == "HostGroup")
-      $("<li></li>").data("item.autocomplete", item).append( $( "<a></a>" ).text(" " + item.label ).prepend("<i class='custom-icon icon_" + type + "'>")).appendTo(ul)
+  format = (item)->
+    return item.text unless !item.id
+    text = "user" if (item.text == "User")
+    text = "group" if (item.text == "UserGroup")
+    text = "host" if (item.text == "Host")
+    text = "group" if (item.text == "HostGroup")
+    return "<i class='custom-icon icon_" + text + "'/>" + item.text
+  $("#acl_form_hosts").select2(
+    placeHolder: "Select a host or a host group"
+    formatResult: format
+    formatSelection: format
+  ).on("change", (v)->
+    b = $(v.target).val().split(':')
+    if b.length > 1
+      $('#acl_form_host_id').attr('value', b[0]);
+      $('#acl_form_host_type').attr('value', b[1]);
+  )
+
+  $("#acl_form_users").select2(
+    placeHolder: "Select a user or a user group"
+    formatResult: format
+    formatSelection: format
+  ).on("change", (v)->
+    b = $(v.target).val().split(':')
+    console.log "change"
+    if b.length > 1
+      $('#acl_form_user_id').attr('value', b[0]);
+      $('#acl_form_user_type').attr('value', b[1]);
+    else
+      $('#acl_form_user_id').attr('value', "");
+      $('#acl_form_user_type').attr('value', "");
+  )

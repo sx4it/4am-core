@@ -1,0 +1,17 @@
+-if @new_acl.errors.any?
+  .alert.alert-error
+    %a.close{href: "#", data:{ dismiss:'alert' }} ×
+    %h4.alert-heading= "#{pluralize(@new_acl.errors.count, "error")} "
+    %ul
+      - @new_acl.errors.full_messages.each do |msg|
+        %li
+          %p= msg
+
+- if not @new_acl.errors.any? and not @errors.nil?
+  .alert.alert-error
+    %a.close{href: "#", data:{ dismiss:'alert' }} ×
+    %h4.alert-heading= "#{pluralize(@errors.count, "error")} "
+    %ul
+      - @errors.full_messages.each do |msg|
+        %li
+          %p= msg

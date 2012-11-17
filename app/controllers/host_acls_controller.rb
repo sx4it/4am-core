@@ -4,6 +4,8 @@ class HostAclsController < ApplicationController
   def index
     @acls = HostAcl.all
     @new_acl = AclForm.new
+    @hosts = [Host.all, HostGroup.all]
+    @users = [User.all, UserGroup.all]
   end
 
   def create

@@ -9,6 +9,8 @@
 //= require jquery_ujs
 //= require jquery-ui
 
+//= require select2.min
+
 // Loads all Bootstrap javascripts
 //= require bootstrap
 //= require bootstrap-tooltip
@@ -18,6 +20,6 @@
 
 //= require jquery.dualselect
 //= require cocoon
-//
+
 //= require rails.validations
 //= require rails.validations.simple_form

@@ -1,3 +1,4 @@
+
 class Host < ActiveRecord::Base
   validates :name, :presence => true, :uniqueness => true
   validates :ip, :presence => true
@@ -37,6 +38,9 @@ class Host < ActiveRecord::Base
     h.size
   end
   def type
-    t = self.class.to_s
+    self.class.to_s
+  end
+  def acl_id
+    "#{id}:#{type}"
   end
 end
