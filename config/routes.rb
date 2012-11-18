@@ -15,8 +15,6 @@ AM::Application.routes.draw do
 
   resources :commands
 
-  get :autocomplete_host_name, :controller => :autocomplete
-  get :autocomplete_user_login, :controller => :autocomplete
   resources :hosts do
     resources :cmd do
       collection do

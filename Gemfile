@@ -55,8 +55,6 @@ gem "will_paginate"
 gem 'authlogic'
 gem "authlogic_haapi"
 
-gem 'rails3-jquery-autocomplete'
-
 gem "ruby_parser"
 
 # To use ActiveModel has_secure_password

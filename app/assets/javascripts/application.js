@@ -16,8 +16,6 @@
 //= require bootstrap-tooltip
 //= require bootstrap-popover
 
-//= require autocomplete-rails
-
 //= require jquery.dualselect
 //= require cocoon
 
