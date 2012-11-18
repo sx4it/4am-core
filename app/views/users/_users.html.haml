@@ -5,6 +5,8 @@
       %th= sortable 'login'
       %th Keys
       %th Groups
+      - if permitted_to? :show, :roles
+        %th Roles
       %th.actions Actions
       %th.checkbox
         %input.check_all{:type => "checkbox"} 
@@ -18,6 +20,11 @@
           - user.user_group.each do |group|
             %span.label
               = group.name
+        - if permitted_to? :show, :roles
+          %td
+            - user.roles.each do |r|
+              %span.label
+                = r.name
         %td.actions
           = render 'layouts/form/list_actions', elem:user
         %td.checkbox

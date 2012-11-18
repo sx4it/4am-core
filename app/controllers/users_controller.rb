@@ -46,30 +46,19 @@ class UsersController < ApplicationController
   # GET /users/new.json
   def new
     @user = User.new
+    @roles = Role.all
+    @groups = UserGroup.all
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @user }
     end
   end
 
-  def add_role
-    @user = User.find params[:id]
-    role = Role.find params[:role]
-    @user.roles << role if role
-    redisplay_roles
-  end
-
-  def delete_role
-    @user = User.find params[:id]
-    @user.roles.delete(Role.find params[:role])
-    redisplay_roles
-  end
-
-
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
     @roles = Role.all
+    @groups = UserGroup.all
   end
 
   # POST /users
@@ -82,7 +71,10 @@ class UsersController < ApplicationController
         format.html { redirect_to user_path(@user), notice: 'User was successfully created.' }
         format.json { render json: user_path(@user), status: :created, location: @user }
       else
-        format.html { render action: "new" }
+        format.html { 
+          @roles = Role.all
+          @groups = UserGroup.all
+          render action: "new" }
         format.json { render json: @users.errors, status: :unprocessable_entity }
       end
     end
@@ -100,6 +92,7 @@ class UsersController < ApplicationController
       else
         format.html {
           @roles = Role.all
+          @groups = UserGroup.all
           render action: "edit"
         }
         format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -125,18 +118,6 @@ class UsersController < ApplicationController
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-  end
-
-
-  private
-
-  def redisplay_roles
-    @roles = Role.all
-    @user = User.find params[:id]
-    respond_to do |format|
-      format.html { redirect_to edit_user_path(@user) }
-      format.js { render :redisplay_roles }
-    end
   end
 
 end

@@ -57,8 +57,6 @@ AM::Application.routes.draw do
   resources :users do
     member do
       get "keys" => "keys#index"
-      post :add_role
-      delete :delete_role
       post :reset_api_token
     end
   end

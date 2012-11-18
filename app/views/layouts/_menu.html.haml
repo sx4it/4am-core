@@ -58,6 +58,10 @@
           %b.caret
         %ul.dropdown-menu
           %li
+            %a{href: user_path(current_user)}
+              %i.icon-user
+              Info
+          %li
             %a{href: keys_user_path(current_user)}
               %i.icon-key
               My keys

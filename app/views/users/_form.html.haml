@@ -9,12 +9,13 @@
 
   = f.input :password_confirmation
 
+  - if permitted_to? :edit, :user_groups
+    - current_groups = @user.user_group.map{|u| "#{u.id}" }.to_json
+    = f.input :user_group, :input_html => {:data => {:val => current_groups}, :class => :span3, :multiple => true}, :collection => @groups
+
   - if permitted_to? :edit, :roles
-    #roles
-      #roles_from_list
-        = f.simple_fields_for :roles do |roles|
-          = render 'role_fields', :f => roles
-        = link_to_add_association 'Add role', f, :roles, :class => "btn btn-mini btn-success controls"
+    - current_role = @user.roles.map{|u| "#{u.id}" }.to_json
+    = f.input :roles, :input_html => {:data => {:val => current_role}, :class => :span3, :multiple => true}, :collection => @roles
 
   .form-actions.transparent
     = f.submit 'Save user', class: "btn btn-info"

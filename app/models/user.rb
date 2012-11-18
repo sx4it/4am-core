@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
 
   cattr_accessor :current_user
 
-  attr_accessible :roles_attributes, :password, :password_confirmation, :login, :email
+  attr_accessible :roles, :user_group, :password, :password_confirmation, :login, :email
 
   validates :login, :exclusion => {:in => %w{root}, :message => "is reserved"}
 
@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :host_acl, :as => :users, :dependent => :destroy
   has_and_belongs_to_many :roles, :uniq => true
   accepts_nested_attributes_for :roles, :allow_destroy => true
+  accepts_nested_attributes_for :user_group, :allow_destroy => true
 
   #public activity tracking
   include PublicActivity::Model
@@ -41,22 +42,36 @@ class User < ActiveRecord::Base
     end
   end
 
-  def roles_attributes=(attrs)
-    roles = []
-    attrs.each do |key, attr|
-      break if attrs[key][:id] == ""
-      if attrs[key][:_destroy] == "1"
-        self.roles.delete Role.find(attrs[key][:id])
-      else
-        roles << Role.find(attrs[key][:id])
-      end
-      # trick to be sure the final action is adding
-      # and not deleting (in case we delete and add in the same submit)
-      roles.each do |role|
-        self.roles << role
-      end
-    end
+  def has_role?(role)
+    current_user.roles.include? Role.find_by_name(role.to_s)
   end
+
+  def roles=(attr)
+    raise Authorization::NotAuthorized unless has_role? :admin
+    if attr and attr.first.is_a? String
+      roles = []
+      attr.each do |a|
+       role = Role.find_by_id(a)
+       roles << role if role
+      end
+      attr = roles
+    end
+    super(attr)
+  end
+
+  def user_group=(attr)
+    raise Authorization::NotAuthorized unless has_role? :admin
+    if attr and attr.first.is_a? String
+      grps = []
+      attr.each do |a|
+       grp = UserGroup.find_by_id(a)
+       grps << grp if grp
+      end
+      attr = grps
+    end
+    super(attr)
+  end
+
   def self.search(search, page)
     if search
       paginate :per_page => 3, :page => page, :conditions => ['login like ?', "%#{search}%"], :order => 'login'
