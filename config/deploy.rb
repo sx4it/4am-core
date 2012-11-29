@@ -6,7 +6,7 @@ require "rvm/capistrano"
 set :application, "4am-core"
 set :repository,  "git://github.com/sx4it/4am-core.git" # read only git
 
-#set :user, "4am" # deploying as root
+set :web_user, "4am"
 set :deploy_to, "/opt/4am/www"
 
 # set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
@@ -27,7 +27,7 @@ role :db, app, :primary => true
 
 set :use_sudo, false
 set :keep_releases, 3
-
+after "deploy:update", "deploy:cleanup"
 
 # rvm install
 # we assume it is already installed
@@ -110,6 +110,11 @@ namespace :config_4am do
     run "ln -nfs #{shared_path}/config/4am-ca.key #{release_path}/config/4am.ca.key"
     run "ln -nfs #{shared_path}/config/4am.yml #{release_path}/config/4am.yml"
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+
+    run "chown -R #{web_user} #{deploy_to}"
+    run "chown #{web_user} -R #{deploy_to}/current/tmp/pids"
+    run "chown #{web_user} -R #{deploy_to}/current/log"
+    run "chown #{web_user} -R #{shared_path}/pids"
   end
 end
 
