@@ -1,7 +1,9 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
+  #setup :login_admin
   setup do
+    login_admin
     @user = create(:user)
   end
 

@@ -12,9 +12,9 @@
       = f.hidden_field :host_type, :value => ""
       = f.hidden_field :host_id, :value => ""
 
-      = f.input :hosts, :collection => @hosts, :input_html => {:class => :span4}, :group_label_method => 'first.type', :as => :grouped_select, :group_method => :to_a, :value_method => :acl_id
+      = f.input :hosts, :collection => @hosts, :input_html => {:class => :span4}, :group_label_method => 'each {|w| break w.type}', :as => :grouped_select, :group_method => :to_a, :value_method => :acl_id
 
-      = f.input :users, :collection => @users, :input_html => {:class => :span4}, :group_label_method => 'first.type', :as => :grouped_select, :group_method => :to_a, :value_method => :acl_id
+      = f.input :users, :collection => @users, :input_html => {:class => :span4}, :group_label_method => 'each {|w| break w.type }', :as => :grouped_select, :group_method => :to_a, :value_method => :acl_id
 
       = f.input :type, :collection => rights, :as => :radio
 

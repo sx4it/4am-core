@@ -1,9 +1,6 @@
 require 'test_helper'
 
 class HostAclsControllerTest < ActionController::TestCase
-  setup do
-    @host_acl = create(:host_acl)
-  end
   test "should get index" do
     get :index
     assert_response :success
@@ -19,6 +16,7 @@ class HostAclsControllerTest < ActionController::TestCase
   end
 
   test "should get delete" do
+    @host_acl = create(:host_acl)
     assert_difference('HostAcl.count', -1) do
       delete :destroy, id: @host_acl
     end

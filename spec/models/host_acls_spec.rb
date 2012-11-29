@@ -1,14 +1,16 @@
-require 'test_helper'
+require 'spec_helper'
 
-class HostAclsTest < ActiveSupport::TestCase
-  setup do
+describe HostAcl do
+
+  before :each do
+    # we set the current_user so that cmd know who launch the command.
+    @admin = login(:admin)
     create :command, :name => "add_user"
     create :command, :name => "del_user"
-
-    # we set the current_user so that cmd know who launch the command.
-    User.current_user = @admin
+    Authorization.current_user = @admin
   end
-  test "delete cascade (deleting host)" do
+
+  it "delete cascade (deleting host)" do
     host = create :host
     count_before = Cmd::count host.id
 
@@ -26,7 +28,7 @@ class HostAclsTest < ActiveSupport::TestCase
     assert_equal 1, (count_after_delete - count_after)
   end
 
-  test "delete cascade (deleting host group)" do
+  it "delete cascade (deleting host group)" do
     host_group = create :host_group
     host_acl = create :host_acl, :hosts => host_group
     assert_equal 1, HostAcl.all.count
@@ -34,7 +36,7 @@ class HostAclsTest < ActiveSupport::TestCase
     assert_equal 0, HostAcl.all.count
   end
 
-  test "delete cascade (deleting host group with host)" do
+  it "delete cascade (deleting host group with host)" do
     host_group = create :host_group
     host = create :host
     host_group.host << host
@@ -48,7 +50,7 @@ class HostAclsTest < ActiveSupport::TestCase
     assert_equal 1, (count_after_delete - count_after)
   end
 
-  test "delete cascade (deleting user)" do
+  it "delete cascade (deleting user)" do
     host_acl = create :host_acl
     count_before = Cmd::count host_acl.hosts.id
 
@@ -59,7 +61,7 @@ class HostAclsTest < ActiveSupport::TestCase
     assert_equal 1, (count_after - count_before)
   end
 
-  test "delete cascade (deleting user group)" do
+  it "delete cascade (deleting user group)" do
     user_group = create :user_group
     host_acl = create :host_acl, :users => user_group
     count_before = Cmd::count host_acl.hosts.id
@@ -72,7 +74,7 @@ class HostAclsTest < ActiveSupport::TestCase
     assert_equal 0, (count_after - count_before)
   end
 
-  test "delete cascade (deleting user in user group)" do
+  it "delete cascade (deleting user in user group)" do
     user_group = create :user_group
     user = create :user
     user_group.user << user
@@ -87,7 +89,7 @@ class HostAclsTest < ActiveSupport::TestCase
     assert_equal 1, (count_after - count_before)
   end
 
-  test "delete cascade (deleting host in host group)" do
+  it "delete cascade (deleting host in host group)" do
     host_group = create :host_group
     host = create :host
     host_group.host << host
@@ -101,7 +103,7 @@ class HostAclsTest < ActiveSupport::TestCase
     assert_equal 1, (count_after - count_before)
   end
 
-  test "delete cascade (deleting user group with someone inside)" do
+  it "delete cascade (deleting user group with someone inside)" do
     user_group = create :user_group
     user = create :user
     user_group.user << user
@@ -115,7 +117,7 @@ class HostAclsTest < ActiveSupport::TestCase
     assert_equal 1, (count_after - count_before)
   end
 
-  test "adding acl (adding user in usergroup with acl)" do
+  it "adding acl (adding user in usergroup with acl)" do
     user_group = create :user_group
     user = create :user
     host_acl = create :host_acl, :users => user_group
@@ -128,7 +130,7 @@ class HostAclsTest < ActiveSupport::TestCase
     assert_equal 1, (count_after - count_before)
   end
 
-  test "adding acl (adding host in hostgroup with acl)" do
+  it "adding acl (adding host in hostgroup with acl)" do
     host_group = create :host_group
     host = create :host
     host_acl = create :host_acl, :hosts => host_group
@@ -140,7 +142,7 @@ class HostAclsTest < ActiveSupport::TestCase
     assert_equal 1, (count_after - count_before)
   end
 
-  test "deleting acl (removing user from user_group)" do
+  it "deleting acl (removing user from user_group)" do
     user_group = create :user_group
     user = create :user
     user_group.user << user
@@ -154,7 +156,7 @@ class HostAclsTest < ActiveSupport::TestCase
     assert_equal 1, (count_after - count_before)
   end
 
-  test "deleting acl (removing user from hostgroup)" do
+  it "deleting acl (removing user from hostgroup)" do
     host_group = create :host_group
     host = create :host
     host_group.host << host
@@ -171,7 +173,7 @@ class HostAclsTest < ActiveSupport::TestCase
 #
 #  # TODO implement a cleaner way to add key
 #
-#  test "adding new key (adding new key to user should deploy the key)" do
+#  it "adding new key (adding new key to user should deploy the key)" do
 #    user_group = create :user_group
 #    user = create :user
 #    user_group.user << user
@@ -186,7 +188,7 @@ class HostAclsTest < ActiveSupport::TestCase
 #    assert_equal 1, (count_after - count_before)
 #  end
 #
-#  test "deleting new key (deleting user key should undeploy the key)" do
+#  it "deleting new key (deleting user key should undeploy the key)" do
 #    user_group = create :user_group
 #    user = create :user
 #    user_group.user << user

@@ -4,11 +4,11 @@ class Command < ActiveRecord::Base
 
   #public activity tracking
   include PublicActivity::Model
-  tracked :owner => proc { User.current_user }, :params => {
+  tracked :owner => proc { Authorization.current_user if Authorization.current_user.respond_to? :login }, :params => {
       :trackable_name => proc { |c, model| model.name },
       :owner_name => proc {
-        if User.current_user
-          User.current_user.login 
+        if Authorization.current_user.respond_to? :login
+          Authorization.current_user.login 
         else
           # seed.rb case
           "Setup"

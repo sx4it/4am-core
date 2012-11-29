@@ -9,14 +9,14 @@ class HostAcl < ActiveRecord::Base
 
   #public activity tracking
   include PublicActivity::Model
-  tracked :owner => proc { User.current_user }, :params => {
+  tracked :owner => proc { Authorization.current_user }, :params => {
       :hosts => proc { |c, model| model.hosts.name },
       :users => proc { |c, model| model.users.name },
       :acl_type => proc { |c, model| model.acl_type },
-      :owner_name => proc { User.current_user.login }}
+      :owner_name => proc { Authorization.current_user.login }}
 
   before_destroy do |record|
-    Cmd::Action.delete_host_acl record, User.current_user
+    Cmd::Action.delete_host_acl record, Authorization.current_user
   end
 
   validates_uniqueness_of :acl_type, :scope => [:users_id, :hosts_id, :users_type, :hosts_type], :message => "has already been set"

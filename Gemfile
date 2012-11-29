@@ -2,12 +2,9 @@ source 'http://rubygems.org'
 
 gem 'rails', '~> 3.2.0'
 
-gem 'minitest'
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
-
 group :development do
     gem 'sqlite3'
+    gem 'awesome_print'
     # quiet asset for dev mode :)
     gem 'quiet_assets'
     # getting it from git to allow dynamic reloading
@@ -16,13 +13,10 @@ group :development do
     gem 'rvm-capistrano'
 end
 
-gem 'sqlite3'
 gem 'redis'
 gem 'log4r'
 
 
-# Gems used only for assets and not required
-# in production environments by default.
 group :assets do
   gem 'capistrano'
   gem 'sass-rails', '~> 3.2.3'
@@ -37,43 +31,24 @@ group :assets do
   gem "jquery-ui-rails"
 
   gem 'font-awesome-sass-rails'
+  gem 'therubyracer'
+  gem 'haml'
+  gem 'haml-rails'
 end
-
-
-gem 'therubyracer'
-gem 'haml'
-gem 'haml-rails'
-
-gem 'ruby-prof'
-
-
-#gem 'mongrel'
-gem 'factory_girl_rails'
 
 gem "will_paginate"
 
 gem 'authlogic'
 gem "authlogic_haapi"
 
-gem "ruby_parser"
-
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
 
-# Use unicorn as the web server
-#gem 'unicorn'
-
-# Deploy with Capistrano
-#gem 'rvm-capistrano'
 # We can only use passenger as web server because unicorn and webrick do not
 # support to receive the raw ssl certificate via an environment variable
 gem 'passenger'
 gem 'net-ssh'
 
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
-#
-#
 gem "declarative_authorization"
 gem "simple_form"
 gem "cocoon"
@@ -84,11 +59,17 @@ gem 'client_side_validations-simple_form'
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
+  gem 'factory_girl_rails'
+end
+
+group :test, :development do
+    gem "rspec-rails"
+    gem "capybara"
+    gem 'rb-fsevent', :require => false if RUBY_PLATFORM =~ /darwin/i
+    gem 'guard-rspec'
+    gem 'sqlite3'
 end
 
 group :production do
     gem 'mysql2'
 end
-
-
-

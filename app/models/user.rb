@@ -1,7 +1,5 @@
 class User < ActiveRecord::Base
 
-  cattr_accessor :current_user
-
   attr_accessible :roles, :user_group, :password, :password_confirmation, :login, :email
 
   validates :login, :exclusion => {:in => %w{root}, :message => "is reserved"}
@@ -21,11 +19,11 @@ class User < ActiveRecord::Base
 
   #public activity tracking
   include PublicActivity::Model
-  tracked :owner => proc { User.current_user }, :except => [:update], :params => {
+  tracked :owner => proc { Authorization.current_user if Authorization.current_user.respond_to? :login }, :except => [:update], :params => {
     :trackable_name => proc { |c, model| model.login },
     :owner_name => proc { 
-      if User.current_user
-        User.current_user.login 
+      if Authorization.current_user.respond_to? :login
+        Authorization.current_user.login
       else
         # seed.rb case
         "Setup"
@@ -37,17 +35,22 @@ class User < ActiveRecord::Base
       group.host_acl.each do |acl|
         dup_acl = acl.dup
         dup_acl.users = record
-        Cmd::Action.delete_host_acl dup_acl, User.current_user
+        Cmd::Action.delete_host_acl dup_acl, Authorization.current_user
       end
     end
   end
 
-  def has_role?(role)
-    current_user.roles.include? Role.find_by_name(role.to_s)
+
+  def self.can?(what, context)
+    Authorization::Engine.new.permit? what.to_sym, :context => context.to_sym
+  end
+
+  def self.can!(what, context)
+    Authorization::Engine.new.permit! what.to_sym, :context => context.to_sym
   end
 
   def roles=(attr)
-    raise Authorization::NotAuthorized unless has_role? :admin
+    User.can! :edit, :roles
     if attr and attr.first.is_a? String
       roles = []
       attr.each do |a|
@@ -60,7 +63,7 @@ class User < ActiveRecord::Base
   end
 
   def user_group=(attr)
-    raise Authorization::NotAuthorized unless has_role? :admin
+    User.can! :edit, :user_group
     if attr and attr.first.is_a? String
       grps = []
       attr.each do |a|

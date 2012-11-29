@@ -8,9 +8,9 @@ class UserGroup < ActiveRecord::Base
 
   # public activity tracking
   include PublicActivity::Model
-  tracked :owner => proc { User.current_user }, :params => {
+  tracked :owner => proc { Authorization.current_user }, :params => {
       :trackable_name => proc { |c, model| model.name },
-      :owner_name => proc { User.current_user.login }}
+      :owner_name => proc { Authorization.current_user.login }}
 
   def user_attributes=(attrs)
     users = []
@@ -32,7 +32,7 @@ class UserGroup < ActiveRecord::Base
     self.host_acl.all.each do |acl|
       dup_acl = acl.dup
       dup_acl.users = record
-      Cmd::Action.add_host_acl dup_acl, User.current_user
+      Cmd::Action.add_host_acl dup_acl, Authorization.current_user
     end
   end
 
@@ -40,7 +40,7 @@ class UserGroup < ActiveRecord::Base
     self.host_acl.all.each do |acl|
       dup_acl = acl.dup
       dup_acl.users = record
-      Cmd::Action.delete_host_acl dup_acl, User.current_user
+      Cmd::Action.delete_host_acl dup_acl, Authorization.current_user
     end
   end
 

@@ -12,7 +12,7 @@
     .stat
       %span
         = current_user.keys.count
-      = link_to "Key".pluralize(current_user.keys.count), keys_user_path(User.current_user)
+      = link_to "Key".pluralize(current_user.keys.count), keys_user_path(Authorization.current_user)
     / /stat
   / /stat-holder
   .stat-holder.fourth
