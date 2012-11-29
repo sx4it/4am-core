@@ -6,12 +6,7 @@ AM::Application.routes.draw do
   resources :host_acls, :only=>[:index, :create, :destroy]
   resources :roles, :only=>[:index, :create, :destroy]
 
-  resources :user_groups do
-    member do
-      post :add_user
-      delete :del_user
-    end
-  end
+  resources :user_groups
 
   resources :commands
 
@@ -28,10 +23,6 @@ AM::Application.routes.draw do
   end
 
   resources :host_groups do
-    member do
-      post :add_host
-      delete :del_host
-    end
     resources :cmd do
       collection do
           get :clear
