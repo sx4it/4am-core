@@ -31,10 +31,11 @@ group :assets do
   gem "jquery-ui-rails"
 
   gem 'font-awesome-sass-rails'
-  gem 'therubyracer'
-  gem 'haml'
-  gem 'haml-rails'
 end
+
+gem 'therubyracer'
+gem 'haml'
+gem 'haml-rails'
 
 gem "will_paginate"
 
