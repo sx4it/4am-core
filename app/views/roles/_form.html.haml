@@ -1,9 +1,10 @@
+- include_related_js
+
 #add_role_form
 
-  = form_for @new_role, html: { class: 'form-inline' }, :remote => true do |f|
+  = simple_form_for @new_role, html: { class: 'form-horizontal' } do |f|
 
-    = render 'layouts/form/errors', elem: @new_role
+    = f.input :roles, :input_html => {:class => :span3, :multiple => true}, :as => :text
 
-    = f.text_field :name, :placeholder => 'New Role Name'
-
-    = f.submit 'New Role', class: "btn btn-info"
+    .form-actions.transparent
+      = f.submit 'Save', class: "btn btn-info"

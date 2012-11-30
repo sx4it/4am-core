@@ -169,39 +169,39 @@ describe HostAcl do
     assert_equal 1, (count_after - count_before)
   end
 
+  it "adding new key (adding new key to user should deploy the key)" do
+    pending "find a better way to deploy key"
 
-#
-#  # TODO implement a cleaner way to add key
-#
-#  it "adding new key (adding new key to user should deploy the key)" do
-#    user_group = create :user_group
-#    user = create :user
-#    user_group.user << user
-#    host_acl = create :host_acl, :users => user_group
-#    count_before = Cmd::count host_acl.hosts.id
-#
-#    assert_equal 1, HostAcl.all.count
-#    key = create :key
-#    user.key << key
-#    assert_equal 1, HostAcl.all.count
-#    count_after = Cmd::count host_acl.hosts.id
-#    assert_equal 1, (count_after - count_before)
-#  end
-#
-#  it "deleting new key (deleting user key should undeploy the key)" do
-#    user_group = create :user_group
-#    user = create :user
-#    user_group.user << user
-#    key = create :key
-#    user.key << key
-#    host_acl = create :host_acl, :users => user_group
-#    count_before = Cmd::count host_acl.hosts.id
-#
-#    assert_equal 1, HostAcl.all.count
-#    key.destroy
-#    assert_equal 1, HostAcl.all.count
-#    count_after = Cmd::count host_acl.hosts.id
-#    assert_equal 1, (count_after - count_before)
-#  end
-#
+    #user_group = create :user_group
+    #user = create :user
+    #user_group.user << user
+    #host_acl = create :host_acl, :users => user_group
+    #count_before = Cmd::count host_acl.hosts.id
+
+    #assert_equal 1, HostAcl.all.count
+    #key = create :key
+    #user.key << key
+    #assert_equal 1, HostAcl.all.count
+    #count_after = Cmd::count host_acl.hosts.id
+    #assert_equal 1, (count_after - count_before)
+  end
+
+  it "deleting new key (deleting user key should undeploy the key)" do
+    pending "find a better way to deploy key"
+
+    #user_group = create :user_group
+    #user = create :user
+    #user_group.user << user
+    #key = create :key
+    #user.key << key
+    #host_acl = create :host_acl, :users => user_group
+    #count_before = Cmd::count host_acl.hosts.id
+
+    #assert_equal 1, HostAcl.all.count
+    #key.destroy
+    #assert_equal 1, HostAcl.all.count
+    #count_after = Cmd::count host_acl.hosts.id
+    #assert_equal 1, (count_after - count_before)
+  end
+
 end

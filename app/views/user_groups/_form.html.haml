@@ -1,11 +1,11 @@
+- include_related_js
+
 = simple_form_for @user_group, html: { class: 'form-horizontal' }, :validate => true  do |f|
 
   = f.input :name
-  #user
-    #user_from_list
-      = f.simple_fields_for :user do |user|
-        = render 'user_fields', :f => user
-      = link_to_add_association 'Add user', f, :user, :class => "btn btn-mini btn-success controls"
+
+  - current_users = @user_group.user.map{|u| "#{u.id}" }.to_json
+  = f.input :user, :input_html => {:data => {:val => current_users}, :class => :span3, :multiple => true}, :collection => User.all
 
   .form-actions.transparent
     = f.submit 'Save', class: "btn btn-info", name: "save"

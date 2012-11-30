@@ -16,6 +16,14 @@ describe 'admin can add user in user_group' do
       @user.save
     end.to_not raise_error
   end
+
+  it "can add user to group" do
+    r = UserGroup.create(:name => "test")
+    expect do
+      r.user = [@user]
+      r.save
+    end.to_not raise_error
+  end
 end
 
 describe 'user cannot add user in user_group' do
@@ -34,6 +42,14 @@ describe 'user cannot add user in user_group' do
       @user.save
     end.to raise_error(Authorization::NotAuthorized)
   end
+
+  it "cannot add user to group" do
+    r = UserGroup.create(:name => "test")
+    expect do
+      r.user = [@user]
+      r.save
+    end.to raise_error(Authorization::NotAuthorized)
+  end
 end
 
 describe 'user cannot add himself in user_group' do
@@ -49,6 +65,14 @@ describe 'user cannot add himself in user_group' do
     expect do
       u = @user.user_group = [r]
       @user.save.should raise_error
+    end.to raise_error(Authorization::NotAuthorized)
+  end
+
+  it "cannot add user to group" do
+    r = UserGroup.create(:name => "test")
+    expect do
+      r.user = [@user]
+      r.save
     end.to raise_error(Authorization::NotAuthorized)
   end
 end
