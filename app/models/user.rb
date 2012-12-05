@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
 
   has_many :keys, :dependent => :delete_all
 
-  has_and_belongs_to_many :user_group, :uniq => true
+  has_and_belongs_to_many :user_group, :uniq => true, :after_add => :after_add_callback, :after_remove => :after_remove_callback
   has_many :host_acl, :as => :users, :dependent => :destroy
   has_and_belongs_to_many :roles, :uniq => true
   accepts_nested_attributes_for :roles, :allow_destroy => true
@@ -31,15 +31,30 @@ class User < ActiveRecord::Base
   }}
 
   before_destroy do |record|
-    record.user_group.each do |group|
-      group.host_acl.each do |acl|
-        dup_acl = acl.dup
-        dup_acl.users = record
-        Cmd::Action.delete_host_acl dup_acl, Authorization.current_user
-      end
+    #record.user_group.each do |group|
+    #  group.host_acl.each do |acl|
+    #    dup_acl = acl.dup
+    #    dup_acl.users = record
+    #    Cmd::Action.delete_host_acl dup_acl, Authorization.current_user
+    #  end
+    #end
+  end
+
+  def after_add_callback(record)
+    record.host_acl.all.each do |acl|
+      dup_acl = acl.dup
+      dup_acl.users = self
+      Cmd::Action.add_host_acl dup_acl, Authorization.current_user
     end
   end
 
+  def after_remove_callback(record)
+    record.host_acl.all.each do |acl|
+      dup_acl = acl.dup
+      dup_acl.users = self
+      Cmd::Action.delete_host_acl dup_acl, Authorization.current_user
+    end
+  end
 
   def self.can?(what, context)
     Authorization::Engine.new.permit? what.to_sym, :context => context.to_sym

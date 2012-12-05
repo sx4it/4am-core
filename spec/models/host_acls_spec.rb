@@ -117,6 +117,19 @@ describe HostAcl do
     assert_equal 1, (count_after - count_before)
   end
 
+  it "adding acl (adding user_group to user)" do
+    user_group = create :user_group
+    user = create :user
+    host_acl = create :host_acl, :users => user_group
+    count_before = Cmd::count host_acl.hosts.id
+
+    assert_equal 1, HostAcl.all.count
+    user.user_group << user_group
+    assert_equal 1, HostAcl.all.count
+    count_after = Cmd::count host_acl.hosts.id
+    assert_equal 1, (count_after - count_before)
+  end
+
   it "adding acl (adding user in usergroup with acl)" do
     user_group = create :user_group
     user = create :user
@@ -151,6 +164,20 @@ describe HostAcl do
 
     assert_equal 1, HostAcl.all.count
     user_group.user.delete user
+    assert_equal 1, HostAcl.all.count
+    count_after = Cmd::count host_acl.hosts.id
+    assert_equal 1, (count_after - count_before)
+  end
+
+  it "deleting acl (removing user_group from user)" do
+    user_group = create :user_group
+    user = create :user
+    user.user_group << user_group
+    host_acl = create :host_acl, :users => user_group
+    count_before = Cmd::count host_acl.hosts.id
+
+    assert_equal 1, HostAcl.all.count
+    user.user_group.delete user_group
     assert_equal 1, HostAcl.all.count
     count_after = Cmd::count host_acl.hosts.id
     assert_equal 1, (count_after - count_before)
