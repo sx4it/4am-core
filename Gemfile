@@ -4,6 +4,7 @@ gem 'rails', '~> 3.2.0'
 
 group :development do
     gem 'sqlite3'
+    gem 'better_errors'
     gem 'awesome_print'
     # quiet asset for dev mode :)
     gem 'quiet_assets'

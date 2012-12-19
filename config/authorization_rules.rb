@@ -2,7 +2,7 @@ authorization do
 
   role :guest do
       has_permission_on [:keys], :to => [:new, :create]
-      has_permission_on [:keys], :to => [:index, :show, :new, :create, :edit, :update, :destroy] do
+      has_permission_on [:keys], :to => [:index, :show, :new, :create, :edit, :update, :destroy, :x509, :pkcs12_new, :pkcs12_create] do
         if_attribute :user => is { user }
       end
       has_permission_on [:users], :to => [:show, :edit, :keys, :update, :reset_api_token] do

@@ -37,6 +37,9 @@ GEM
     authlogic_haapi (1.0.4)
     awesome_print (1.1.0)
     bcrypt-ruby (3.0.1)
+    better_errors (0.3.2)
+      coderay (>= 1.0.0)
+      erubis (>= 2.7.0)
     bootstrap-sass (2.0.4.2)
     builder (3.0.4)
     capistrano (2.13.5)
@@ -247,6 +250,7 @@ DEPENDENCIES
   authlogic_haapi
   awesome_print
   bcrypt-ruby (~> 3.0.0)
+  better_errors
   bootstrap-sass (~> 2.0.2)
   capistrano
   capybara
