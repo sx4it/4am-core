@@ -64,7 +64,7 @@ class CmdController < ApplicationController
 
   def has_permission
     @host = Host.find params[:host_id]
-    unless permitted_to? :view, @host
+    unless permitted_to? :show, @host
       flash[:error] = "Sorry, you are not allowed to do that."
       redirect_to root_url
     end
