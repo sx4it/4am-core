@@ -1,3 +1,11 @@
+
+[sx4it.com](http://sx4it.com/)
+=======
+
+
+![Screenshot](http://www.metalabz.com/assets/img/pres02.png)
+
+
 # Host Installation
 
 The script deploy.sh at the root of the repository takes care of the nginx/passenger/mysql/rails deployment.
